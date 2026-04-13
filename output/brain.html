@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Brain — MAGNA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Forum&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --charcoal: #2D2D2D;
+      --charcoal-deep: #242424;
+      --creme: #E8DFC8;
+      --creme-60: rgba(232,223,200,0.6);
+      --creme-30: rgba(232,223,200,0.3);
+      --creme-08: rgba(232,223,200,0.06);
+      --creme-14: rgba(232,223,200,0.10);
+      --soil: #5C3518;
+      --soil-light: #7a4a28;
+      --taupe: #483C32;
+      --taupe-border: rgba(72,60,50,0.8);
+      --gold: #c0927a;
+      --green: #4a7c5c;
+      --blue: #4a6b8a;
+      --mauve: #7a4a64;
+      --font-display: 'Forum', Georgia, serif;
+      --font-body: 'Raleway', system-ui, -apple-system, sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--charcoal); color: var(--creme); font-family: var(--font-body); font-size: 14px; line-height: 1.7; min-height: 100vh; }
+
+    /* NAV */
+    .nav { padding: 18px 28px; border-bottom: 1px solid var(--taupe-border); display: flex; align-items: center; gap: 18px; background: var(--charcoal-deep); position: sticky; top: 0; z-index: 100; }
+    .nav-mark { font-family: var(--font-display); font-size: 15px; letter-spacing: 0.22em; color: var(--creme); }
+    .nav-tag { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--creme-60); padding-left: 16px; border-left: 1px solid var(--taupe-border); }
+    .nav-home { margin-left: auto; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--creme-60); text-decoration: none; }
+    .nav-home:hover { color: var(--creme); }
+
+    /* TOC */
+    .toc { background: var(--creme-08); border-bottom: 1px solid var(--taupe-border); padding: 14px 28px; display: flex; gap: 6px; flex-wrap: wrap; }
+    .toc a { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--creme-60); text-decoration: none; padding: 4px 10px; border: 1px solid var(--taupe-border); }
+    .toc a:hover { color: var(--creme); border-color: var(--gold); }
+
+    /* LAYOUT */
+    .page { max-width: 900px; margin: 0 auto; padding: 0 28px 96px; }
+
+    /* SECTION HEADERS */
+    .section { margin-top: 56px; }
+    .section-label { font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+    .section-title { font-family: var(--font-display); font-size: clamp(22px, 3vw, 32px); font-weight: 400; line-height: 1.2; margin-bottom: 6px; }
+    .section-sub { font-size: 13px; color: var(--creme-60); font-weight: 300; margin-bottom: 28px; max-width: 600px; }
+    .section-divider { border: none; border-top: 1px solid var(--taupe-border); margin-bottom: 28px; }
+
+    /* STAT ROW */
+    .stat-row { display: flex; gap: 2px; flex-wrap: wrap; margin-bottom: 32px; }
+    .stat-box { background: var(--creme-08); border: 1px solid var(--taupe-border); padding: 18px 22px; min-width: 120px; flex: 1; }
+    .stat-num { font-family: var(--font-display); font-size: 28px; color: var(--creme); display: block; }
+    .stat-lbl { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--creme-60); margin-top: 2px; }
+
+    /* QUOTE BLOCK */
+    .quote-block { border-left: 3px solid var(--soil); padding: 16px 20px; background: var(--creme-08); margin-bottom: 14px; }
+    .quote-block p { font-size: 15px; font-style: italic; color: var(--creme); font-weight: 300; line-height: 1.65; }
+    .quote-block .attr { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--creme-60); margin-top: 8px; font-style: normal; }
+
+    /* GRID */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-bottom: 24px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; margin-bottom: 24px; }
+    @media (max-width: 640px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+    /* CARDS */
+    .card { background: var(--creme-08); border: 1px solid var(--taupe-border); padding: 20px; }
+    .card-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--creme-60); margin-bottom: 8px; }
+    .card-title { font-family: var(--font-display); font-size: 17px; font-weight: 400; color: var(--creme); margin-bottom: 8px; }
+    .card-body { font-size: 12px; color: var(--creme-60); font-weight: 300; line-height: 1.7; }
+    .card-body em { color: var(--creme); font-style: italic; }
+    .card.core { border-left: 3px solid var(--green); }
+    .card.emerging { border-left: 3px solid var(--blue); }
+    .card.social { border-left: 3px solid var(--mauve); }
+    .card.gold { border-left: 3px solid var(--gold); }
+
+    /* PILLAR TITLE */
+    .pillar-title { font-family: var(--font-display); font-size: 13px; font-weight: 400; margin-bottom: 6px; }
+    .pillar-title.core { color: #7abf8f; }
+    .pillar-title.emerging { color: #7aaabf; }
+    .pillar-title.social { color: #bf7a9a; }
+
+    /* TAG ROW */
+    .tag-row { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 10px; }
+    .tag { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; border: 1px solid var(--taupe-border); color: var(--creme-60); }
+    .tag.core { border-color: var(--green); color: #7abf8f; }
+    .tag.emerging { border-color: var(--blue); color: #7aaabf; }
+    .tag.social { border-color: var(--mauve); color: #bf7a9a; }
+
+    /* VOICE TABLE */
+    .voice-row { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(72,60,50,0.4); align-items: flex-start; }
+    .voice-row:last-child { border-bottom: none; }
+    .voice-name { font-family: var(--font-display); font-size: 14px; color: var(--creme); min-width: 140px; flex-shrink: 0; }
+    .voice-desc { font-size: 12px; color: var(--creme-60); font-weight: 300; line-height: 1.6; flex: 1; }
+    .voice-series { font-size: 10px; color: var(--gold); letter-spacing: 0.1em; margin-top: 4px; }
+
+    /* PROGRAM ROW */
+    .program-row { padding: 18px 0; border-bottom: 1px solid rgba(72,60,50,0.4); }
+    .program-row:last-child { border-bottom: none; }
+    .program-name { font-family: var(--font-display); font-size: 16px; color: var(--creme); margin-bottom: 4px; }
+    .program-meta { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+    .program-desc { font-size: 12px; color: var(--creme-60); font-weight: 300; line-height: 1.7; }
+
+    /* SECTOR LIST */
+    .sector-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 2px; margin-top: 12px; }
+    .sector-item { background: var(--creme-08); border: 1px solid var(--taupe-border); padding: 10px 12px; font-size: 11px; color: var(--creme-60); }
+    .sector-num { font-family: var(--font-display); font-size: 13px; color: var(--creme); margin-right: 6px; }
+
+    /* CORRIDOR */
+    .corridor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 12px; }
+    @media (max-width: 600px) { .corridor-grid { grid-template-columns: 1fr; } }
+    .corridor-card { background: var(--creme-08); border: 1px solid var(--taupe-border); padding: 14px 16px; }
+    .corridor-name { font-family: var(--font-display); font-size: 14px; color: var(--creme); margin-bottom: 4px; }
+    .corridor-countries { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+    .corridor-desc { font-size: 11px; color: var(--creme-60); font-weight: 300; line-height: 1.6; }
+
+    /* SHAILU */
+    .exit-row { display: flex; gap: 14px; padding: 10px 0; border-bottom: 1px solid rgba(72,60,50,0.3); align-items: flex-start; }
+    .exit-row:last-child { border-bottom: none; }
+    .exit-num { font-family: var(--font-display); font-size: 18px; color: var(--gold); min-width: 28px; }
+    .exit-detail { flex: 1; }
+    .exit-company { font-size: 13px; color: var(--creme); font-weight: 400; }
+    .exit-acquirer { font-size: 11px; color: var(--creme-60); font-weight: 300; }
+
+    /* CONTENT SERIES */
+    .series-row { padding: 16px 0; border-bottom: 1px solid rgba(72,60,50,0.4); display: grid; grid-template-columns: 160px 80px 1fr; gap: 16px; align-items: start; }
+    .series-row:last-child { border-bottom: none; }
+    .series-name { font-family: var(--font-display); font-size: 14px; color: var(--creme); }
+    .series-day { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); padding-top: 2px; }
+    .series-info { font-size: 12px; color: var(--creme-60); font-weight: 300; line-height: 1.6; }
+    .series-voice { display: inline-block; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; padding: 2px 7px; border: 1px solid var(--taupe-border); color: var(--creme-60); margin-top: 5px; }
+    @media (max-width: 600px) { .series-row { grid-template-columns: 1fr; gap: 4px; } }
+
+    /* CONTENT PILLARS */
+    .pillar-block { padding: 14px 0; border-bottom: 1px solid rgba(72,60,50,0.4); }
+    .pillar-block:last-child { border-bottom: none; }
+    .pillar-block-title { font-family: var(--font-display); font-size: 15px; color: var(--creme); margin-bottom: 4px; }
+    .pillar-block-desc { font-size: 12px; color: var(--creme-60); font-weight: 300; line-height: 1.7; }
+
+    /* KEY RULES */
+    .rule { display: flex; gap: 14px; padding: 10px 0; border-bottom: 1px solid rgba(72,60,50,0.3); }
+    .rule:last-child { border-bottom: none; }
+    .rule-num { font-family: var(--font-display); font-size: 15px; color: var(--soil-light); min-width: 22px; }
+    .rule-text { font-size: 12px; color: var(--creme-60); font-weight: 300; line-height: 1.65; }
+    .rule-text strong { color: var(--creme); font-weight: 500; }
+
+    footer { padding: 32px 28px; border-top: 1px solid var(--taupe-border); text-align: center; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--creme-60); }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-mark">MAGNA</span>
+  <span class="nav-tag">The Brain · Full Context</span>
+  <a class="nav-home" href="index.html">all drafts ↗</a>
+</nav>
+
+<div class="toc">
+  <a href="#what-magna-is">What Magna Is</a>
+  <a href="#compass">The Compass</a>
+  <a href="#programs">Programs</a>
+  <a href="#audiences">Audiences</a>
+  <a href="#shailu">Shailu</a>
+  <a href="#philosophy">Philosophy</a>
+  <a href="#content-series">Content Series</a>
+  <a href="#voice">Voice System</a>
+  <a href="#tone-rules">Tone Rules</a>
+  <a href="#angles">Content Angles</a>
+</div>
+
+<div class="page">
+
+  <!-- ═══════════════ WHAT MAGNA IS ═══════════════ -->
+  <div class="section" id="what-magna-is">
+    <div class="section-label">01 — The One-Line Truth</div>
+    <h2 class="section-title">What Magna Is</h2>
+    <hr class="section-divider">
+
+    <div class="quote-block">
+      <p>A global intelligence and education firm that translates institutional-grade sector knowledge into founder and executive capability — so the people building the next generation of businesses see the world the way the world's largest investors see it.</p>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-box"><span class="stat-num">33</span><span class="stat-lbl">Global Sectors Mapped</span></div>
+      <div class="stat-box"><span class="stat-num">3</span><span class="stat-lbl">Investment Pillars</span></div>
+      <div class="stat-box"><span class="stat-num">6</span><span class="stat-lbl">Growth Corridors</span></div>
+      <div class="stat-box"><span class="stat-num">3</span><span class="stat-lbl">Audiences Served</span></div>
+      <div class="stat-box"><span class="stat-num">4</span><span class="stat-lbl">EdTech Exits</span></div>
+      <div class="stat-box"><span class="stat-num">100+</span><span class="stat-lbl">Companies Mentored</span></div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card gold">
+        <div class="card-label">Mission</div>
+        <div class="card-body">"To connect the world's leading educators and researchers with purpose-driven entrepreneurs and executives, globally."</div>
+      </div>
+      <div class="card gold">
+        <div class="card-label">Institutional Tagline</div>
+        <div class="card-body" style="font-size:14px; font-style:italic; color:var(--creme);">"Delivering clarity where complexity meets capital allocation."</div>
+      </div>
+      <div class="card gold">
+        <div class="card-label">Deep Purpose</div>
+        <div class="card-body">"To guide entrepreneurs and executives to connect, learn, and live purpose-driven balanced lives, so that they can build compassionate and values-driven organizations that can shape the world to be a kinder, better place for future generations."</div>
+      </div>
+      <div class="card gold">
+        <div class="card-label">The Moat</div>
+        <div class="card-body">No other executive education platform operates from a 33-sector global industry blueprint used by <em>sovereign wealth funds and family offices</em>. The Compass is the spine that unifies education, advisory, and investment — all three in one firm.</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:0;">
+      <div class="card-label">The Problem Magna Solves</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:8px;">
+        <div class="rule"><span class="rule-num">1</span><span class="rule-text">Lack of guided learning frameworks and personalized impact networks to scale and find fulfillment</span></div>
+        <div class="rule"><span class="rule-num">2</span><span class="rule-text">Missing balance between personal, professional, and social goals for leaders of fast-scaling organizations</span></div>
+        <div class="rule"><span class="rule-num">3</span><span class="rule-text">No unified platform connecting learning, connections, and collaboration in one ecosystem</span></div>
+        <div class="rule"><span class="rule-num">4</span><span class="rule-text">Missing the inner circle — a trusted peer group who understand the challenge without being inside it</span></div>
+        <div class="rule"><span class="rule-num">5</span><span class="rule-text">Missing innovation and strategy levers for the creation, acceleration, and transition phases of business</span></div>
+        <div class="rule"><span class="rule-num">6</span><span class="rule-text">Most business education teaches tactics. Magna teaches the worldview. That gap is the opportunity.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ THE COMPASS ═══════════════ -->
+  <div class="section" id="compass">
+    <div class="section-label">02 — The Intellectual Spine</div>
+    <h2 class="section-title">The Magna Compass</h2>
+    <p class="section-sub">33 sectors · 3 investment pillars · 4 geographic dimensions · 6 frontier growth corridors · 7 nations profiled. Used by sovereign wealth funds, family offices, private equity, and multinational corporates.</p>
+    <hr class="section-divider">
+
+    <div class="grid-3">
+      <div class="card core">
+        <div class="pillar-title core">Pillar I — Core</div>
+        <div class="card-label">Stable Value Creation · 15 Sectors</div>
+        <div class="card-body">"The bedrock of every economy: where capital compounds reliably across cycles, geographies, and generations."<br><br>Enduring economic engines across manufacturing, energy, finance, and real estate.</div>
+        <div class="tag-row">
+          <span class="tag core">Stable Returns</span>
+          <span class="tag core">Long Duration</span>
+          <span class="tag core">Multi-cycle</span>
+        </div>
+      </div>
+      <div class="card emerging">
+        <div class="pillar-title emerging">Pillar II — Emerging</div>
+        <div class="card-label">Transformative Growth · 12 Sectors</div>
+        <div class="card-body">"Where the next decade of global wealth creation will be won — for investors who understand the signal from the noise."<br><br>High-growth, disruptive sectors redefining global value creation.</div>
+        <div class="tag-row">
+          <span class="tag emerging">Growth Alpha</span>
+          <span class="tag emerging">Winner-take-most</span>
+          <span class="tag emerging">Exponential</span>
+        </div>
+      </div>
+      <div class="card social">
+        <div class="pillar-title social">Pillar III — Social</div>
+        <div class="card-label">Societal Resilience · 6 Sectors</div>
+        <div class="card-body">"The sectors that define whether societies hold together — increasingly the most critical allocation for long-duration investors."<br><br>Human-centered sectors. $25T annual government expenditure globally.</div>
+        <div class="tag-row">
+          <span class="tag social">Impact Resilience</span>
+          <span class="tag social">Policy Capital</span>
+          <span class="tag social">Human Capital</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:2px; margin-bottom:28px;">
+      <div class="card">
+        <div class="pillar-title core" style="margin-bottom:10px;">15 Core Sectors</div>
+        <div class="sector-grid" style="grid-template-columns:1fr; gap:2px; margin-top:0;">
+          <div class="sector-item"><span class="sector-num">1</span>Energy & Utilities</div>
+          <div class="sector-item"><span class="sector-num">2</span>Financial Services</div>
+          <div class="sector-item"><span class="sector-num">3</span>Advanced Manufacturing</div>
+          <div class="sector-item"><span class="sector-num">4</span>Real Estate</div>
+          <div class="sector-item"><span class="sector-num">5</span>Logistics & Transport</div>
+          <div class="sector-item"><span class="sector-num">6</span>Retail & Consumer</div>
+          <div class="sector-item"><span class="sector-num">7</span>Agriculture & Food</div>
+          <div class="sector-item"><span class="sector-num">8</span>Construction & Infrastructure</div>
+          <div class="sector-item"><span class="sector-num">9</span>Healthcare Services</div>
+          <div class="sector-item"><span class="sector-num">10</span>Media & Telecom</div>
+          <div class="sector-item"><span class="sector-num">11</span>Mining & Metals</div>
+          <div class="sector-item"><span class="sector-num">12</span>Chemical Industries</div>
+          <div class="sector-item"><span class="sector-num">13</span>Defence & Security</div>
+          <div class="sector-item"><span class="sector-num">14</span>Water & Environment</div>
+          <div class="sector-item"><span class="sector-num">15</span>Professional Services</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="pillar-title emerging" style="margin-bottom:10px;">12 Emerging Sectors</div>
+        <div class="sector-grid" style="grid-template-columns:1fr; gap:2px; margin-top:0;">
+          <div class="sector-item"><span class="sector-num">1</span>AI & Data</div>
+          <div class="sector-item"><span class="sector-num">2</span>Biotechnology & Genomics</div>
+          <div class="sector-item"><span class="sector-num">3</span>Space & Satellite Economy</div>
+          <div class="sector-item"><span class="sector-num">4</span>Climate Technology</div>
+          <div class="sector-item"><span class="sector-num">5</span>Advanced Materials</div>
+          <div class="sector-item"><span class="sector-num">6</span>Quantum Computing</div>
+          <div class="sector-item"><span class="sector-num">7</span>Digital Assets & Web3</div>
+          <div class="sector-item"><span class="sector-num">8</span>Autonomous Systems & Robotics</div>
+          <div class="sector-item"><span class="sector-num">9</span>New Energy Storage</div>
+          <div class="sector-item"><span class="sector-num">10</span>Next-Gen Semiconductors</div>
+          <div class="sector-item"><span class="sector-num">11</span>Synthetic Biology</div>
+          <div class="sector-item"><span class="sector-num">12</span>Extended Reality & Metaverse</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="pillar-title social" style="margin-bottom:10px;">6 Social Sectors</div>
+        <div class="sector-grid" style="grid-template-columns:1fr; gap:2px; margin-top:0;">
+          <div class="sector-item"><span class="sector-num">1</span>Healthcare Access & Systems</div>
+          <div class="sector-item"><span class="sector-num">2</span>Education & Human Capital</div>
+          <div class="sector-item"><span class="sector-num">3</span>Affordable Housing</div>
+          <div class="sector-item"><span class="sector-num">4</span>Public Safety & Justice</div>
+          <div class="sector-item"><span class="sector-num">5</span>Arts, Culture & Creative Economy</div>
+          <div class="sector-item"><span class="sector-num">6</span>Food Security & Nutrition</div>
+        </div>
+        <div style="margin-top:14px; padding-top:12px; border-top:1px solid var(--taupe-border);">
+          <div class="card-label" style="margin-bottom:8px;">4 Strategic Convergence Themes</div>
+          <div class="sector-item" style="margin-bottom:2px;background:transparent; border:none; padding:4px 0; font-size:11px; color:var(--creme-60);">⟶ Energy Transition Stack</div>
+          <div class="sector-item" style="margin-bottom:2px;background:transparent; border:none; padding:4px 0; font-size:11px; color:var(--creme-60);">⟶ AI-Enabled Healthcare</div>
+          <div class="sector-item" style="margin-bottom:2px;background:transparent; border:none; padding:4px 0; font-size:11px; color:var(--creme-60);">⟶ Human Capital Economy</div>
+          <div class="sector-item" style="background:transparent; border:none; padding:4px 0; font-size:11px; color:var(--creme-60);">⟶ Geopolitical Resilience</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-label" style="margin-bottom:10px;">6 Frontier Growth Corridors</div>
+    <div class="corridor-grid">
+      <div class="corridor-card">
+        <div class="corridor-name">Indo-Pacific Digital Belt</div>
+        <div class="corridor-countries">India · Singapore · South Korea · Japan</div>
+        <div class="corridor-desc">AI services, semiconductor supply chain, digital finance, biomedical sciences. $3T+ GDP corridor with fastest-growing middle class.</div>
+      </div>
+      <div class="corridor-card">
+        <div class="corridor-name">Gulf Transformation Zone</div>
+        <div class="corridor-countries">UAE · Saudi Arabia · Qatar</div>
+        <div class="corridor-desc">Energy sovereignty reinvestment into smart cities, tourism, finance, food security. $1T+ sovereign wealth redeployment.</div>
+      </div>
+      <div class="corridor-card">
+        <div class="corridor-name">African Continental Corridor</div>
+        <div class="corridor-countries">Nigeria · Kenya · Egypt · South Africa</div>
+        <div class="corridor-desc">Fintech, mobile infrastructure, agricultural transformation. World's largest youth demographic driving services and consumption.</div>
+      </div>
+      <div class="corridor-card">
+        <div class="corridor-name">Latin American Resource Belt</div>
+        <div class="corridor-countries">Brazil · Chile · Peru · Colombia</div>
+        <div class="corridor-desc">Critical minerals, agri-commodities, nearshoring for North America, green energy transition leadership.</div>
+      </div>
+      <div class="corridor-card">
+        <div class="corridor-name">European Resilience Cluster</div>
+        <div class="corridor-countries">Germany · France · Poland · Nordics</div>
+        <div class="corridor-desc">Industrial re-armament, green hydrogen, digital sovereignty, advanced manufacturing reshoring.</div>
+      </div>
+      <div class="corridor-card">
+        <div class="corridor-name">Central Asian New Silk Road</div>
+        <div class="corridor-countries">Kazakhstan · Uzbekistan · Azerbaijan</div>
+        <div class="corridor-desc">Transit corridor between China and Europe, critical minerals, emerging digital economies.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PROGRAMS ═══════════════ -->
+  <div class="section" id="programs">
+    <div class="section-label">03 — What Magna Delivers</div>
+    <h2 class="section-title">Programs & Products</h2>
+    <hr class="section-divider">
+
+    <div class="card" style="margin-bottom:2px;">
+      <div class="program-row">
+        <div class="program-name">Quantum of Greatness ® — The 10-Week Applied MBA</div>
+        <div class="program-meta">Magna School · Remote + 2-Day In-Person Graduation</div>
+        <div class="program-desc">Research-backed, experiential, hyper-learning "Applied-MBA in a box." Exclusively for business owners, founders, and executives. Covers three business lifecycle themes — <strong>Creation · Acceleration · Transition</strong> — across 10 classes: Hyper-Learning, Reflective Leadership, Innovation, Negotiations, Strategy (8-module), Sales & Marketing, Technology, Finance, Operations, and The Global Entrepreneur. Graduates with ABCD framework (Awareness, Balance, Creativity, Design) and a personal leadership action plan. Cohort model — small, diverse, trusted peer group that spans functions, cultures, and countries.</div>
+      </div>
+      <div class="program-row">
+        <div class="program-name">Magna Meetup — 3-Day Intensive</div>
+        <div class="program-meta">In-Person · Immersive</div>
+        <div class="program-desc">Shorter intensive format. Participants "reflect deeply, look at their business differently." Confirmed participant: "In just three days, I gained courage to start writing a book and a complete shift in perspective." Format for leaders who can't commit to 10 weeks but need the breakthrough.</div>
+      </div>
+      <div class="program-row">
+        <div class="program-name">Magna Roundtable — Dubai</div>
+        <div class="program-meta">Invite-Only · 40 Founders Over 3 Years</div>
+        <div class="program-desc">The room where real problems get solved. Sessions are not recorded. Small, senior, invite-only. The shift in the room is the product. "We don't run events. We build rooms where real problems get solved." Documented via #BehindTheBuild on LinkedIn.</div>
+      </div>
+      <div class="program-row" style="border-bottom:none;">
+        <div class="program-name">Magna Capital — Early-Stage Venture</div>
+        <div class="program-meta">Investment Thesis: Merit · Market · Maturity</div>
+        <div class="program-desc">Early-stage venture guided by entrepreneur empowerment, visionary investment, long-term value creation, impact, and purpose. Unique requirement: every entrepreneur and investor must complete the Magna curriculum first. Capital and education are intentionally linked — you cannot invest in Magna without first understanding Magna's philosophy.</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:2px;">
+      <div class="card-label" style="margin-bottom:12px;">Three VIP Membership Tiers</div>
+      <div class="grid-3" style="margin-bottom:0;">
+        <div style="padding:14px; background:var(--creme-08); border:1px solid var(--taupe-border);">
+          <div class="card-label">Growth VIP</div>
+          <div class="card-title" style="font-size:14px;">1 Workshop / Month</div>
+          <div class="card-body">Content Library · Cohorts · Book Club · Magna Summit (add-on)</div>
+        </div>
+        <div style="padding:14px; background:var(--creme-08); border:1px solid var(--taupe-border); border-top: 2px solid var(--gold);">
+          <div class="card-label">Scale VIP</div>
+          <div class="card-title" style="font-size:14px;">2 Workshops / Month</div>
+          <div class="card-body">+ Introductions · Shared Concierge · Magna Summit (discounted)</div>
+        </div>
+        <div style="padding:14px; background:var(--creme-08); border:1px solid var(--taupe-border);">
+          <div class="card-label">Enterprise VIP</div>
+          <div class="card-title" style="font-size:14px;">3 Workshops / Month</div>
+          <div class="card-body">+ PR/Brand/Publishing · Dedicated Concierge · Magna Summit (included)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ AUDIENCES ═══════════════ -->
+  <div class="section" id="audiences">
+    <div class="section-label">04 — Who Magna Serves</div>
+    <h2 class="section-title">Three Audiences</h2>
+    <hr class="section-divider">
+    <div class="grid-3">
+      <div class="card gold">
+        <div class="card-label">Founders & Executives</div>
+        <div class="card-title">The Education Audience</div>
+        <div class="card-body">Business owners, founders, executives, family business owners at the $10M–$50M+ growth stage. They come for the curriculum, cohort, and compass. They leave with a global worldview and a practitioner's toolkit for Creation, Acceleration, and Transition.</div>
+      </div>
+      <div class="card gold">
+        <div class="card-label">Institutional Investors</div>
+        <div class="card-title">The Intelligence Audience</div>
+        <div class="card-body">Sovereign wealth funds, family offices, private equity, multinational corporates. Served through the Magna Compass — institutional-grade sector intelligence for portfolio construction decisions. Not coaching. Capital allocation intelligence.</div>
+      </div>
+      <div class="card gold">
+        <div class="card-label">Early-Stage Startups</div>
+        <div class="card-title">The Capital Audience</div>
+        <div class="card-body">Startups aligned with Magna's thesis of merit, market, and maturity. Sustainability, social responsibility, ethical practices. Must complete Magna curriculum before receiving capital. Education and investment are deliberately inseparable.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SHAILU ═══════════════ -->
+  <div class="section" id="shailu">
+    <div class="section-label">05 — The Founder</div>
+    <h2 class="section-title">Shailu Tipparaju</h2>
+    <p class="section-sub">Educator. Investor. Entrepreneur. Artist. Musician. Family-man. The voice of Magna on LinkedIn.</p>
+    <hr class="section-divider">
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-label">Identity & Philosophy</div>
+        <div class="card-body" style="margin-bottom:10px;">Personal philosophy brand: <em>Shailosophy</em> — "Life... as I understand it." Rooted in purpose, driven by performance, centered around people.<br><br>Believes in <em>purposeful balanced living</em> and <em>compassionate capitalism</em>.<br><br>Based in Barrington, IL. Wife: Sireesha. Sons: Dhanush and Ankush.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Education (Harvard × 3 + More)</div>
+        <div class="card-body">
+          B.S. Chemical Engineering — Osmania University, Hyderabad<br>
+          M.S. Computer Science — Loyola University Chicago<br>
+          Business Management Program — <em>Harvard Business School</em><br>
+          Executive Leadership — <em>U Chicago Booth</em><br>
+          Crisis Leadership — <em>Harvard Kennedy School</em><br>
+          Negotiations — <em>Harvard Law School</em>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:2px;">
+      <div class="card-label" style="margin-bottom:14px;">4 Confirmed Exits</div>
+      <div class="exit-row"><span class="exit-num">1</span><div class="exit-detail"><div class="exit-company">EdAssist — Founder-CTO</div><div class="exit-acquirer">Acquired by Bain Capital / Bright Horizons · 2010</div></div></div>
+      <div class="exit-row"><span class="exit-num">2</span><div class="exit-detail"><div class="exit-company">Strateology — Founder-CTO</div><div class="exit-acquirer">Acquired by University Ventures · 2017</div></div></div>
+      <div class="exit-row"><span class="exit-num">3</span><div class="exit-detail"><div class="exit-company">Examity — Founder-CTO</div><div class="exit-acquirer">Acquired by Great Hill Partners · 2019</div></div></div>
+      <div class="exit-row" style="border-bottom:none;"><span class="exit-num">4</span><div class="exit-detail"><div class="exit-company">[4th exit]</div><div class="exit-acquirer">Referenced in documents, name not disclosed</div></div></div>
+    </div>
+
+    <div class="grid-2" style="margin-top:2px;">
+      <div class="card">
+        <div class="card-label">Scale of Impact</div>
+        <div class="card-body">
+          5,000+ senior executives taught globally<br>
+          100+ companies mentored, invested in, advised<br>
+          Workshops in USA, Canada, Asia, Europe, South America<br>
+          Harvard Alumni administrator (thousands of business owners)<br>
+          YPO speaker — confirmed Chicagoland chapter<br>
+          Top 100 Education Pioneers — 2020<br>
+          Xerox top performing employee worldwide — 2005
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-label">Books</div>
+        <div class="card-body">
+          <em>Reflections: On Living, Loving and Working</em> (2019)<br>
+          <em>Quantum of Emotions Vol. 1</em> (2023)<br>
+          <em>Quantum of Emotions Vol. 2</em> (2024)<br>
+          <em>Strateology: Quantum Strategy</em> (in progress)
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:2px;">
+      <div class="card-label" style="margin-bottom:12px;">Core Quotes (verbatim)</div>
+      <div class="quote-block" style="margin-bottom:8px;"><p>"True leadership is not about the spotlight you stand in, but the light you help others discover in themselves."</p></div>
+      <div class="quote-block" style="margin-bottom:8px;"><p>"Leadership rarely comes with perfect clarity. What it does require is conviction, perspective, and the courage to move anyway."</p></div>
+      <div class="quote-block" style="margin-bottom:8px;"><p>"Society has conditioned us to view wealth through a singular lens — money. Yet, true wealth transcends numbers in a bank account."</p></div>
+      <div class="quote-block" style="margin-bottom:8px;"><p>"Some debts are financial. They sit on ledgers. Some debts are social. They live in expectations. Some debts are relational. They echo in memories."</p></div>
+      <div class="quote-block" style="margin-bottom:0;"><p>"Difficult conversations begin with a whisper from the heart, away from the gravity of pride."</p></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PHILOSOPHY ═══════════════ -->
+  <div class="section" id="philosophy">
+    <div class="section-label">06 — The Worldview</div>
+    <h2 class="section-title">Magna's Core Philosophy</h2>
+    <p class="section-sub">The ground every post sits on. If a draft contradicts one of these, the draft is wrong.</p>
+    <hr class="section-divider">
+
+    <div class="card">
+      <div class="rule"><span class="rule-num">1</span><span class="rule-text"><strong>Founders hit walls because they avoid the thinking their situation demands</strong> — not because they lack information.</span></div>
+      <div class="rule"><span class="rule-num">2</span><span class="rule-text"><strong>The $10M → $50M gap is a thinking shift, not a tactical one.</strong> The strategies, hires, and conversations trace back to who the founder believes they are.</span></div>
+      <div class="rule"><span class="rule-num">3</span><span class="rule-text"><strong>Capital is a tool. Judgment is the multiplier.</strong> The founders who win at $50M aren't better at raising money. They're better at allocating it.</span></div>
+      <div class="rule"><span class="rule-num">4</span><span class="rule-text"><strong>Culture is what you tolerate, not what you say.</strong> Every tolerance creates permission. Every permission creates expectation. Culture compounds in both directions.</span></div>
+      <div class="rule"><span class="rule-num">5</span><span class="rule-text"><strong>Clarity is the product.</strong> Delivering clarity where complexity meets capital allocation. This is not a motivational brand. It is an intelligence brand.</span></div>
+      <div class="rule"><span class="rule-num">6</span><span class="rule-text"><strong>Geography is strategy made manifest.</strong> Understanding where industries are won shapes which investments succeed. The Gulf, Indo-Pacific, Africa — these aren't travel destinations. They're the next decade's economic narrative.</span></div>
+      <div class="rule"><span class="rule-num">7</span><span class="rule-text"><strong>Emotions are strategic, not soft.</strong> The Quantum of Emotions framework treats emotions as identity, strategy, and life force. The rational and emotional are not opposites — they're entangled.</span></div>
+      <div class="rule" style="border-bottom:none;"><span class="rule-num">8</span><span class="rule-text"><strong>The "Quantum" worldview:</strong> Growth is nonlinear. Variables are entangled. Value is multidimensional (social, emotional, intellectual, financial). Transformation happens in leaps, not steps.</span></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ CONTENT SERIES ═══════════════ -->
+  <div class="section" id="content-series">
+    <div class="section-label">07 — The Publishing Schedule</div>
+    <h2 class="section-title">Content Series</h2>
+    <p class="section-sub">9 series across Instagram and LinkedIn. Every post maps to exactly one series, one voice, one format.</p>
+    <hr class="section-divider">
+
+    <div class="card" style="margin-bottom:2px;">
+      <div class="card-label" style="margin-bottom:14px; color:#c0607a;">Instagram</div>
+      <div class="series-row">
+        <div><div class="series-name">#MagnaMondays</div><span class="series-voice">Naval Ravikant</span></div>
+        <div class="series-day">Monday</div>
+        <div class="series-info">Single static. One compressed business truth. Dense, no fluff. The post founders screenshot before 9am. Hook + 60–90 word caption. Ends quietly — never a CTA.</div>
+      </div>
+      <div class="series-row">
+        <div><div class="series-name">#WisdomWednesdays</div><span class="series-voice">Seth Godin</span></div>
+        <div class="series-day">Wednesday</div>
+        <div class="series-info">5–8 slide carousel. Brand-history case studies (Apple 1997, Patagonia, Nike 1984, Dubai) reframed through the Magna lens. Hook → story beats → Magna framework takeaway on final slide.</div>
+      </div>
+      <div class="series-row">
+        <div><div class="series-name">#FounderFridays</div><span class="series-voice">Simon Sinek</span></div>
+        <div class="series-day">Friday</div>
+        <div class="series-info">Reel or carousel. Real founder stories at inflection points. Human first, lesson second. Specific scene → the shift → the transferable truth. Always specific ($28M company, three years, $2M to $18M).</div>
+      </div>
+      <div class="series-row" style="border-bottom:none;">
+        <div><div class="series-name">#InspirationWeekends</div><span class="series-voice">Daniel Pink</span></div>
+        <div class="series-day">Sunday</div>
+        <div class="series-info">Single static. One quote or principle. 40–70 word caption that reframes it. Sunday is for reflection, not information. Ends with a question the founder can sit with through the week.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label" style="margin-bottom:14px; color:#6a9ab8;">LinkedIn</div>
+      <div class="series-row">
+        <div><div class="series-name">#ThePrinciple</div><span class="series-voice">Ray Dalio</span></div>
+        <div class="series-day">Tuesday</div>
+        <div class="series-info">Long-form text. Numbered principles building a canon over time. Title: "MAGNA PRINCIPLE #0XX: [the principle in quotes]." 4–8 short paragraphs + em-dash break + closing question. 150–280 words. Next available: #014.</div>
+      </div>
+      <div class="series-row">
+        <div><div class="series-name">#TheSharpTake</div><span class="series-voice">Seth Godin</span></div>
+        <div class="series-day">Thursday</div>
+        <div class="series-info">20–60 words maximum. A common belief stated plainly → the contrarian reframe → one optional supporting line. Punchy, not preachy. Ends on the reframe itself when silence does the work.</div>
+      </div>
+      <div class="series-row">
+        <div><div class="series-name">#DigitalLectures</div><span class="series-voice">Ray Dalio</span></div>
+        <div class="series-day">Sat (bi-weekly)</div>
+        <div class="series-info">8–10 slide carousel. Free, ungated lecture. "Give the lecture away. Sell the application." Structure: Title → Common trap → Shift in thinking → Framework → Application. One topic, one lecture. No CTAs.</div>
+      </div>
+      <div class="series-row" style="border-bottom:none;">
+        <div><div class="series-name">#BehindTheBuild</div><span class="series-voice">Simon Sinek</span></div>
+        <div class="series-day">Sat (alt weeks)</div>
+        <div class="series-info">Text + photo. A scene from inside Magna — a roundtable moment, a cohort exchange, an event. Scene → what it revealed → the implicit "this is what Magna is." Show the community, don't promote it. No selling.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ VOICE SYSTEM ═══════════════ -->
+  <div class="section" id="voice">
+    <div class="section-label">08 — The Tone Compass</div>
+    <h2 class="section-title">Six Reference Voices</h2>
+    <p class="section-sub">Every post maps to exactly one voice. Voice is chosen by series, not mood. The sixth (Tony Robbins) is almost never used.</p>
+    <hr class="section-divider">
+
+    <div class="card">
+      <div class="voice-row">
+        <div class="voice-name">Naval Ravikant</div>
+        <div class="voice-desc">Dense, compressed, one big idea, no fluff. Short sentences that feel like they took years to compress. The quote that gets saved, not liked. <div class="voice-series">#MagnaMondays</div></div>
+      </div>
+      <div class="voice-row">
+        <div class="voice-name">Ray Dalio</div>
+        <div class="voice-desc">Numbered principles. Radical transparency about failures. Pattern recognition distilled from decades of practice. "I've seen this a hundred times" energy without claiming authority explicitly. <div class="voice-series">#ThePrinciple · #DigitalLectures</div></div>
+      </div>
+      <div class="voice-row">
+        <div class="voice-name">Seth Godin</div>
+        <div class="voice-desc">Provocative but never loud. Remarkable thinking about ordinary things. Two-sentence observation that rewires how you see the market. Reframes, not denials. <div class="voice-series">#TheSharpTake · #WisdomWednesdays</div></div>
+      </div>
+      <div class="voice-row">
+        <div class="voice-name">Simon Sinek</div>
+        <div class="voice-desc">Start with the human. Emotion before the lesson. The why before the what. Specific scenes, real moments, transferable truths. <div class="voice-series">#FounderFridays · #BehindTheBuild</div></div>
+      </div>
+      <div class="voice-row">
+        <div class="voice-name">Daniel Pink</div>
+        <div class="voice-desc">Motivational but grounded. Autonomy, mastery, purpose. Makes founders feel the meaning behind the work — not inspired, but oriented. <div class="voice-series">#InspirationWeekends</div></div>
+      </div>
+      <div class="voice-row" style="border-bottom:none;">
+        <div class="voice-name" style="color:var(--creme-60);">Tony Robbins</div>
+        <div class="voice-desc" style="color:rgba(232,223,200,0.35);">Energy and momentum, restrained. Never the default. Only for event launches, membership opens, community celebrations. Almost never used. <div class="voice-series" style="color:rgba(232,223,200,0.3);">CTAs & events only</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ TONE RULES ═══════════════ -->
+  <div class="section" id="tone-rules">
+    <div class="section-label">09 — Non-Negotiable</div>
+    <h2 class="section-title">Tone Rules</h2>
+    <hr class="section-divider">
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-label" style="margin-bottom:10px; color:#7abf8f;">Always</div>
+        <div class="rule"><span class="rule-num">✓</span><span class="rule-text"><strong>Specific over abstract.</strong> "$10M → $50M" beats "scaling." "The 3rd Strategy Roundtable in Dubai" beats "our events."</span></div>
+        <div class="rule"><span class="rule-num">✓</span><span class="rule-text"><strong>Hook first.</strong> First line is the one that stops the scroll. No warm-ups, no setup.</span></div>
+        <div class="rule"><span class="rule-num">✓</span><span class="rule-text"><strong>One idea per post.</strong> Not two, not a list of three. One idea, fully earned.</span></div>
+        <div class="rule"><span class="rule-num">✓</span><span class="rule-text"><strong>Quietly certain.</strong> Magna states. Magna doesn't shout. Confidence without volume.</span></div>
+        <div class="rule" style="border-bottom:none;"><span class="rule-num">✓</span><span class="rule-text"><strong>End on a question, a shareable truth, or a quiet mention.</strong> Never a sale.</span></div>
+      </div>
+      <div class="card">
+        <div class="card-label" style="margin-bottom:10px; color:#bf7a7a;">Never</div>
+        <div class="rule"><span class="rule-num">✗</span><span class="rule-text"><strong>No CTAs.</strong> No "DM me," "book a call," "sign up," "learn more." Magna never sells in posts.</span></div>
+        <div class="rule"><span class="rule-num">✗</span><span class="rule-text"><strong>No jargon.</strong> "Thought leadership," "synergy," "disrupt," "unlock," "10x" — all banned.</span></div>
+        <div class="rule"><span class="rule-num">✗</span><span class="rule-text"><strong>No hustle framing.</strong> No motivational posters. No humblebrag stats. No "grinding."</span></div>
+        <div class="rule"><span class="rule-num">✗</span><span class="rule-text"><strong>No listicles</strong> (unless numbered in #ThePrinciple). No tagline marketing copy.</span></div>
+        <div class="rule" style="border-bottom:none;"><span class="rule-num">✗</span><span class="rule-text"><strong>No selling.</strong> The product sells itself when the thinking is undeniable.</span></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:2px;">
+      <div class="card-label" style="margin-bottom:10px;">The Good Magna Post Checklist</div>
+      <div class="rule"><span class="rule-num">1</span><span class="rule-text">First line alone is worth the post.</span></div>
+      <div class="rule"><span class="rule-num">2</span><span class="rule-text">Exactly one idea. Not two.</span></div>
+      <div class="rule"><span class="rule-num">3</span><span class="rule-text">Ends on a provocation, never a sale.</span></div>
+      <div class="rule"><span class="rule-num">4</span><span class="rule-text">Remove Magna framing — the thinking still holds on its own.</span></div>
+      <div class="rule" style="border-bottom:none;"><span class="rule-num">5</span><span class="rule-text">A $10M–$50M founder — or a sovereign wealth fund allocator — would screenshot it before 9am.</span></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ CONTENT ANGLES ═══════════════ -->
+  <div class="section" id="angles">
+    <div class="section-label">10 — What I Can Write About</div>
+    <h2 class="section-title">Unlocked Content Angles</h2>
+    <p class="section-sub">Every angle below is grounded in documented knowledge. Nothing invented.</p>
+    <hr class="section-divider">
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-label">Founder & Leadership</div>
+        <div class="card-body">
+          The $10M → $50M identity gap<br>
+          Conviction over clarity<br>
+          The conversation you're avoiding<br>
+          What you tolerate is your culture<br>
+          Walkaway power in negotiations<br>
+          The org chart as political compromise<br>
+          When knowing everything becomes the ceiling<br>
+          Capital allocation as a strategy decision<br>
+          Purpose vs. the company that runs itself<br>
+          The founder's developmental arc
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-label">Global Intelligence</div>
+        <div class="card-body">
+          The $50T energy transition — largest capital reallocation in history<br>
+          The $1T AI capex cycle through 2030<br>
+          Food security as a national security issue<br>
+          Sub-Saharan Africa's youth dividend — most underpriced long-duration asset<br>
+          Water stress: 4 billion people, investment supercycle<br>
+          Quantum computing: 3–7 years from commercial advantage<br>
+          The semiconductor sector as most strategically contested<br>
+          Gulf Transformation Zone: $1T+ sovereign wealth redeployment<br>
+          Synthetic biology: 60% of global physical inputs within 20 years<br>
+          Geography as strategy
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-label">Brand Case Studies</div>
+        <div class="card-body">
+          Nike 1984 — identity before product<br>
+          Patagonia — repelling the wrong customer<br>
+          Apple 1997 — identity before strategy<br>
+          Dubai — 1971 port town, positioning masterclass<br>
+          Any sector from the Compass where a company's rise/fall illustrates a principle
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-label">Emotional & Human</div>
+        <div class="card-body">
+          Emotions as strategy (Quantum of Emotions)<br>
+          Wealth beyond money (4 dimensions)<br>
+          Emotional capital alongside enterprise value<br>
+          Difficult conversations and pride<br>
+          Burnout vs. loss of meaning<br>
+          The inner circle you haven't built yet<br>
+          The question you've never seriously asked yourself<br>
+          Shailosophy: "Think in Ink ®" and reflective leadership
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  MAGNA · Brain Context · Last updated Apr 13, 2026 · reach@magna.vip
+</footer>
+
+</body>
+</html>
