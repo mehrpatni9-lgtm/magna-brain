@@ -27,6 +27,7 @@ except ImportError:
 
 ROOT = Path(__file__).resolve().parent.parent
 WIKI = ROOT / "wiki"
+RAW = ROOT / "raw"
 OUT = ROOT / "output" / "brain"
 
 SECTIONS = [
@@ -249,7 +250,8 @@ def one_line(fm: dict, body: str) -> str:
     return ""
 
 
-def render_index():
+def render_index(raw_files=None):
+    raw_files = raw_files or []
     sections_html = []
 
     # Hero
@@ -301,7 +303,35 @@ def render_index():
             )
         sections_html.append(f'<div class="section-grid">{"".join(cards)}</div>')
 
-    # Also expose wiki/index.md and wiki/log.md at top-level
+    # Daily drops section — Mehr's raw logs, most recent first
+    if raw_files:
+        sections_html.append(
+            '<div class="section-header" id="daily-drops">'
+            '<h2>Daily drops</h2>'
+            '<span class="section-header-sub">Everything Mehr has fed the brain, newest first</span>'
+            '</div>'
+        )
+        cards = []
+        for src in raw_files[:20]:  # cap at 20 most recent
+            raw_text = src.read_text(encoding="utf-8")
+            # First meaningful line as a preview
+            preview = ""
+            for line in raw_text.splitlines():
+                line = line.strip()
+                if line and not line.startswith("#"):
+                    preview = line[:140]
+                    break
+            if not preview:
+                preview = "No content yet"
+            href = f"{BASE_HREF}/brain/raw/{src.stem}.html"
+            cards.append(
+                f'<a class="section-card" href="{href}">'
+                f'<h4>{html.escape(src.stem)}</h4>'
+                f'<p>{html.escape(preview)}</p>'
+                f'</a>'
+            )
+        sections_html.append(f'<div class="section-grid">{"".join(cards)}</div>')
+
     body_html = "".join(sections_html)
 
     crumb = f'<div class="crumb"><a href="{BASE_HREF}/">drafts</a> · <span>brain</span></div>'
@@ -315,6 +345,41 @@ def render_index():
     (OUT / "index.html").write_text(page, encoding="utf-8")
 
 
+def render_raw_logs():
+    """Render raw/YYYY-MM-DD.md files as a 'daily drops' section of the brain."""
+    if not RAW.exists():
+        return []
+    raw_files = sorted(
+        [p for p in RAW.glob("*.md") if p.name != ".gitkeep"],
+        reverse=True,
+    )
+    rendered = []
+    for src in raw_files:
+        dest = OUT / "raw" / f"{src.stem}.html"
+        raw = src.read_text(encoding="utf-8")
+        md = markdown.Markdown(extensions=["extra", "sane_lists", "tables"])
+        html_body = md.convert(raw)
+        crumb = (
+            f'<div class="crumb">'
+            f'<a href="{BASE_HREF}/">drafts</a> · '
+            f'<a href="{BASE_HREF}/brain/">brain</a> · '
+            f'<a href="{BASE_HREF}/brain/#daily-drops">daily drops</a>'
+            f'</div>'
+        )
+        title = f"Daily drop — {src.stem}"
+        page = BRAND_SHELL.format(
+            title=html.escape(title),
+            base=BASE_HREF,
+            section_tag="daily drops",
+            crumb=crumb,
+            body=f"<h1>{html.escape(title)}</h1>{html_body}",
+        )
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_text(page, encoding="utf-8")
+        rendered.append(src)
+    return rendered
+
+
 def main():
     if OUT.exists():
         shutil.rmtree(OUT)
@@ -324,7 +389,6 @@ def main():
     for src in WIKI.rglob("*.md"):
         rel = src.relative_to(WIKI)
         dest = OUT / rel.with_suffix(".html")
-        # Pick a section label from the first path component
         top = rel.parts[0]
         section_label = {
             "entities": "Entities",
@@ -336,8 +400,11 @@ def main():
         }.get(top, "Brain")
         render_file(src, dest, section_label)
 
+    # Render raw/ daily drops so Mehr can see her own inputs
+    raw_files = render_raw_logs()
+
     # Render the browse-all index
-    render_index()
+    render_index(raw_files=raw_files)
 
     print(f"Rendered {sum(1 for _ in OUT.rglob('*.html'))} HTML files to {OUT}")
 
