@@ -1,15 +1,17 @@
-name: Publish drafts to GitHub Pages
+name: Publish magna-brain drafts to GitHub Pages
 
-# Publishes output/ from any drafts/* branch to GitHub Pages so Mehr can
-# review every generated post at a clean URL. main is never published.
-# This workflow is the spec; the build step is intentionally minimal —
-# Jekyll is not required in v1. output/ is served as static markdown +
-# rendered index.
+# Publishes output/ to GitHub Pages so Mehr sees every generated draft at a
+# clean URL. Fires on push to main when output/ changes (v1: we publish
+# from main directly, not drafts/*, to keep Pages consistent and avoid
+# multi-branch deploy thrash).
 
 on:
   push:
     branches:
-      - 'drafts/**'
+      - main
+    paths:
+      - 'output/**'
+      - '.github/workflows/pages.yml'
   workflow_dispatch:
 
 permissions:
@@ -25,26 +27,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout draft branch
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Verify output/ exists
-        run: |
-          if [ ! -d output ]; then
-            echo "::error::output/ missing on draft branch — magna-brain-write-post did not publish correctly"
-            exit 1
-          fi
-
-      - name: Render markdown to static site
-        # Phase 1: just copy output/ verbatim. Phase 2 will plug in a
-        # minimal renderer (likely `mdbook` or a 30-line Python renderer)
-        # that wraps each draft with Magna's brand shell and the
-        # "this doesn't feel right" feedback link.
+      - name: Assemble site from output/
         run: |
           mkdir -p _site
-          cp -r output/* _site/ 2>/dev/null || true
-          # Generate an index listing for discoverability
-          ls output/*.md 2>/dev/null | sed 's|output/||' > _site/index.txt || true
+          if [ -d output ] && [ -n "$(ls -A output 2>/dev/null)" ]; then
+            cp -r output/* _site/ 2>/dev/null || true
+          fi
+          # Ensure there's always an index.html so the Pages URL never 404s
+          if [ ! -f _site/index.html ]; then
+            cat > _site/index.html <<'EOF'
+          <!DOCTYPE html>
+          <html lang="en"><head><meta charset="UTF-8"><title>MAGNA — Drafts</title>
+          <style>body{background:#2D2D2D;color:#E8DFC8;font-family:system-ui;padding:48px;max-width:720px;margin:0 auto;}
+          h1{font-family:Georgia,serif;font-weight:400;}</style></head>
+          <body><h1>MAGNA</h1><p>No drafts yet. Ask the brain for one.</p></body></html>
+          EOF
+          fi
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

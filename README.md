@@ -138,28 +138,81 @@ See `skills/<name>/SKILL.md` for each.
 
 ---
 
+## Handing this off to Mehr (Sahil, read this)
+
+One command on her machine:
+
+```bash
+gh repo clone mehrpatni9-lgtm/magna-brain ~/magna-brain && cd ~/magna-brain && claude
+```
+
+That's everything. The `.claude/settings.json` contract locks her session
+to read-only on the brain and write-only on `raw/` and `output/`. The six
+`.claude/skills/magna-brain-*` skills auto-load when she opens Claude Code.
+`CLAUDE.md` ensures her first "hi" returns a natural greeting, not a file
+tree. She never sees a command or a path again.
+
+### Before you hand off — admin toggles (one-time, Mehr must do)
+
+Only a repo admin can flip these. Sahil has push/triage, not admin, so
+Mehr needs to run through Settings once:
+
+1. **Pages:** Settings → Pages → Source = `GitHub Actions`
+2. **Actions permissions:** Settings → Actions → General → Workflow
+   permissions = `Read and write permissions` (and allow PR creation)
+3. Optional: grant Sahil `maintain` so future architectural PRs don't
+   need a manual step.
+
+Once those are on, the first draft Mehr asks for appears at
+`https://mehrpatni9-lgtm.github.io/magna-brain/<date>-<slug>.html`
+within ~60 seconds. The landing page at
+`https://mehrpatni9-lgtm.github.io/magna-brain/` is already built and
+lives under `output/index.html`.
+
+---
+
 ## Status
 
-**Phase 1 — Specification (current).** The artifacts in this repo describe
-the architecture only. No Python, Jekyll config, or hook scripts are
-implemented yet. Review the spec; implementation follows from Sahil's
-terminal session once the spec is locked.
+**Phase 1 — Specification.** ✅ Complete. Architecture artifacts in
+`CLAUDE.md`, `AGENTS.md`, `TOKEN_BUDGET.md`, `.claude/settings.json`,
+and this README.
 
-**Phase 2 — Implementation.** Agent-SDK compile subprocess, ingest adapters
-(PDF/image/voice/URL), Pages workflow, lint CI, GH Issue automation.
+**Phase 2 — v1 implementation.** ✅ Complete for Mehr's first chat.
+- Six executable skills at `.claude/skills/magna-brain-*/SKILL.md`
+- Seeded `wiki/`: 8 entities, 14 concepts, 3 sources, 10 exemplars,
+  1 synthesis angle, master index, topic summaries, append-only log
+- `wiki/voice/styleguide.md` extracted from Magna's real brand guide
+  and content platform
+- Landing page at `output/index.html` with Magna brand shell
+- GitHub Pages workflow publishing from `main` on any `output/` change
+- 5 feedback labels created: `brain-architecture`, `voice`, `facts`,
+  `skill-bug`, `brain-feedback`
+- Feedback issue template auto-filled by `magna-brain-feedback` skill
 
-**Phase 3 — Mehr's first session.** She opens Claude Code in
-`~/magna-brain`, types "hi," and the brain is loaded. If she ever has to
-type a command or see a file path, the spec failed.
+**Phase 3 — autonomous compound loop (deferred).**
+- Python compile subprocess (Agent SDK) that turns `raw/` dumps into
+  structured `wiki/` articles. v1 instead lets `magna-brain-write-post`
+  read recent `raw/` files as supplementary context — the brain "remembers"
+  Mehr's dumps even without compile.
+- XLSX parser for the content calendar (currently a stub in
+  `wiki/sources/magna-content-calendar.md`).
+- Multimodal ingest adapters (image vision, voice transcription, URL
+  fetching). v1 handles PDFs via `pdftotext` and pasted prose natively.
+- Lint CI wiring (the skill exists; the GitHub Actions job is TODO).
+- Agentic swarm that auto-PRs architectural fixes for `brain-architecture`
+  issues from Sahil's terminal.
 
 ---
 
 ## Reference material
 
-`reference/` is where Mehr has dropped brand assets, the content calendar,
-and an exemplar content-platform HTML. The compile step will ingest these
-in Phase 2 to seed `wiki/voice/` and `wiki/entities/`. Do not ingest from
-the spec phase.
+`reference/` contains:
+- `design/Magna Brand Guide.pdf` — seeded `wiki/sources/magna-brand-guide.md`
+  and `wiki/voice/styleguide.md`
+- `magna-content-platform.html` — the 2026 content strategy brief; seeded
+  every content-series concept and entity file
+- `Magna_Content_Calendar___Clean_v4.xlsx` — stub only, not yet parsed
+- `design/` — logo assets, brand imagery
 
 ---
 
