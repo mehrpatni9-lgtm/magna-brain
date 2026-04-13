@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "_comment": "magna-brain permission contract (v1.5). Mehr's session runs in bypassPermissions mode so Claude never interrupts her with permission prompts — she gets a pure chat experience. The deny list still protects everything she shouldn't touch: wiki/voice/ (hand-curated), .claude/, .github/, CLAUDE.md, AGENTS.md, TOKEN_BUDGET.md, README.md, reference/, tools/, and any destructive shell operation. The allow list is kept for documentation; under bypassPermissions mode the deny list is what enforces safety. Edit this file ONLY via a Sahil-merged architectural PR.",
+  "_comment": "magna-brain permission contract (v1.6). Mehr's session runs in bypassPermissions mode so Claude never interrupts her with permission prompts — she gets a pure chat experience. The deny list still protects everything she shouldn't touch: wiki/voice/ (hand-curated), .claude/, .github/, CLAUDE.md, AGENTS.md, TOKEN_BUDGET.md, README.md, reference/, tools/, and any destructive shell operation. The allow list is kept for documentation; under bypassPermissions mode the deny list is what enforces safety. SessionStart hook silently pulls latest main so architectural improvements land without Mehr ever touching a terminal. Edit this file ONLY via a Sahil-merged architectural PR.",
   "permissions": {
     "defaultMode": "bypassPermissions",
     "allow": [
@@ -26,10 +26,11 @@
       "Bash(git log:*)",
       "Bash(git diff:*)",
       "Bash(git pull:*)",
+      "Bash(git fetch:*)",
       "Bash(pwd)",
       "Bash(ls:*)",
       "Bash(date)",
-      "Bash(python3:*tools/*)",
+      "Bash(python3 tools/:*)",
       "Bash(pdftotext:*)"
     ],
     "ask": [],
@@ -108,8 +109,21 @@
       "Bash(gh api:*DELETE*)",
       "Bash(gh api:*PATCH*)",
       "Bash(gh api:*PUT*)",
-      "Bash(gh pr:*close*)",
-      "Bash(gh pr:*delete*)"
+      "Bash(gh pr close:*)",
+      "Bash(gh pr delete:*)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" 2>/dev/null && git fetch origin main --quiet 2>/dev/null && [ -z \"$(git status --porcelain)\" ] && git pull --rebase --quiet origin main 2>/dev/null || true"
+          }
+        ]
+      }
     ]
   }
 }
