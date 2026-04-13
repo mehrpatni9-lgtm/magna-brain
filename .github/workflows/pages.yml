@@ -1,0 +1,63 @@
+name: Publish drafts to GitHub Pages
+
+# Publishes output/ from any drafts/* branch to GitHub Pages so Mehr can
+# review every generated post at a clean URL. main is never published.
+# This workflow is the spec; the build step is intentionally minimal —
+# Jekyll is not required in v1. output/ is served as static markdown +
+# rendered index.
+
+on:
+  push:
+    branches:
+      - 'drafts/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout draft branch
+        uses: actions/checkout@v4
+
+      - name: Verify output/ exists
+        run: |
+          if [ ! -d output ]; then
+            echo "::error::output/ missing on draft branch — magna-brain-write-post did not publish correctly"
+            exit 1
+          fi
+
+      - name: Render markdown to static site
+        # Phase 1: just copy output/ verbatim. Phase 2 will plug in a
+        # minimal renderer (likely `mdbook` or a 30-line Python renderer)
+        # that wraps each draft with Magna's brand shell and the
+        # "this doesn't feel right" feedback link.
+        run: |
+          mkdir -p _site
+          cp -r output/* _site/ 2>/dev/null || true
+          # Generate an index listing for discoverability
+          ls output/*.md 2>/dev/null | sed 's|output/||' > _site/index.txt || true
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,89 @@
+name: Brain feedback
+description: Auto-filed by magna-brain-feedback when Mehr corrects a draft. Do not file manually unless you're Sahil triaging.
+title: "[feedback] "
+labels: ["brain-feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This template is auto-populated by the `magna-brain-feedback` skill.
+        Every field below comes from the session that produced the correction.
+        Mehr never sees this template directly.
+
+  - type: dropdown
+    id: correction_category
+    attributes:
+      label: Correction category
+      description: The skill picks this based on tone and content.
+      options:
+        - voice
+        - facts
+        - skill-bug
+        - brain-architecture
+    validations:
+      required: true
+
+  - type: input
+    id: post_url
+    attributes:
+      label: Draft URL
+      description: The GitHub Pages URL of the draft Mehr was reacting to. "<none>" if no draft exists (e.g. lint failed pre-publish).
+      placeholder: "https://mehrpatni9-lgtm.github.io/magna-brain/<slug>"
+    validations:
+      required: true
+
+  - type: textarea
+    id: wiki_pages_used
+    attributes:
+      label: Wiki pages loaded for this draft
+      description: Bullet list of wikilinks the write-post skill had in its prompt assembly at draft time. Pulled from the draft's provenance footer.
+      placeholder: |
+        - [[synthesis/authenticity-over-activism]]
+        - [[concepts/nostalgia-marketing]]
+        - [[entities/magna-core-audience]]
+    validations:
+      required: true
+
+  - type: input
+    id: skill_version
+    attributes:
+      label: Skill version
+      description: Commit SHA of skills/magna-brain-write-post/ at draft time.
+    validations:
+      required: true
+
+  - type: textarea
+    id: users_exact_words
+    attributes:
+      label: Mehr's exact words
+      description: Verbatim message from Mehr that triggered this feedback. Do NOT paraphrase. This is how Sahil's triage distinguishes "too corporate" (voice) from "we don't do that" (facts).
+    validations:
+      required: true
+
+  - type: textarea
+    id: architectural_hypothesis
+    attributes:
+      label: Architectural hypothesis (skill-generated)
+      description: The magna-brain-feedback skill's best guess at WHICH part of the architecture likely caused this. Not authoritative — Sahil's session re-evaluates on triage. Example "wiki/voice/styleguide.md is missing tonal guidance for Instagram short-form posts" or "exemplar selection picked a LinkedIn exemplar for an Instagram post".
+    validations:
+      required: false
+
+  - type: textarea
+    id: suggested_fix_scope
+    attributes:
+      label: Suggested fix scope
+      description: Which files / subsystems a PR would likely touch to resolve this. Helps Sahil's agentic swarm scope the fix. Do NOT write the fix here.
+      placeholder: |
+        - wiki/voice/styleguide.md
+        - skills/magna-brain-write-post/SKILL.md (exemplar selection logic)
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        **For Sahil (triage):** On merge of the PR that resolves this issue,
+        append this issue number to `corrected_by:` in the frontmatter of
+        every wiki file the PR touches. This is how provenance stays
+        auditable across corrections.
