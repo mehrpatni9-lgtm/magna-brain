@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MAGNA — Content Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Forum&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --charcoal: #2D2D2D;
+      --creme: #E8DFC8;
+      --taupe: #483C32;
+      --soil: #5C3518;
+      --creme-60: rgba(232,223,200,0.6);
+      --creme-20: rgba(232,223,200,0.12);
+      --creme-08: rgba(232,223,200,0.06);
+      --taupe-border: rgba(72,60,50,0.8);
+      --font-display: 'Forum', Georgia, serif;
+      --font-body: 'Raleway', system-ui, -apple-system, sans-serif;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--charcoal);
+      color: var(--creme);
+      font-family: var(--font-body);
+      font-size: 14px;
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #242424;
+      border-bottom: 1px solid var(--taupe-border);
+      display: flex;
+      align-items: center;
+      padding: 0 28px;
+      height: 56px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-right: 32px;
+      text-decoration: none;
+      flex-shrink: 0;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+    .nav-logo-mark { width: 28px; height: 28px; }
+    .nav-logo-text {
+      font-family: var(--font-display);
+      font-size: 15px;
+      letter-spacing: 0.22em;
+      color: var(--creme);
+    }
+    .nav-divider {
+      width: 1px;
+      height: 22px;
+      background: var(--taupe-border);
+      margin-right: 28px;
+      flex-shrink: 0;
+    }
+    .nav-tabs {
+      display: flex;
+      height: 100%;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .nav-tabs::-webkit-scrollbar { display: none; }
+    .nav-tab {
+      height: 100%;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--creme-60);
+      border: none;
+      background: none;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+    .nav-tab:hover { color: var(--creme); }
+    .nav-tab.active { color: var(--creme); border-bottom-color: var(--creme); }
+    .nav-tab .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: 0.7; }
+    .nav-tab[data-tab="ig"].active { border-bottom-color: #e48aad; color: #e48aad; }
+    .nav-tab[data-tab="li"].active { border-bottom-color: #6faed6; color: #6faed6; }
+    .nav-tab[data-tab="yt"].active { border-bottom-color: #e06060; color: #e06060; }
+    .nav-tab[data-tab="twitter"].active { border-bottom-color: #7ec8c8; color: #7ec8c8; }
+
+    /* SECTIONS */
+    .section { display: none; }
+    .section.active { display: block; }
+
+    /* HERO */
+    .hero {
+      padding: 56px 48px 48px;
+      border-bottom: 1px solid var(--taupe-border);
+    }
+    .hero-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--creme-60);
+      margin-bottom: 14px;
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(30px, 5vw, 50px);
+      font-weight: 400;
+      color: var(--creme);
+      line-height: 1.12;
+      margin-bottom: 16px;
+    }
+    .hero h1 em { font-style: italic; color: #a07860; }
+    .hero-sub {
+      font-size: 14px;
+      color: var(--creme-60);
+      max-width: 560px;
+      font-weight: 300;
+    }
+    .hero-meta {
+      display: flex;
+      gap: 32px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+    .hero-stat { display: flex; flex-direction: column; gap: 3px; }
+    .hero-stat-value { font-family: var(--font-display); font-size: 24px; color: var(--creme); }
+    .hero-stat-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--creme-60); }
+
+    /* INNER CONTENT */
+    .section-inner { padding: 48px; max-width: 1280px; }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+    .section-header h2 {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--creme);
+    }
+    .section-header-sub {
+      font-size: 11px;
+      color: var(--creme-60);
+      font-style: italic;
+    }
+
+    .rule { height: 1px; background: var(--taupe-border); margin: 44px 0; }
+
+    .callout {
+      background: var(--creme-08);
+      border: 1px solid var(--taupe-border);
+      border-left: 3px solid var(--soil);
+      padding: 18px 22px;
+      margin-bottom: 28px;
+      font-size: 13px;
+      font-style: italic;
+      color: var(--creme-60);
+      line-height: 1.7;
+    }
+    .callout strong { color: var(--creme); font-style: normal; font-weight: 500; }
+
+    /* BUCKET CARDS */
+    .buckets-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2px;
+      margin-bottom: 44px;
+    }
+    .bucket-card {
+      background: var(--creme-08);
+      border: 1px solid var(--taupe-border);
+      padding: 26px;
+    }
+    .bucket-card:hover { background: var(--creme-20); }
+    .bucket-platform {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--creme-60);
+      margin-bottom: 10px;
+    }
+    .bucket-name { font-family: var(--font-display); font-size: 22px; color: var(--creme); margin-bottom: 5px; }
+    .bucket-tagline { font-size: 12px; font-style: italic; color: var(--creme-60); margin-bottom: 14px; }
+    .bucket-desc { font-size: 13px; color: var(--creme-60); line-height: 1.6; margin-bottom: 18px; }
+    .bucket-meta { display: flex; flex-wrap: wrap; gap: 7px; }
+    .badge {
+      padding: 3px 9px;
+      border: 1px solid var(--taupe-border);
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--creme-60);
+      border-radius: 2px;
+    }
+    .badge.ig { border-color: rgba(228,138,173,0.4); color: #e48aad; }
+    .badge.li { border-color: rgba(111,174,214,0.4); color: #6faed6; }
+    .bucket-voice {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--taupe-border);
+      font-size: 11px;
+      color: var(--creme-60);
+    }
+    .bucket-voice strong { color: var(--creme); font-weight: 500; }
+
+    /* RHYTHM TABLE */
+    .rhythm-grid { overflow-x: auto; border: 1px solid var(--taupe-border); margin-bottom: 44px; }
+    .rhythm-table { width: 100%; border-collapse: collapse; min-width: 700px; }
+    .rhythm-table th {
+      padding: 12px 14px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--creme-60);
+      background: var(--creme-08);
+      border-bottom: 1px solid var(--taupe-border);
+      text-align: left;
+    }
+    .rhythm-table td {
+      padding: 14px;
+      border-bottom: 1px solid rgba(72,60,50,0.35);
+      vertical-align: top;
+      min-width: 110px;
+    }
+    .rhythm-table tr:last-child td { border-bottom: none; }
+    .rhythm-row-label {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 14px 16px !important;
+      background: var(--creme-08);
+      color: var(--creme-60);
+      white-space: nowrap;
+      min-width: 60px !important;
+    }
+    .rhythm-cell { display: flex; flex-direction: column; gap: 5px; }
+    .rhythm-chip {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 2px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      width: fit-content;
+    }
+    .rhythm-chip.ig { background: rgba(228,138,173,0.15); color: #e48aad; border: 1px solid rgba(228,138,173,0.3); }
+    .rhythm-chip.li { background: rgba(111,174,214,0.15); color: #6faed6; border: 1px solid rgba(111,174,214,0.3); }
+    .rhythm-chip.story { background: rgba(232,223,200,0.07); color: var(--creme-60); border: 1px solid var(--taupe-border); }
+    .rhythm-chip.rest { color: rgba(232,223,200,0.2); font-size: 10px; }
+    .rhythm-sublabel { font-size: 10px; color: var(--creme-60); font-style: italic; }
+
+    /* CALENDAR */
+    .cal-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+    }
+    .cal-month { font-family: var(--font-display); font-size: 28px; color: var(--creme); }
+    .cal-nav { display: flex; gap: 8px; }
+    .cal-btn {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--taupe-border);
+      background: none;
+      color: var(--creme-60);
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      line-height: 1;
+    }
+    .cal-btn:hover { background: var(--creme-20); color: var(--creme); }
+    .calendar-table { width: 100%; border-collapse: collapse; border: 1px solid var(--taupe-border); }
+    .calendar-table th {
+      padding: 10px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--creme-60);
+      background: var(--creme-08);
+      border: 1px solid var(--taupe-border);
+      text-align: center;
+    }
+    .cal-cell {
+      border: 1px solid var(--taupe-border);
+      padding: 10px;
+      vertical-align: top;
+      min-height: 108px;
+      width: calc(100% / 7);
+    }
+    .cal-cell.empty { background: rgba(0,0,0,0.1); }
+    .cal-date { font-size: 11px; font-weight: 600; color: var(--creme-60); margin-bottom: 7px; }
+    .cal-today .cal-date {
+      background: var(--soil);
+      color: var(--creme);
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      margin-bottom: 7px;
+    }
+    .cal-entry {
+      display: block;
+      padding: 3px 6px;
+      border-radius: 2px;
+      font-size: 9px;
+      font-weight: 600;
+      margin-bottom: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
+    .cal-entry.ig { background: rgba(228,138,173,0.2); color: #e48aad; }
+    .cal-entry.li { background: rgba(111,174,214,0.2); color: #6faed6; }
+    .cal-entry.story { background: rgba(232,223,200,0.07); color: var(--creme-60); border: 1px solid rgba(72,60,50,0.5); }
+
+    /* POST CARDS */
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 2px;
+      margin-bottom: 44px;
+    }
+    .post-card { border: 1px solid var(--taupe-border); overflow: hidden; }
+    .post-card-header {
+      padding: 14px 20px;
+      background: var(--creme-08);
+      border-bottom: 1px solid var(--taupe-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .post-card-series { font-family: var(--font-display); font-size: 16px; color: var(--creme); }
+    .post-card-meta { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--creme-60); }
+    .post-card-body { display: grid; grid-template-columns: 1fr 1fr; }
+    .post-visual {
+      background: #1e1e1e;
+      aspect-ratio: 1/1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 22px;
+      border-right: 1px solid var(--taupe-border);
+    }
+    .post-visual-text {
+      font-family: var(--font-display);
+      font-size: 13px;
+      color: var(--creme);
+      line-height: 1.55;
+      text-align: center;
+    }
+    .post-caption-area { padding: 18px; }
+    .post-caption-label {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--creme-60);
+      margin-bottom: 10px;
+    }
+    .post-caption-text {
+      font-size: 12px;
+      color: var(--creme);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* LI POSTS */
+    .li-post-card { border: 1px solid var(--taupe-border); margin-bottom: 2px; }
+    .li-post-header {
+      padding: 15px 22px;
+      background: var(--creme-08);
+      border-bottom: 1px solid var(--taupe-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .li-post-series { font-family: var(--font-display); font-size: 16px; color: var(--creme); }
+    .li-post-day { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #6faed6; }
+    .li-post-body { padding: 22px; }
+    .li-post-tagline { font-size: 11px; font-style: italic; color: var(--creme-60); margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--taupe-border); }
+    .li-post-text { font-size: 13px; line-height: 1.75; color: var(--creme); font-weight: 300; }
+    .li-post-text p { margin-bottom: 10px; }
+    .li-post-text p:last-child { margin-bottom: 0; }
+    .li-post-text strong { font-weight: 600; }
+    .li-post-examples { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--taupe-border); }
+    .li-example-label { font-size: 9px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--creme-60); margin-bottom: 10px; }
+    .li-example-item {
+      padding: 8px 12px;
+      border-left: 2px solid var(--taupe-border);
+      font-size: 12px;
+      color: var(--creme-60);
+      margin-bottom: 6px;
+      font-style: italic;
+    }
+
+    /* YOUTUBE */
+    .yt-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 2px;
+      margin-bottom: 44px;
+    }
+    .yt-card { border: 1px solid var(--taupe-border); overflow: hidden; }
+    .yt-card-thumb {
+      background: #1a1a1a;
+      height: 152px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid var(--taupe-border);
+      position: relative;
+    }
+    .yt-play-icon {
+      width: 42px;
+      height: 42px;
+      border: 1.5px solid rgba(224,96,96,0.5);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #e06060;
+      font-size: 15px;
+      padding-left: 3px;
+    }
+    .yt-status-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 3px 8px;
+      border-radius: 2px;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .yt-status-badge.posted { background: rgba(100,190,100,0.2); color: #78c878; border: 1px solid rgba(100,190,100,0.4); }
+    .yt-status-badge.planned { background: var(--creme-08); color: var(--creme-60); border: 1px solid var(--taupe-border); }
+    .yt-card-body { padding: 15px; }
+    .yt-card-title { font-size: 13px; font-weight: 500; color: var(--creme); margin-bottom: 5px; line-height: 1.4; }
+    .yt-card-desc { font-size: 11px; color: var(--creme-60); font-weight: 300; }
+
+    /* TWITTER */
+    .twitter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 2px;
+    }
+    .tweet-card { border: 1px solid var(--taupe-border); padding: 20px; }
+    .tweet-bucket { font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #7ec8c8; margin-bottom: 12px; }
+    .tweet-text { font-size: 14px; color: var(--creme); line-height: 1.6; font-weight: 300; margin-bottom: 12px; }
+    .tweet-meta { font-size: 10px; color: var(--creme-60); }
+
+    /* TONE COMPASS */
+    .compass-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 2px;
+      margin-bottom: 44px;
+    }
+    .compass-card { border: 1px solid var(--taupe-border); padding: 22px; }
+    .compass-name { font-family: var(--font-display); font-size: 18px; color: var(--creme); margin-bottom: 4px; }
+    .compass-applied { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--creme-60); margin-bottom: 12px; }
+    .compass-desc { font-size: 12px; color: var(--creme-60); line-height: 1.6; font-weight: 300; }
+
+    /* MINI CARDS */
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px,1fr));
+      gap: 2px;
+      margin-bottom: 28px;
+    }
+    .mini-card { border: 1px solid var(--taupe-border); padding: 18px 20px; }
+    .mini-card-label { font-size: 9px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--creme-60); margin-bottom: 6px; }
+    .mini-card-title { font-size: 14px; font-weight: 500; color: var(--creme); margin-bottom: 6px; line-height: 1.4; }
+    .mini-card-desc { font-size: 12px; color: var(--creme-60); font-weight: 300; }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: var(--charcoal); }
+    ::-webkit-scrollbar-thumb { background: var(--taupe); }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      .nav { padding: 0 16px; }
+      .hero { padding: 36px 20px 28px; }
+      .section-inner { padding: 28px 20px; }
+      .post-card-body { grid-template-columns: 1fr; }
+      .post-visual { aspect-ratio: auto; min-height: 120px; border-right: none; border-bottom: 1px solid var(--taupe-border); }
+      .buckets-grid, .compass-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 28px; }
+      .cal-entry:not(:first-child) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <button class="nav-logo" onclick="showTab('home')">
+    <svg class="nav-logo-mark" viewBox="0 0 28 28" fill="none">
+      <polygon points="14,3 26,25 2,25" fill="none" stroke="#E8DFC8" stroke-width="1.4"/>
+      <polygon points="14,9 21,22 7,22" fill="#E8DFC8" opacity="0.25"/>
+    </svg>
+    <span class="nav-logo-text">MAGNA</span>
+  </button>
+  <div class="nav-divider"></div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" data-tab="home" onclick="showTab('home')">Overview</button>
+    <button class="nav-tab" data-tab="calendar" onclick="showTab('calendar')">Calendar</button>
+    <button class="nav-tab" data-tab="ig" onclick="showTab('ig')"><span class="dot"></span>Instagram</button>
+    <button class="nav-tab" data-tab="li" onclick="showTab('li')"><span class="dot"></span>LinkedIn</button>
+    <button class="nav-tab" data-tab="yt" onclick="showTab('yt')"><span class="dot"></span>YouTube</button>
+    <button class="nav-tab" data-tab="twitter" onclick="showTab('twitter')"><span class="dot"></span>Twitter</button>
+  </div>
+</nav>
+
+
+<!-- ══════════════ HOME / OVERVIEW ══════════════ -->
+<div id="tab-home" class="section active">
+  <div class="hero">
+    <div class="hero-label">MAGNA · CONTENT PLATFORM · 2026</div>
+    <h1>A <em>recurring identity</em><br>for every day of the week.</h1>
+    <p class="hero-sub">Not posts — rituals. Each bucket is a named series with its own platform, cadence, tone, and purpose. Your audience knows what's coming and starts to expect it.</p>
+    <div class="hero-meta">
+      <div class="hero-stat"><span class="hero-stat-value">9</span><span class="hero-stat-label">Content Series</span></div>
+      <div class="hero-stat"><span class="hero-stat-value">4</span><span class="hero-stat-label">Platforms</span></div>
+      <div class="hero-stat"><span class="hero-stat-value">Daily</span><span class="hero-stat-label">IG Stories</span></div>
+      <div class="hero-stat"><span class="hero-stat-value">2×</span><span class="hero-stat-label">LinkedIn / Week</span></div>
+    </div>
+  </div>
+
+  <div class="section-inner">
+
+    <div class="section-header">
+      <h2>Instagram</h2>
+      <span class="section-header-sub">4 posts / month · 2–3 reels / week · daily stories</span>
+    </div>
+
+    <div class="callout">
+      <strong>Philosophy:</strong> Instagram is where MAGNA builds emotional resonance. Every bucket has a day, a name, and a visual language. Followers don't just watch — they anticipate. The goal isn't reach. It's <strong>recognition</strong>.
+    </div>
+
+    <div class="buckets-grid">
+      <div class="bucket-card">
+        <div class="bucket-platform">Instagram · Every Monday</div>
+        <div class="bucket-name">#MagnaMondays</div>
+        <div class="bucket-tagline">One sharp business truth. Every week.</div>
+        <div class="bucket-desc">A single, actionable insight from the MAGNA framework — strategy, negotiation, capital, culture, or leadership. One idea. Zero fat. The kind of post founders screenshot before 9am.</div>
+        <div class="bucket-meta"><span class="badge ig">IG</span><span class="badge">Static 1080×1080</span><span class="badge">Every Monday</span></div>
+        <div class="bucket-voice">Voice: <strong>Naval Ravikant</strong> — dense, compressed. The quote that gets saved, not liked.</div>
+      </div>
+      <div class="bucket-card">
+        <div class="bucket-platform">Instagram · Every Wednesday</div>
+        <div class="bucket-name">#WisdomWednesdays</div>
+        <div class="bucket-tagline">The brand story behind the business.</div>
+        <div class="bucket-desc">Deep-dive carousels on brand case studies. How did Apple reclaim identity? How did Patagonia turn values into market share? Always ends with a MAGNA framework takeaway.</div>
+        <div class="bucket-meta"><span class="badge ig">IG</span><span class="badge">5–8 Slide Carousel</span><span class="badge">Every Wednesday</span></div>
+        <div class="bucket-voice">Voice: <strong>Seth Godin</strong> — provocative but never loud. Rewires how you see the market.</div>
+      </div>
+      <div class="bucket-card">
+        <div class="bucket-platform">Instagram · Every Friday</div>
+        <div class="bucket-name">#FounderFridays</div>
+        <div class="bucket-tagline">Real founders. Real inflection points.</div>
+        <div class="bucket-desc">Short-form founder stories from the MAGNA community and beyond. The moment it broke. The decision that changed everything. Start with the human, then the lesson. Always specific.</div>
+        <div class="bucket-meta"><span class="badge ig">IG</span><span class="badge">Reel or Carousel</span><span class="badge">Every Friday</span></div>
+        <div class="bucket-voice">Voice: <strong>Simon Sinek</strong> — the why before the what. Stories that make you feel before they teach.</div>
+      </div>
+      <div class="bucket-card">
+        <div class="bucket-platform">Instagram · Every Sunday</div>
+        <div class="bucket-name">#InspirationWeekends</div>
+        <div class="bucket-tagline">Slow down to think further.</div>
+        <div class="bucket-desc">Sunday is for reflection, not information. A quote from Shailu or a MAGNA principle that makes a founder think differently about the week ahead. Single image, single idea.</div>
+        <div class="bucket-meta"><span class="badge ig">IG</span><span class="badge">Single Static</span><span class="badge">Every Sunday</span></div>
+        <div class="bucket-voice">Voice: <strong>Daniel Pink</strong> — motivational but grounded. Autonomy. Mastery. Purpose.</div>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <div class="section-header">
+      <h2>LinkedIn</h2>
+      <span class="section-header-sub">2–3 posts / week · Shailu's personal brand</span>
+    </div>
+
+    <div class="callout">
+      <strong>Philosophy:</strong> LinkedIn for MAGNA is thought leadership, not marketing. Shailu posts as a practitioner with 25 years of scars — not as a brand account. Every post should feel like something you'd share with your board. <strong>No selling. Ever.</strong> The product sells itself when the thinking is undeniable.
+    </div>
+
+    <div class="buckets-grid">
+      <div class="bucket-card">
+        <div class="bucket-platform">LinkedIn · Every Tuesday</div>
+        <div class="bucket-name">#ThePrinciple</div>
+        <div class="bucket-tagline">One operating truth. Unpacked with depth.</div>
+        <div class="bucket-desc">One principle from 25 years of building and advising. Stated clearly. Unpacked with context. Ends with a question. Numbered series — each post builds the MAGNA canon.</div>
+        <div class="bucket-meta"><span class="badge li">LI</span><span class="badge">Long-form Text</span><span class="badge">Every Tuesday</span></div>
+        <div class="bucket-voice">Voice: <strong>Ray Dalio</strong> — numbered principles, radical transparency. Pattern recognition distilled.</div>
+      </div>
+      <div class="bucket-card">
+        <div class="bucket-platform">LinkedIn · Every Thursday</div>
+        <div class="bucket-name">#TheSharpTake</div>
+        <div class="bucket-tagline">A contrarian view on a common belief.</div>
+        <div class="bucket-desc">A widely-held business belief — examined, challenged, reframed. The authority to say what others won't. Drives the most comments and shares. Short, punchy, conversation-starting.</div>
+        <div class="bucket-meta"><span class="badge li">LI</span><span class="badge">Short Text Post</span><span class="badge">Every Thursday</span></div>
+        <div class="bucket-voice">Voice: <strong>Seth Godin</strong> — two-sentence observation that rewires how you see the market.</div>
+      </div>
+      <div class="bucket-card">
+        <div class="bucket-platform">LinkedIn · Saturday Bi-Weekly</div>
+        <div class="bucket-name">#DigitalLectures</div>
+        <div class="bucket-tagline">A full lecture. Free. In 8 slides.</div>
+        <div class="bucket-desc">A complete lecture on one topic — Sales, Strategy, Negotiation, Capital, Leadership — in carousel form. Free. Ungated. Give the lecture away. Sell the application.</div>
+        <div class="bucket-meta"><span class="badge li">LI</span><span class="badge">8–10 Slides</span><span class="badge">Bi-weekly Sat</span></div>
+        <div class="bucket-voice">Voice: <strong>Ray Dalio</strong> — the most shareable MAGNA content. Builds authority and inbound.</div>
+      </div>
+      <div class="bucket-card">
+        <div class="bucket-platform">LinkedIn · Saturday Alternate Weeks</div>
+        <div class="bucket-name">#BehindTheBuild</div>
+        <div class="bucket-tagline">Inside the MAGNA ecosystem.</div>
+        <div class="bucket-desc">An event recap, roundtable moment, or founder conversation worth sharing. Where the brand becomes real — not a logo, but a living community doing serious work.</div>
+        <div class="bucket-meta"><span class="badge li">LI</span><span class="badge">Text + Photo</span><span class="badge">Alt Saturdays</span></div>
+        <div class="bucket-voice">Voice: <strong>Simon Sinek</strong> — community over audience. The why behind the room.</div>
+      </div>
+      <div class="bucket-card">
+        <div class="bucket-platform">LinkedIn · Monthly</div>
+        <div class="bucket-name">#CompassFramework</div>
+        <div class="bucket-tagline">A full framework. Free. No strings.</div>
+        <div class="bucket-desc">Once a month: a complete, usable framework from the MAGNA Compass — strategy, negotiation, capital allocation, culture design, leadership positioning. Give the framework away. Sell the application.</div>
+        <div class="bucket-meta"><span class="badge li">LI</span><span class="badge">Document Share</span><span class="badge">Monthly</span></div>
+        <div class="bucket-voice">MAGNA's most authoritative content. Builds inbound from founders who want more.</div>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <div class="section-header">
+      <h2>The Tone Compass</h2>
+      <span class="section-header-sub">6 voices · applied to MAGNA</span>
+    </div>
+
+    <div class="compass-grid">
+      <div class="compass-card">
+        <div class="compass-name">Naval Ravikant</div>
+        <div class="compass-applied">→ #MagnaMondays</div>
+        <div class="compass-desc">One big idea. No fluff. Dense with meaning. Short sentences that feel like they took years to compress. The quote that gets saved, not liked.</div>
+      </div>
+      <div class="compass-card">
+        <div class="compass-name">Ray Dalio</div>
+        <div class="compass-applied">→ #ThePrinciple · #DigitalLectures</div>
+        <div class="compass-desc">Numbered principles. Radical transparency about failures and lessons. The voice of someone who's seen the pattern a hundred times and distilled it into something transferable.</div>
+      </div>
+      <div class="compass-card">
+        <div class="compass-name">Simon Sinek</div>
+        <div class="compass-applied">→ #FounderFridays</div>
+        <div class="compass-desc">Start with the human. The emotion before the lesson. The "why" before the "what." Stories that make you feel something before they teach you something.</div>
+      </div>
+      <div class="compass-card">
+        <div class="compass-name">Seth Godin</div>
+        <div class="compass-applied">→ #TheSharpTake · #WisdomWednesdays</div>
+        <div class="compass-desc">Provocative but never loud. Remarkable thinking about ordinary things. The two-sentence observation that rewires how you see the market. Tribes, not audiences.</div>
+      </div>
+      <div class="compass-card">
+        <div class="compass-name">Daniel Pink</div>
+        <div class="compass-applied">→ #InspirationWeekends</div>
+        <div class="compass-desc">The motivational register — but grounded in research and real human behaviour. Autonomy. Mastery. Purpose. Posts that make founders feel the meaning behind the work.</div>
+      </div>
+      <div class="compass-card">
+        <div class="compass-name">Tony Robbins</div>
+        <div class="compass-applied">→ CTAs & Event Posts only</div>
+        <div class="compass-desc">Energy and momentum when needed — but restrained. Used sparingly for event launches, membership opens, or community celebrations. Never the default, always the exception.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════ CALENDAR ══════════════ -->
+<div id="tab-calendar" class="section">
+  <div class="hero">
+    <div class="hero-label">CONTENT CALENDAR · 2026</div>
+    <h1>The weekly <em>rhythm</em> —<br>at a glance.</h1>
+    <p class="hero-sub">What goes out, when, and where. Every single week.</p>
+  </div>
+
+  <div class="section-inner">
+
+    <div class="section-header"><h2>Weekly Rhythm</h2></div>
+
+    <div class="rhythm-grid">
+      <table class="rhythm-table">
+        <thead>
+          <tr>
+            <th style="width:58px;"></th>
+            <th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="rhythm-row-label">IG</td>
+            <td><div class="rhythm-cell"><span class="rhythm-chip ig">#MagnaMondays</span><span class="rhythm-sublabel">Pro tip / Quote</span></div></td>
+            <td><div class="rhythm-cell"><span class="rhythm-chip story">Story: Poll or Q</span></div></td>
+            <td><div class="rhythm-cell"><span class="rhythm-chip ig">#WisdomWednesdays</span><span class="rhythm-sublabel">Brand case study</span></div></td>
+            <td><div class="rhythm-cell"><span class="rhythm-chip story">Story: BTS / Tease</span></div></td>
+            <td><div class="rhythm-cell"><span class="rhythm-chip ig">#FounderFridays</span><span class="rhythm-sublabel">Reel or carousel</span></div></td>
+            <td><div class="rhythm-cell"><span class="rhythm-chip story">Story: Repost + CTA</span></div></td>
+            <td><div class="rhythm-cell"><span class="rhythm-chip ig">#InspirationWeekends</span><span class="rhythm-sublabel">Quote / Reflection</span></div></td>
+          </tr>
+          <tr>
+            <td class="rhythm-row-label">LI</td>
+            <td><div class="rhythm-cell"><span class="rhythm-chip rest">— Rest —</span></div></td>
+            <td><div class="rhythm-cell"><span class="rhythm-chip li">#ThePrinciple</span><span class="rhythm-sublabel">Shailu's weekly truth</span></div></td>
+            <td><div class="rhythm-cell"><span class="rhythm-chip rest">— Rest —</span></div></td>
+            <td><div class="rhythm-cell"><span class="rhythm-chip li">#TheSharpTake</span><span class="rhythm-sublabel">Contrarian view</span></div></td>
+            <td><div class="rhythm-cell"><span class="rhythm-chip rest">— Rest —</span></div></td>
+            <td><div class="rhythm-cell"><span class="rhythm-chip li">#DigitalLectures</span><span class="rhythm-sublabel">Bi-weekly carousel</span><br><span class="rhythm-chip li" style="margin-top:4px;">#BehindTheBuild</span><span class="rhythm-sublabel">Alternate weeks</span></div></td>
+            <td><div class="rhythm-cell"><span class="rhythm-chip rest">— Rest —</span></div></td>
+          </tr>
+          <tr>
+            <td class="rhythm-row-label">YT</td>
+            <td colspan="7" style="font-size:12px;color:var(--creme-60);padding:14px;">1–2 videos per week. Shailu lectures, roundtables, and strategy sessions. See YouTube tab for full shoot plan.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="rule"></div>
+
+    <div class="cal-controls">
+      <div class="cal-month" id="cal-month-label">April 2026</div>
+      <div class="cal-nav">
+        <button class="cal-btn" onclick="changeMonth(-1)">&#8249;</button>
+        <button class="cal-btn" onclick="changeMonth(1)">&#8250;</button>
+      </div>
+    </div>
+    <div id="calendar-container"></div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════ INSTAGRAM ══════════════ -->
+<div id="tab-ig" class="section">
+  <div class="hero">
+    <div class="hero-label">INSTAGRAM · @MAGNA</div>
+    <h1>Four buckets.<br><em>One unmistakable feed.</em></h1>
+    <p class="hero-sub">4 posts / month · 2–3 reels / week · daily stories.</p>
+  </div>
+
+  <div class="section-inner">
+
+    <div class="section-header">
+      <h2>#MagnaMondays</h2>
+      <span class="section-header-sub">Every Monday · Static 1080×1080 · Naval Ravikant voice</span>
+    </div>
+    <div class="posts-grid">
+      <div class="post-card">
+        <div class="post-card-header"><span class="post-card-series">#MagnaMondays 001</span><span class="post-card-meta">Monday · Static</span></div>
+        <div class="post-card-body">
+          <div class="post-visual"><div class="post-visual-text">At $10M, you're celebrated for knowing everything.<br><br>At $50M, knowing everything is the problem.</div></div>
+          <div class="post-caption-area">
+            <div class="post-caption-label">Post Caption</div>
+            <div class="post-caption-text">The founders who break through don't learn more. They learn to let go more.<br><br>That's the hardest shift in business — and almost no one talks about it honestly.<br><br>Every Monday, MAGNA shares one idea built for founders who are ready for what's next.</div>
+          </div>
+        </div>
+      </div>
+      <div class="post-card">
+        <div class="post-card-header"><span class="post-card-series">#MagnaMondays 002</span><span class="post-card-meta">Monday · Static</span></div>
+        <div class="post-card-body">
+          <div class="post-visual"><div class="post-visual-text">"Capital is a tool.<br>Judgment is the multiplier."</div></div>
+          <div class="post-caption-area">
+            <div class="post-caption-label">Post Caption</div>
+            <div class="post-caption-text">Most founders spend years optimising for capital access.<br><br>The founders who compound — they optimise for judgment first.<br><br>One distinction. Massive difference in trajectory.</div>
+          </div>
+        </div>
+      </div>
+      <div class="post-card">
+        <div class="post-card-header"><span class="post-card-series">#MagnaMondays 003</span><span class="post-card-meta">Monday · Static</span></div>
+        <div class="post-card-body">
+          <div class="post-visual"><div class="post-visual-text">The 3 decisions every founder avoids until they're expensive.</div></div>
+          <div class="post-caption-area">
+            <div class="post-caption-label">Post Caption</div>
+            <div class="post-caption-text">They're not secret. Everyone in the room knows them.<br><br>The co-founder who stopped pulling weight. The product line bleeding margin. The culture problem you've been "monitoring."<br><br>Avoidance is its own strategy. Just not a good one.</div>
+          </div>
+        </div>
+      </div>
+      <div class="post-card">
+        <div class="post-card-header"><span class="post-card-series">#MagnaMondays 004</span><span class="post-card-meta">Monday · Static</span></div>
+        <div class="post-card-body">
+          <div class="post-visual"><div class="post-visual-text">"Most founders don't have a strategy problem.<br>They have a thinking problem."</div></div>
+          <div class="post-caption-area">
+            <div class="post-caption-label">Post Caption</div>
+            <div class="post-caption-text">Strategy is the easy part. You can buy a framework.<br><br>What you can't buy: the clarity to know which problem is actually the problem.<br><br>That's what MAGNA is built for.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <div class="section-header">
+      <h2>#WisdomWednesdays</h2>
+      <span class="section-header-sub">Every Wednesday · 5–8 Slide Carousel · Seth Godin voice</span>
+    </div>
+    <div class="posts-grid">
+      <div class="post-card">
+        <div class="post-card-header"><span class="post-card-series">#WisdomWednesdays 001</span><span class="post-card-meta">Wednesday · Carousel</span></div>
+        <div class="post-card-body">
+          <div class="post-visual"><div class="post-visual-text">Apple, 1997.<br>350 products.<br>Losing $1B a year.<br><br>What happened next changed everything.</div></div>
+          <div class="post-caption-area">
+            <div class="post-caption-label">Post Caption</div>
+            <div class="post-caption-text">In 1997, Apple had 350 products and was losing $1B a year.<br><br>Steve Jobs came back and did something most founders never do. He stopped asking "what should we build?" and started asking "who are we?"<br><br>The turnaround started with identity, not innovation. Swipe to see how.</div>
+          </div>
+        </div>
+      </div>
+      <div class="post-card">
+        <div class="post-card-header"><span class="post-card-series">#WisdomWednesdays 002</span><span class="post-card-meta">Wednesday · Carousel</span></div>
+        <div class="post-card-body">
+          <div class="post-visual"><div class="post-visual-text">Patagonia built a $3B brand by refusing to act like one.</div></div>
+          <div class="post-caption-area">
+            <div class="post-caption-label">Post Caption</div>
+            <div class="post-caption-text">Most brands chase market share. Patagonia chased conviction.<br><br>They told customers not to buy their jacket. They sued the US government. They gave the company away.<br><br>Every move made them less like a corporation and more like a cause. Swipe for the MAGNA takeaway.</div>
+          </div>
+        </div>
+      </div>
+      <div class="post-card">
+        <div class="post-card-header"><span class="post-card-series">#WisdomWednesdays 003</span><span class="post-card-meta">Wednesday · Carousel</span></div>
+        <div class="post-card-body">
+          <div class="post-visual"><div class="post-visual-text">What Dubai's rise can teach every founder about positioning.</div></div>
+          <div class="post-caption-area">
+            <div class="post-caption-label">Post Caption</div>
+            <div class="post-caption-text">In 1971, Dubai was a port town with sand and ambition. Nothing else.<br><br>50 years later it's a global capital of commerce, luxury, and positioning. The story behind it isn't luck — it's a masterclass in decided identity.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <div class="section-header">
+      <h2>#FounderFridays</h2>
+      <span class="section-header-sub">Every Friday · Reel or Story Carousel · Simon Sinek voice</span>
+    </div>
+    <div class="posts-grid">
+      <div class="post-card">
+        <div class="post-card-header"><span class="post-card-series">#FounderFridays 001</span><span class="post-card-meta">Friday · Carousel</span></div>
+        <div class="post-card-body">
+          <div class="post-visual"><div class="post-visual-text">He built a $20M company. Then spent three years slowly destroying it.</div></div>
+          <div class="post-caption-area">
+            <div class="post-caption-label">Post Caption</div>
+            <div class="post-caption-text">Not through bad decisions. Through one decision he kept refusing to make.<br><br>Swipe to see what changed. 👉<br><br>Every Friday, MAGNA shares a real founder story — the inflection point, the shift, and the lesson that applies right now.</div>
+          </div>
+        </div>
+      </div>
+      <div class="post-card">
+        <div class="post-card-header"><span class="post-card-series">#FounderFridays 002</span><span class="post-card-meta">Friday · Carousel</span></div>
+        <div class="post-card-body">
+          <div class="post-visual"><div class="post-visual-text">She scaled from $2M to $18M.<br><br>Here's the one thing she changed first.</div></div>
+          <div class="post-caption-area">
+            <div class="post-caption-label">Post Caption</div>
+            <div class="post-caption-text">It wasn't a new product. It wasn't a new hire. It wasn't more capital.<br><br>It was a single conversation she'd been avoiding for 18 months.<br><br>Your biggest lever is almost always the thing you're most reluctant to pull.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <div class="section-header">
+      <h2>#InspirationWeekends</h2>
+      <span class="section-header-sub">Every Sunday · Single Static · Daniel Pink voice</span>
+    </div>
+    <div class="posts-grid">
+      <div class="post-card">
+        <div class="post-card-header"><span class="post-card-series">#InspirationWeekends 001</span><span class="post-card-meta">Sunday · Static</span></div>
+        <div class="post-card-body">
+          <div class="post-visual"><div class="post-visual-text">The business you're building will outlast the version of you that started it.<br><br>Build accordingly.</div></div>
+          <div class="post-caption-area">
+            <div class="post-caption-label">Post Caption</div>
+            <div class="post-caption-text">The founder who starts a company is never the same person who scales it. Or exits it.<br><br>Each phase demands a different version of you.<br><br>The question isn't how to build a bigger business. It's whether you're becoming the person that business actually needs.</div>
+          </div>
+        </div>
+      </div>
+      <div class="post-card">
+        <div class="post-card-header"><span class="post-card-series">#InspirationWeekends 002</span><span class="post-card-meta">Sunday · Static</span></div>
+        <div class="post-card-body">
+          <div class="post-visual"><div class="post-visual-text">"You don't rise to the level of your goals.<br>You fall to the level of your systems."</div></div>
+          <div class="post-caption-area">
+            <div class="post-caption-label">Post Caption</div>
+            <div class="post-caption-text">Goals are direction. Systems are distance.<br><br>The best founders I know don't hustle harder on Sundays. They think clearer.<br><br>What system would make next week inevitable?</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <div class="section-header"><h2>Daily Stories</h2><span class="section-header-sub">Every day · Community is built in stories</span></div>
+    <div class="callout">
+      <strong>Stories strategy:</strong> Behind-the-scenes at MAGNA events · Poll: "What's your biggest scaling challenge?" · Countdown to Friday's Reel · Repost of Monday's insight with a question sticker · Quote of the day · Swipe-up to brochure or website. <strong>Stories are where the community is built — posts are where the brand is established.</strong>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════ LINKEDIN ══════════════ -->
+<div id="tab-li" class="section">
+  <div class="hero">
+    <div class="hero-label">LINKEDIN · SHAILU / MAGNA</div>
+    <h1>Thought leadership,<br><em>not marketing.</em></h1>
+    <p class="hero-sub">Shailu posts as a practitioner with 25 years of scars. No selling. Ever. The product sells itself when the thinking is undeniable.</p>
+  </div>
+
+  <div class="section-inner">
+
+    <div class="section-header"><h2>#ThePrinciple</h2><span class="section-header-sub">Every Tuesday · Ray Dalio voice</span></div>
+
+    <div class="li-post-card">
+      <div class="li-post-header"><span class="li-post-series">#ThePrinciple 004</span><span class="li-post-day">Every Tuesday</span></div>
+      <div class="li-post-body">
+        <div class="li-post-tagline">One operating truth. Unpacked with depth.</div>
+        <div class="li-post-text">
+          <p><strong>MAGNA PRINCIPLE #004: "Never negotiate a deal you're not prepared to walk away from."</strong></p>
+          <p>Most founders enter negotiations hoping to close. That hope costs them — every time.</p>
+          <p>When you need the deal, the other side can feel it. Your body language changes. Your asks shrink before you even make them. You accept terms you'd never accept if the pressure was off.</p>
+          <p>Preparation isn't just knowing your numbers. It's knowing — genuinely knowing — what you'll do if this doesn't close. Your next best option isn't a backup plan. It's your power source.</p>
+          <p>The founders who win in negotiation aren't the most aggressive. They're the most unattached.</p>
+          <p>—</p>
+          <p>What's a deal you've regretted because you needed it too much? Drop it in the comments — I'll tell you the one thing most founders in that position get wrong.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="li-post-card">
+      <div class="li-post-header"><span class="li-post-series">#ThePrinciple 011</span><span class="li-post-day">Every Tuesday</span></div>
+      <div class="li-post-body">
+        <div class="li-post-tagline">One operating truth. Unpacked with depth.</div>
+        <div class="li-post-text">
+          <p><strong>MAGNA PRINCIPLE #011: "Culture isn't what you say. It's what you tolerate."</strong></p>
+          <p>Every culture speech a CEO gives is immediately tested by the next thing they let slide.</p>
+          <p>The team that watches you close your eyes to the high-performer who bullies his reports? They've just learned what your values actually are. Not the poster on the wall — the behaviour at the edge.</p>
+          <p>Culture compounds. Every tolerance creates permission. Every permission creates expectation.</p>
+          <p>—</p>
+          <p>What's the one thing you wish you hadn't tolerated for too long?</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <div class="section-header"><h2>#TheSharpTake</h2><span class="section-header-sub">Every Thursday · Seth Godin voice</span></div>
+
+    <div class="li-post-card">
+      <div class="li-post-header"><span class="li-post-series">#TheSharpTake 001</span><span class="li-post-day">Every Thursday</span></div>
+      <div class="li-post-body">
+        <div class="li-post-tagline">A contrarian view on a common belief.</div>
+        <div class="li-post-text">
+          <p>Hustle culture isn't a work ethic.</p>
+          <p>It's a distraction strategy.</p>
+          <p>The founder who's always busy rarely has time to notice that the business they're building isn't the one they should be.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="li-post-card">
+      <div class="li-post-header"><span class="li-post-series">#TheSharpTake 002</span><span class="li-post-day">Every Thursday</span></div>
+      <div class="li-post-body">
+        <div class="li-post-tagline">A contrarian view on a common belief.</div>
+        <div class="li-post-text">
+          <p>Your pitch deck is not your strategy.</p>
+          <p>It's your strategy for raising money.</p>
+          <p>There's a difference. Most founders find out which one they actually have around Series B.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="li-post-card">
+      <div class="li-post-header"><span class="li-post-series">#TheSharpTake 003</span><span class="li-post-day">Every Thursday</span></div>
+      <div class="li-post-body">
+        <div class="li-post-tagline">A contrarian view on a common belief.</div>
+        <div class="li-post-text">
+          <p>Networking events don't build networks.</p>
+          <p>Shared problems do.</p>
+          <p>The best professional relationships I have came from being in the same room when something went wrong — not when everyone was performing.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <div class="section-header"><h2>#DigitalLectures</h2><span class="section-header-sub">Saturday Bi-Weekly · 8–10 Slide Carousel</span></div>
+
+    <div class="callout">Every two weeks, MAGNA publishes a full business lecture — free, no strings. Just knowledge built from 25 years of doing it. <strong>Give the lecture away. Sell the application.</strong></div>
+
+    <div class="mini-grid">
+      <div class="mini-card">
+        <div class="mini-card-label">Lecture 01 · Negotiation</div>
+        <div class="mini-card-title">5 Laws of Strategic Negotiation</div>
+        <div class="mini-card-desc">Most founders lose negotiations before they walk into the room. Not because they lack confidence — because they prepared the wrong things.</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-card-label">Lecture 02 · Sales</div>
+        <div class="mini-card-title">Why Your Sales Process Is Costing You Deals</div>
+        <div class="mini-card-desc">The sales framework most founders use was designed to sell products. If you're selling transformation, you need a different process entirely.</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-card-label">Lecture 03 · Capital</div>
+        <div class="mini-card-title">Capital Allocation: The Skill No One Teaches Founders</div>
+        <div class="mini-card-desc">Revenue is a lagging indicator. What founders need is a leading indicator framework for where capital actually compounds.</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-card-label">Lecture 04 · Culture</div>
+        <div class="mini-card-title">How to Build a Culture That Outlasts the Founder</div>
+        <div class="mini-card-desc">Every culture speech a CEO gives is immediately tested by the next thing they let slide. Here's how to make culture structural.</div>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <div class="section-header"><h2>#BehindTheBuild</h2><span class="section-header-sub">Saturday Alternate Weeks · Text + Photo</span></div>
+
+    <div class="li-post-card">
+      <div class="li-post-header"><span class="li-post-series">#BehindTheBuild 001</span><span class="li-post-day">Saturday · Alt Weeks</span></div>
+      <div class="li-post-body">
+        <div class="li-post-tagline">Inside the MAGNA ecosystem.</div>
+        <div class="li-post-text">
+          <p>Last week in our Quantum Leap cohort, a founder said something that stopped the room.</p>
+          <p>We just finished our 3rd Strategy Roundtable in Dubai. Here's the one thing every founder in the room agreed on.</p>
+          <p>This is what it looks like when 12 founders stop performing and start solving — together.</p>
+        </div>
+        <div class="li-post-examples">
+          <div class="li-example-label">More Post Hooks</div>
+          <div class="li-example-item">"The session wasn't recorded. But the shift in the room was real."</div>
+          <div class="li-example-item">"We don't run events. We build rooms where real problems get solved."</div>
+          <div class="li-example-item">"3 years ago MAGNA didn't exist. This week we hosted our 40th founder."</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════ YOUTUBE ══════════════ -->
+<div id="tab-yt" class="section">
+  <div class="hero">
+    <div class="hero-label">YOUTUBE · MAGNA</div>
+    <h1>The <em>lecture hall</em><br>goes digital.</h1>
+    <p class="hero-sub">Long-form knowledge. Shailu's 25 years of frameworks, unpacked on camera. Free and ungated. The application is why they join.</p>
+  </div>
+
+  <div class="section-inner">
+
+    <div class="section-header"><h2>Posted</h2><span class="section-header-sub">Live on YouTube</span></div>
+    <div class="yt-grid">
+      <div class="yt-card">
+        <div class="yt-card-thumb"><div class="yt-play-icon">&#9654;</div><span class="yt-status-badge posted">Posted</span></div>
+        <div class="yt-card-body"><div class="yt-card-title">Business Strategy for CEOs &amp; Founders</div><div class="yt-card-desc">Mar 20, 2026 · Full lecture</div></div>
+      </div>
+      <div class="yt-card">
+        <div class="yt-card-thumb"><div class="yt-play-icon">&#9654;</div><span class="yt-status-badge posted">Posted</span></div>
+        <div class="yt-card-body"><div class="yt-card-title">Negotiation Mastery for CEOs &amp; Founders</div><div class="yt-card-desc">Mar 15, 2026 · Full lecture</div></div>
+      </div>
+      <div class="yt-card">
+        <div class="yt-card-thumb"><div class="yt-play-icon">&#9654;</div><span class="yt-status-badge posted">Posted</span></div>
+        <div class="yt-card-body"><div class="yt-card-title">Sales Strategy for Founders &amp; CEOs</div><div class="yt-card-desc">Mar 10, 2026 · Full lecture</div></div>
+      </div>
+      <div class="yt-card">
+        <div class="yt-card-thumb"><div class="yt-play-icon">&#9654;</div><span class="yt-status-badge posted">Posted</span></div>
+        <div class="yt-card-body"><div class="yt-card-title">MAGNA Academy — What We Build</div><div class="yt-card-desc">Mar 8, 2026 · Brand overview</div></div>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <div class="section-header"><h2>Shoot Plan</h2><span class="section-header-sub">Upcoming production pipeline</span></div>
+    <div class="yt-grid">
+      <div class="yt-card">
+        <div class="yt-card-thumb" style="background:#1a1a1a;"><div class="yt-play-icon" style="opacity:0.35;">&#9654;</div><span class="yt-status-badge planned">Planned</span></div>
+        <div class="yt-card-body"><div class="yt-card-title">Capital Allocation: The Skill No One Teaches Founders</div><div class="yt-card-desc">Full lecture · MAGNA Capital pillar</div></div>
+      </div>
+      <div class="yt-card">
+        <div class="yt-card-thumb" style="background:#1a1a1a;"><div class="yt-play-icon" style="opacity:0.35;">&#9654;</div><span class="yt-status-badge planned">Planned</span></div>
+        <div class="yt-card-body"><div class="yt-card-title">How to Build a Culture That Outlasts the Founder</div><div class="yt-card-desc">Full lecture · Leadership series</div></div>
+      </div>
+      <div class="yt-card">
+        <div class="yt-card-thumb" style="background:#1a1a1a;"><div class="yt-play-icon" style="opacity:0.35;">&#9654;</div><span class="yt-status-badge planned">Planned</span></div>
+        <div class="yt-card-body"><div class="yt-card-title">The 3 Phases Every Business Moves Through</div><div class="yt-card-desc">Creation · Acceleration · Succession</div></div>
+      </div>
+      <div class="yt-card">
+        <div class="yt-card-thumb" style="background:#1a1a1a;"><div class="yt-play-icon" style="opacity:0.35;">&#9654;</div><span class="yt-status-badge planned">Planned</span></div>
+        <div class="yt-card-body"><div class="yt-card-title">What Sovereign Wealth Funds Look for in a Founder</div><div class="yt-card-desc">Full lecture · MAGNA Capital</div></div>
+      </div>
+      <div class="yt-card">
+        <div class="yt-card-thumb" style="background:#1a1a1a;"><div class="yt-play-icon" style="opacity:0.35;">&#9654;</div><span class="yt-status-badge planned">Planned</span></div>
+        <div class="yt-card-body"><div class="yt-card-title">Leadership Positioning: Why Most Founders Get It Wrong</div><div class="yt-card-desc">Roundtable format</div></div>
+      </div>
+      <div class="yt-card">
+        <div class="yt-card-thumb" style="background:#1a1a1a;"><div class="yt-play-icon" style="opacity:0.35;">&#9654;</div><span class="yt-status-badge planned">Planned</span></div>
+        <div class="yt-card-body"><div class="yt-card-title">The MAGNA Compass: 33 Sectors Explained</div><div class="yt-card-desc">Framework breakdown · Compass series</div></div>
+      </div>
+      <div class="yt-card">
+        <div class="yt-card-thumb" style="background:#1a1a1a;"><div class="yt-play-icon" style="opacity:0.35;">&#9654;</div><span class="yt-status-badge planned">Planned</span></div>
+        <div class="yt-card-body"><div class="yt-card-title">Quantum Leap: How We Build Founder Cohorts</div><div class="yt-card-desc">MAGNA Academy series</div></div>
+      </div>
+      <div class="yt-card">
+        <div class="yt-card-thumb" style="background:#1a1a1a;"><div class="yt-play-icon" style="opacity:0.35;">&#9654;</div><span class="yt-status-badge planned">Planned</span></div>
+        <div class="yt-card-body"><div class="yt-card-title">Dubai to the World: Why MAGNA is Built Here</div><div class="yt-card-desc">Brand story · Geo-positioning</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════ TWITTER ══════════════ -->
+<div id="tab-twitter" class="section">
+  <div class="hero">
+    <div class="hero-label">TWITTER / X · MAGNA</div>
+    <h1>The sharpest ideas,<br><em>compressed.</em></h1>
+    <p class="hero-sub">Twitter mirrors the IG and LI content compressed to its essential form. One sentence. Zero context needed. Post frequency: 1 per day, 5 days/week.</p>
+  </div>
+
+  <div class="section-inner">
+
+    <div class="callout">
+      <strong>Strategy:</strong> Repurpose the best IG and LI content down to its most essential form. Repost top performers after 30 days. Use threads sparingly — only when a #DigitalLecture topic warrants one. Engagement driver: end with a question.
+    </div>
+
+    <div class="section-header"><h2>Content Bank</h2></div>
+
+    <div class="twitter-grid">
+      <div class="tweet-card">
+        <div class="tweet-bucket">#MagnaMondays Mirror</div>
+        <div class="tweet-text">"At $10M, you're celebrated for knowing everything. At $50M, knowing everything is the problem."</div>
+        <div class="tweet-meta">Monday · mirrors IG post</div>
+      </div>
+      <div class="tweet-card">
+        <div class="tweet-bucket">#TheSharpTake Mirror</div>
+        <div class="tweet-text">Hustle culture isn't a work ethic. It's a distraction strategy.</div>
+        <div class="tweet-meta">Thursday · mirrors LI post</div>
+      </div>
+      <div class="tweet-card">
+        <div class="tweet-bucket">#TheSharpTake Mirror</div>
+        <div class="tweet-text">Your pitch deck is not your strategy. It's your strategy for raising money.</div>
+        <div class="tweet-meta">Thursday · mirrors LI post</div>
+      </div>
+      <div class="tweet-card">
+        <div class="tweet-bucket">#Principle Drop</div>
+        <div class="tweet-text">Never negotiate a deal you're not prepared to walk away from.<br><br>— MAGNA Principle #004</div>
+        <div class="tweet-meta">Tuesday · teases LI post</div>
+      </div>
+      <div class="tweet-card">
+        <div class="tweet-bucket">#InspirationWeekends Mirror</div>
+        <div class="tweet-text">"The business you're building will outlast the version of you that started it. Build accordingly."</div>
+        <div class="tweet-meta">Sunday · mirrors IG post</div>
+      </div>
+      <div class="tweet-card">
+        <div class="tweet-bucket">#WisdomWednesdays Hook</div>
+        <div class="tweet-text">Apple in 1997 had 350 products and was losing $1B a year.<br><br>The comeback started with one question. Full story on IG →</div>
+        <div class="tweet-meta">Wednesday · drives IG carousel traffic</div>
+      </div>
+      <div class="tweet-card">
+        <div class="tweet-bucket">Evergreen</div>
+        <div class="tweet-text">Culture isn't what you say. It's what you tolerate.<br><br>— MAGNA Principle #011</div>
+        <div class="tweet-meta">Any day</div>
+      </div>
+      <div class="tweet-card">
+        <div class="tweet-bucket">Evergreen</div>
+        <div class="tweet-text">Networking events don't build networks. Shared problems do.</div>
+        <div class="tweet-meta">Any day</div>
+      </div>
+      <div class="tweet-card">
+        <div class="tweet-bucket">Lecture Promo</div>
+        <div class="tweet-text">Most founders lose negotiations before they walk into the room.<br><br>New MAGNA Lecture: 5 Laws of Strategic Negotiation. Free. 8 slides. LinkedIn carousel →</div>
+        <div class="tweet-meta">Saturday · drives LI carousel traffic</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+  /* TAB NAVIGATION */
+  function showTab(tab) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    document.querySelector('[data-tab="' + tab + '"]').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+
+  /* CALENDAR */
+  const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+  const calEvents = {
+    '2026-3': {
+      1:  [{ t:'li', l:'#ThePrinciple' }],
+      2:  [{ t:'li', l:'#TheSharpTake' }, { t:'story', l:'IG Story' }],
+      3:  [{ t:'ig', l:'#FounderFridays' }],
+      4:  [{ t:'li', l:'#DigitalLectures' }, { t:'story', l:'IG Story' }],
+      5:  [{ t:'ig', l:'#InspirationWeekends' }],
+      7:  [{ t:'ig', l:'#MagnaMondays' }],
+      8:  [{ t:'story', l:'IG Story' }, { t:'li', l:'#ThePrinciple' }],
+      9:  [{ t:'ig', l:'#WisdomWednesdays' }],
+      10: [{ t:'story', l:'IG Story' }, { t:'li', l:'#TheSharpTake' }],
+      11: [{ t:'ig', l:'#FounderFridays' }],
+      12: [{ t:'li', l:'#BehindTheBuild' }, { t:'story', l:'IG Story' }],
+      13: [{ t:'ig', l:'#InspirationWeekends' }],
+      14: [{ t:'ig', l:'#MagnaMondays' }],
+      15: [{ t:'story', l:'IG Story' }, { t:'li', l:'#ThePrinciple' }],
+      16: [{ t:'ig', l:'#WisdomWednesdays' }],
+      17: [{ t:'story', l:'IG Story' }, { t:'li', l:'#TheSharpTake' }],
+      18: [{ t:'ig', l:'#FounderFridays' }],
+      19: [{ t:'li', l:'#DigitalLectures' }, { t:'story', l:'IG Story' }],
+      20: [{ t:'ig', l:'#InspirationWeekends' }],
+      21: [{ t:'ig', l:'#MagnaMondays' }],
+      22: [{ t:'story', l:'IG Story' }, { t:'li', l:'#ThePrinciple' }],
+      23: [{ t:'ig', l:'#WisdomWednesdays' }],
+      24: [{ t:'story', l:'IG Story' }, { t:'li', l:'#TheSharpTake' }],
+      25: [{ t:'ig', l:'#FounderFridays' }],
+      26: [{ t:'li', l:'#BehindTheBuild' }, { t:'story', l:'IG Story' }],
+      27: [{ t:'ig', l:'#InspirationWeekends' }],
+      28: [{ t:'ig', l:'#MagnaMondays' }],
+      29: [{ t:'story', l:'IG Story' }, { t:'li', l:'#ThePrinciple' }],
+      30: [{ t:'ig', l:'#WisdomWednesdays' }],
+    },
+    '2026-4': {
+      1:  [{ t:'story', l:'IG Story' }, { t:'li', l:'#TheSharpTake' }],
+      2:  [{ t:'ig', l:'#FounderFridays' }],
+      3:  [{ t:'li', l:'#DigitalLectures' }, { t:'story', l:'IG Story' }],
+      4:  [{ t:'ig', l:'#InspirationWeekends' }],
+      5:  [{ t:'ig', l:'#MagnaMondays' }],
+      6:  [{ t:'story', l:'IG Story' }, { t:'li', l:'#ThePrinciple' }],
+      7:  [{ t:'ig', l:'#WisdomWednesdays' }],
+      8:  [{ t:'story', l:'IG Story' }, { t:'li', l:'#TheSharpTake' }],
+      9:  [{ t:'ig', l:'#FounderFridays' }],
+      10: [{ t:'li', l:'#BehindTheBuild' }, { t:'story', l:'IG Story' }],
+      11: [{ t:'ig', l:'#InspirationWeekends' }],
+      12: [{ t:'ig', l:'#MagnaMondays' }],
+    }
+  };
+
+  let curYear = 2026, curMonth = 3;
+
+  function changeMonth(dir) {
+    curMonth += dir;
+    if (curMonth > 11) { curMonth = 0; curYear++; }
+    if (curMonth < 0) { curMonth = 11; curYear--; }
+    document.getElementById('cal-month-label').textContent = monthNames[curMonth] + ' ' + curYear;
+    renderCalendar();
+  }
+
+  function renderCalendar() {
+    const container = document.getElementById('calendar-container');
+    const key = curYear + '-' + curMonth;
+    const events = calEvents[key] || {};
+    const today = new Date();
+    const firstDay = new Date(curYear, curMonth, 1).getDay();
+    const daysInMonth = new Date(curYear, curMonth + 1, 0).getDate();
+    const startOffset = firstDay === 0 ? 6 : firstDay - 1;
+
+    let html = '<table class="calendar-table"><thead><tr>';
+    ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach(d => html += '<th>' + d + '</th>');
+    html += '</tr></thead><tbody>';
+
+    let day = 1, cells = 0;
+    while (day <= daysInMonth) {
+      html += '<tr>';
+      for (let c = 0; c < 7; c++) {
+        if (cells < startOffset || day > daysInMonth) {
+          html += '<td class="cal-cell empty"></td>';
+        } else {
+          const isToday = day === today.getDate() && curMonth === today.getMonth() && curYear === today.getFullYear();
+          const dayEvents = events[day] || [];
+          html += '<td class="cal-cell' + (isToday ? ' cal-today' : '') + '">';
+          html += '<div class="cal-date">' + day + '</div>';
+          dayEvents.forEach(e => {
+            html += '<span class="cal-entry ' + e.t + '">' + e.l + '</span>';
+          });
+          html += '</td>';
+          day++;
+        }
+        cells++;
+      }
+      html += '</tr>';
+    }
+
+    html += '</tbody></table>';
+    container.innerHTML = html;
+  }
+
+  renderCalendar();
+</script>
+</body>
+</html>
