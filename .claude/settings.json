@@ -30,7 +30,7 @@
       "Bash(pwd)",
       "Bash(ls:*)",
       "Bash(date)",
-      "Bash(python3 tools/:*)",
+      "Bash(python3:*)",
       "Bash(pdftotext:*)"
     ],
     "ask": [],
