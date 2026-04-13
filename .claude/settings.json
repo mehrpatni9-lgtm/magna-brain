@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "_comment": "Mehr-side permission contract for magna-brain. Brain is read-only; only raw/, output/, and gh issue create are writable. Paths are project-relative so the contract holds regardless of where she clones. Edit only via an architectural PR.",
+  "permissions": {
+    "allow": [
+      "Read(./**)",
+      "Read(//Users/**/magna-brain/**)",
+      "Write(./raw/**)",
+      "Write(./output/**)",
+      "Bash(gh issue create:*)",
+      "Bash(gh issue list:*)",
+      "Bash(gh issue view:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:origin main)",
+      "Bash(git checkout:*)",
+      "Bash(git status:*)",
+      "Bash(git log:*)",
+      "Bash(git diff:*)",
+      "Bash(git pull:*)",
+      "Bash(pwd)",
+      "Bash(ls:*)",
+      "Bash(date)",
+      "Bash(python3:*tools/*)",
+      "Bash(pdftotext:*)"
+    ],
+    "ask": [],
+    "deny": [
+      "Write(./wiki/**)",
+      "Write(./.claude/**)",
+      "Write(./.github/**)",
+      "Write(./CLAUDE.md)",
+      "Write(./AGENTS.md)",
+      "Write(./TOKEN_BUDGET.md)",
+      "Write(./README.md)",
+      "Write(./reference/**)",
+      "Bash(git push:*--force*)",
+      "Bash(git reset:*--hard*)",
+      "Bash(git rebase:*)",
+      "Bash(rm:*)",
+      "Bash(rmdir:*)",
+      "Bash(mv:*wiki/**)",
+      "Bash(mv:*.claude/**)",
+      "Bash(sudo:*)",
+      "Bash(curl:*)",
+      "Bash(wget:*)"
+    ]
+  }
+}

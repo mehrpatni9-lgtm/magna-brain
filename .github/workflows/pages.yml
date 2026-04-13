@@ -1,0 +1,64 @@
+name: Publish magna-brain drafts to GitHub Pages
+
+# Publishes output/ to GitHub Pages so Mehr sees every generated draft at a
+# clean URL. Fires on push to main when output/ changes (v1: we publish
+# from main directly, not drafts/*, to keep Pages consistent and avoid
+# multi-branch deploy thrash).
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'output/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Assemble site from output/
+        run: |
+          mkdir -p _site
+          if [ -d output ] && [ -n "$(ls -A output 2>/dev/null)" ]; then
+            cp -r output/* _site/ 2>/dev/null || true
+          fi
+          # Ensure there's always an index.html so the Pages URL never 404s
+          if [ ! -f _site/index.html ]; then
+            cat > _site/index.html <<'EOF'
+          <!DOCTYPE html>
+          <html lang="en"><head><meta charset="UTF-8"><title>MAGNA — Drafts</title>
+          <style>body{background:#2D2D2D;color:#E8DFC8;font-family:system-ui;padding:48px;max-width:720px;margin:0 auto;}
+          h1{font-family:Georgia,serif;font-weight:400;}</style></head>
+          <body><h1>MAGNA</h1><p>No drafts yet. Ask the brain for one.</p></body></html>
+          EOF
+          fi
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
