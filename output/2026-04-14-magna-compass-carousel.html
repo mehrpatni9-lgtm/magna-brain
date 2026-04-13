@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Magna Compass — Carousel — MAGNA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Forum&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --charcoal: #2D2D2D;
+      --charcoal-deep: #1e1e1e;
+      --charcoal-mid: #323232;
+      --creme: #E8DFC8;
+      --creme-60: rgba(232,223,200,0.6);
+      --creme-30: rgba(232,223,200,0.3);
+      --creme-10: rgba(232,223,200,0.08);
+      --soil: #5C3518;
+      --soil-light: #8a5530;
+      --soil-pale: rgba(92,53,24,0.18);
+      --taupe: #483C32;
+      --taupe-border: rgba(72,60,50,0.8);
+      --gold: #c0927a;
+      --blue: #4a6b8a;
+      --blue-light: #6a9ab8;
+      --green: #3d6b52;
+      --green-light: #5a9470;
+      --font-display: 'Forum', Georgia, serif;
+      --font-body: 'Raleway', system-ui, sans-serif;
+      --slide-size: min(520px, 92vw);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: #181818;
+      color: var(--creme);
+      font-family: var(--font-body);
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    .nav {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--taupe-border);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--charcoal-deep);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-mark { font-family: var(--font-display); font-size: 14px; letter-spacing: 0.22em; color: var(--creme); }
+    .nav-tag { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--creme-60); padding-left: 14px; border-left: 1px solid var(--taupe-border); }
+    .nav-home { margin-left: auto; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--creme-60); text-decoration: none; }
+    .nav-home:hover { color: var(--creme); }
+
+    /* META BAR */
+    .meta-bar {
+      background: var(--charcoal-deep);
+      border-bottom: 1px solid var(--taupe-border);
+      padding: 12px 24px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .meta-item { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--creme-60); }
+    .meta-item strong { color: var(--gold); font-weight: 500; }
+
+    /* CAROUSEL WRAPPER */
+    .carousel-outer {
+      padding: 40px 0 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .carousel-track-wrap {
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .carousel-track {
+      display: flex;
+      gap: 20px;
+      padding: 0 calc(50vw - var(--slide-size)/2);
+      transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      will-change: transform;
+    }
+
+    /* SLIDE BASE */
+    .slide {
+      width: var(--slide-size);
+      height: var(--slide-size);
+      flex-shrink: 0;
+      border-radius: 2px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 40px 38px;
+      position: relative;
+      overflow: hidden;
+      transition: opacity 0.35s;
+    }
+
+    .slide.inactive { opacity: 0.35; }
+
+    /* Slide counter */
+    .slide-counter {
+      position: absolute;
+      top: 22px;
+      right: 28px;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--creme-60);
+    }
+
+    /* Slide brand mark */
+    .slide-brand {
+      font-family: var(--font-display);
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      color: var(--creme-60);
+      text-transform: uppercase;
+      margin-bottom: auto;
+    }
+
+    /* SLIDE VARIANTS */
+
+    /* S1 — Hook (dark, soil accent) */
+    .s1 { background: var(--charcoal-deep); border: 1px solid var(--taupe-border); border-top: 3px solid var(--soil); }
+    .s1 .hook-tag { font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; }
+    .s1 h1 { font-family: var(--font-display); font-size: clamp(26px, 5vw, 36px); font-weight: 400; line-height: 1.2; color: var(--creme); margin-bottom: 20px; }
+    .s1 .hook-sub { font-size: 14px; font-weight: 300; color: var(--creme-60); line-height: 1.65; border-left: 2px solid var(--soil); padding-left: 14px; }
+
+    /* S2 — What it is (numbers) */
+    .s2 { background: var(--charcoal); border: 1px solid var(--taupe-border); }
+    .s2 .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--taupe-border); border: 1px solid var(--taupe-border); margin: 20px 0; }
+    .s2 .stat-cell { background: var(--charcoal-mid); padding: 18px 16px; }
+    .s2 .stat-num { font-family: var(--font-display); font-size: 36px; color: var(--creme); display: block; line-height: 1; margin-bottom: 6px; }
+    .s2 .stat-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--creme-60); line-height: 1.45; }
+    .s2 .s2-sub { font-size: 12px; color: var(--creme-60); font-weight: 300; line-height: 1.7; }
+
+    /* S3 — Core (warm soil) */
+    .s3 { background: #261a12; border: 1px solid rgba(92,53,24,0.5); }
+    .s3 .pillar-tag { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+    .s3 h2 { font-family: var(--font-display); font-size: 28px; font-weight: 400; color: var(--creme); margin-bottom: 8px; }
+    .s3 .pillar-num { font-family: var(--font-display); font-size: 64px; color: rgba(92,53,24,0.5); position: absolute; top: 32px; right: 32px; line-height: 1; }
+    .s3 .pillar-desc { font-size: 12px; color: var(--creme-60); font-weight: 300; line-height: 1.6; margin-bottom: 18px; font-style: italic; }
+    .s3 .sector-grid { display: flex; flex-wrap: wrap; gap: 5px; }
+    .s3 .sector-tag { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 8px; border: 1px solid rgba(92,53,24,0.6); color: var(--gold); background: rgba(92,53,24,0.12); }
+
+    /* S4 — Emerging (blue) */
+    .s4 { background: #101820; border: 1px solid rgba(74,107,138,0.4); }
+    .s4 .pillar-tag { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--blue-light); margin-bottom: 10px; }
+    .s4 h2 { font-family: var(--font-display); font-size: 28px; font-weight: 400; color: var(--creme); margin-bottom: 8px; }
+    .s4 .pillar-num { font-family: var(--font-display); font-size: 64px; color: rgba(74,107,138,0.3); position: absolute; top: 32px; right: 32px; line-height: 1; }
+    .s4 .pillar-desc { font-size: 12px; color: var(--creme-60); font-weight: 300; line-height: 1.6; margin-bottom: 18px; font-style: italic; }
+    .s4 .sector-grid { display: flex; flex-wrap: wrap; gap: 5px; }
+    .s4 .sector-tag { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 8px; border: 1px solid rgba(74,107,138,0.5); color: var(--blue-light); background: rgba(74,107,138,0.1); }
+
+    /* S5 — Social (green) */
+    .s5 { background: #0d1a12; border: 1px solid rgba(61,107,82,0.4); }
+    .s5 .pillar-tag { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--green-light); margin-bottom: 10px; }
+    .s5 h2 { font-family: var(--font-display); font-size: 28px; font-weight: 400; color: var(--creme); margin-bottom: 8px; }
+    .s5 .pillar-num { font-family: var(--font-display); font-size: 64px; color: rgba(61,107,82,0.25); position: absolute; top: 32px; right: 32px; line-height: 1; }
+    .s5 .pillar-desc { font-size: 12px; color: var(--creme-60); font-weight: 300; line-height: 1.6; margin-bottom: 18px; font-style: italic; }
+    .s5 .sector-grid { display: flex; flex-wrap: wrap; gap: 5px; }
+    .s5 .sector-tag { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 8px; border: 1px solid rgba(61,107,82,0.5); color: var(--green-light); background: rgba(61,107,82,0.1); }
+
+    /* S6 — Convergence */
+    .s6 { background: var(--charcoal-deep); border: 1px solid var(--taupe-border); }
+    .s6 h2 { font-family: var(--font-display); font-size: 22px; font-weight: 400; color: var(--creme); line-height: 1.25; margin-bottom: 24px; }
+    .s6 .convergence-stack { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+    .s6 .conv-row { display: flex; gap: 10px; align-items: center; padding: 10px 14px; }
+    .s6 .conv-row.core { background: var(--soil-pale); border-left: 3px solid var(--gold); }
+    .s6 .conv-row.emerging { background: rgba(74,107,138,0.1); border-left: 3px solid var(--blue-light); }
+    .s6 .conv-row.social { background: rgba(61,107,82,0.1); border-left: 3px solid var(--green-light); }
+    .s6 .conv-label { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--creme-60); min-width: 62px; }
+    .s6 .conv-val { font-size: 12px; color: var(--creme); font-weight: 400; }
+    .s6 .conv-equals { font-family: var(--font-display); font-size: 13px; color: var(--gold); padding: 8px 0; text-align: center; }
+    .s6 .conv-result { padding: 12px 14px; border: 1px solid var(--taupe-border); background: var(--creme-10); font-size: 12px; color: var(--creme); font-weight: 500; letter-spacing: 0.04em; }
+    .s6 .conv-sub { font-size: 11px; color: var(--creme-60); font-weight: 300; line-height: 1.6; }
+
+    /* S7 — Corridors */
+    .s7 { background: var(--charcoal); border: 1px solid var(--taupe-border); }
+    .s7 h2 { font-family: var(--font-display); font-size: 22px; font-weight: 400; color: var(--creme); margin-bottom: 6px; }
+    .s7 .corridors-sub { font-size: 11px; color: var(--creme-60); font-weight: 300; margin-bottom: 18px; font-style: italic; }
+    .s7 .corridor-list { display: flex; flex-direction: column; gap: 1px; background: var(--taupe-border); border: 1px solid var(--taupe-border); }
+    .s7 .corridor-row { background: var(--charcoal-mid); padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+    .s7 .corridor-name { font-size: 11px; font-weight: 500; color: var(--creme); }
+    .s7 .corridor-stat { font-size: 10px; color: var(--gold); font-weight: 300; text-align: right; flex-shrink: 0; }
+
+    /* S8 — Founder lens */
+    .s8 { background: var(--charcoal-deep); border: 1px solid var(--taupe-border); border-bottom: 3px solid var(--soil); }
+    .s8 .compare-block { margin: 16px 0; }
+    .s8 .compare-row { display: grid; grid-template-columns: 1fr 20px 1fr; gap: 0; margin-bottom: 1px; }
+    .s8 .from { background: var(--creme-10); padding: 10px 12px; font-size: 11px; color: var(--creme-60); font-weight: 300; line-height: 1.45; }
+    .s8 .arr { background: rgba(92,53,24,0.2); display: flex; align-items: center; justify-content: center; color: var(--soil-light); font-size: 11px; }
+    .s8 .to { background: var(--soil-pale); padding: 10px 12px; font-size: 11px; color: var(--creme); font-weight: 400; line-height: 1.45; }
+    .s8 .compare-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--creme-60); margin-bottom: 8px; }
+    .s8 h2 { font-family: var(--font-display); font-size: 20px; color: var(--creme); margin-bottom: 14px; line-height: 1.25; }
+    .s8 .close-line { font-size: 12px; color: var(--gold); font-style: italic; font-weight: 300; }
+
+    /* S9 — Close */
+    .s9 { background: var(--charcoal-deep); border: 1px solid var(--taupe-border); border-top: 3px solid var(--gold); justify-content: center; text-align: center; gap: 0; }
+    .s9 .close-mark { font-family: var(--font-display); font-size: 13px; letter-spacing: 0.28em; color: var(--gold); text-transform: uppercase; margin-bottom: 28px; display: block; }
+    .s9 h2 { font-family: var(--font-display); font-size: clamp(24px, 4.5vw, 32px); font-weight: 400; color: var(--creme); line-height: 1.2; margin-bottom: 20px; }
+    .s9 .close-desc { font-size: 13px; color: var(--creme-60); font-weight: 300; line-height: 1.7; margin-bottom: 28px; max-width: 340px; margin-left: auto; margin-right: auto; }
+    .s9 .close-q { font-size: 12px; color: var(--creme-60); padding: 14px 20px; border: 1px solid var(--taupe-border); display: inline-block; font-style: italic; }
+    .s9 .close-site { display: block; margin-top: 20px; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--creme-60); }
+
+    /* DOTS */
+    .dots {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      padding: 4px 0;
+    }
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--taupe-border);
+      cursor: pointer;
+      transition: all 0.25s;
+      border: none;
+      padding: 0;
+    }
+    .dot.active { background: var(--gold); width: 20px; border-radius: 3px; }
+
+    /* CONTROLS */
+    .controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .ctrl-btn {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--taupe-border);
+      background: var(--charcoal-deep);
+      color: var(--creme-60);
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .ctrl-btn:hover { border-color: var(--gold); color: var(--creme); }
+    .ctrl-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    .slide-label {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--creme-60);
+      min-width: 80px;
+      text-align: center;
+    }
+
+    /* COPY SECTION */
+    .copy-section {
+      max-width: 620px;
+      width: 92vw;
+      margin: 32px auto 0;
+      padding: 28px 32px;
+      background: var(--charcoal-deep);
+      border: 1px solid var(--taupe-border);
+      border-left: 3px solid var(--soil);
+    }
+    .copy-label { font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+    .copy-text { font-size: 13px; color: var(--creme); font-weight: 300; line-height: 1.8; white-space: pre-wrap; }
+    .copy-tags { margin-top: 14px; font-size: 11px; color: var(--blue-light); font-weight: 300; }
+
+    /* EDITORIAL */
+    .editorial {
+      max-width: 620px;
+      width: 92vw;
+      margin: 24px auto 60px;
+      padding: 24px 28px;
+      background: rgba(92,53,24,0.06);
+      border: 1px solid var(--taupe-border);
+      border-left: 3px solid var(--gold);
+    }
+    .editorial-label { font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+    .editorial p { font-size: 13px; color: var(--creme-60); line-height: 1.8; margin-bottom: 12px; font-weight: 300; }
+    .editorial p:last-child { margin-bottom: 0; }
+    .editorial strong { color: var(--creme); font-weight: 500; }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-mark">MAGNA</span>
+  <span class="nav-tag">Carousel Draft</span>
+  <a class="nav-home" href="index.html">all drafts ↗</a>
+</nav>
+
+<div class="meta-bar">
+  <span class="meta-item">Platform: <strong>Instagram</strong></span>
+  <span class="meta-item">Series: <strong>#CompassFramework</strong></span>
+  <span class="meta-item">Format: <strong>9-slide Carousel</strong></span>
+  <span class="meta-item">Date: <strong>Apr 14, 2026</strong></span>
+</div>
+
+<div class="carousel-outer">
+
+  <div class="carousel-track-wrap" id="trackWrap">
+    <div class="carousel-track" id="track">
+
+      <!-- SLIDE 1 — HOOK -->
+      <div class="slide s1" id="sl1">
+        <span class="slide-counter">1 / 9</span>
+        <div class="hook-tag">#CompassFramework · Magna</div>
+        <div>
+          <h1>Most founders have a business strategy.<br>Almost none have a world strategy.</h1>
+          <div class="hook-sub">The framework that changes that — the Magna Compass. Used by sovereign wealth funds. Built into every Magna cohort. Here's how it works.</div>
+        </div>
+        <div class="slide-brand">MAGNA · magna.vip</div>
+      </div>
+
+      <!-- SLIDE 2 — WHAT IT IS -->
+      <div class="slide s2" id="sl2">
+        <span class="slide-counter">2 / 9</span>
+        <div style="font-size:9px;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">What Is the Magna Compass?</div>
+        <div class="stat-grid">
+          <div class="stat-cell">
+            <span class="stat-num">33</span>
+            <span class="stat-label">Global sectors mapped across three investment pillars</span>
+          </div>
+          <div class="stat-cell">
+            <span class="stat-num">6</span>
+            <span class="stat-label">Frontier growth corridors driving the next decade</span>
+          </div>
+          <div class="stat-cell">
+            <span class="stat-num">$50T</span>
+            <span class="stat-label">Capital being reallocated globally — the Compass tracks where</span>
+          </div>
+          <div class="stat-cell">
+            <span class="stat-num">1</span>
+            <span class="stat-label">Framework connecting institutional intelligence to founder decisions</span>
+          </div>
+        </div>
+        <div class="s2-sub">The same blueprint sovereign wealth funds use to construct portfolios is the intellectual spine of every Magna program.</div>
+        <div class="slide-brand">MAGNA · magna.vip</div>
+      </div>
+
+      <!-- SLIDE 3 — CORE -->
+      <div class="slide s3" id="sl3">
+        <span class="slide-counter">3 / 9</span>
+        <div class="pillar-num">I</div>
+        <div class="pillar-tag">Pillar I — Core</div>
+        <h2>Stable Value Creation</h2>
+        <div class="pillar-desc">"The bedrock of every economy: where capital compounds reliably across cycles, geographies, and generations."</div>
+        <div class="sector-grid">
+          <span class="sector-tag">Energy & Utilities</span>
+          <span class="sector-tag">Financial Services</span>
+          <span class="sector-tag">Real Estate</span>
+          <span class="sector-tag">Healthcare</span>
+          <span class="sector-tag">Logistics & Transport</span>
+          <span class="sector-tag">Manufacturing</span>
+          <span class="sector-tag">Retail & Consumer</span>
+          <span class="sector-tag">Agriculture & Food</span>
+          <span class="sector-tag">Construction</span>
+          <span class="sector-tag">Media & Telecom</span>
+          <span class="sector-tag">Mining & Metals</span>
+          <span class="sector-tag">Chemicals</span>
+          <span class="sector-tag">Defence</span>
+          <span class="sector-tag">Water & Environment</span>
+          <span class="sector-tag">Professional Services</span>
+        </div>
+        <div class="slide-brand" style="color:var(--gold);opacity:0.5;margin-top:12px;">MAGNA · magna.vip</div>
+      </div>
+
+      <!-- SLIDE 4 — EMERGING -->
+      <div class="slide s4" id="sl4">
+        <span class="slide-counter">4 / 9</span>
+        <div class="pillar-num">II</div>
+        <div class="pillar-tag">Pillar II — Emerging</div>
+        <h2>Transformative Growth</h2>
+        <div class="pillar-desc">"Where the next decade of global wealth creation will be won — for investors who understand the signal from the noise."</div>
+        <div class="sector-grid">
+          <span class="sector-tag">AI & Data</span>
+          <span class="sector-tag">Biotech & Genomics</span>
+          <span class="sector-tag">Climate Technology</span>
+          <span class="sector-tag">Space & Satellite Economy</span>
+          <span class="sector-tag">Advanced Materials</span>
+          <span class="sector-tag">Quantum Computing</span>
+          <span class="sector-tag">Digital Assets & Web3</span>
+          <span class="sector-tag">Autonomous Systems</span>
+          <span class="sector-tag">New Energy Storage</span>
+          <span class="sector-tag">Next-Gen Semiconductors</span>
+          <span class="sector-tag">Synthetic Biology</span>
+          <span class="sector-tag">Extended Reality</span>
+        </div>
+        <div class="slide-brand" style="color:var(--blue-light);opacity:0.5;margin-top:12px;">MAGNA · magna.vip</div>
+      </div>
+
+      <!-- SLIDE 5 — SOCIAL -->
+      <div class="slide s5" id="sl5">
+        <span class="slide-counter">5 / 9</span>
+        <div class="pillar-num">III</div>
+        <div class="pillar-tag">Pillar III — Social</div>
+        <h2>Societal Resilience</h2>
+        <div class="pillar-desc">"The sectors that define whether societies hold together — increasingly the most critical allocation for long-duration investors."</div>
+        <div class="sector-grid">
+          <span class="sector-tag">Healthcare Access & Systems</span>
+          <span class="sector-tag">Education & Human Capital</span>
+          <span class="sector-tag">Affordable Housing</span>
+          <span class="sector-tag">Public Safety & Justice</span>
+          <span class="sector-tag">Arts, Culture & Creative Economy</span>
+          <span class="sector-tag">Food Security & Nutrition</span>
+        </div>
+        <div style="margin-top:16px;padding:12px 14px;border:1px solid rgba(61,107,82,0.35);background:rgba(61,107,82,0.08);">
+          <div style="font-size:10px;color:var(--green-light);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Why this pillar matters now</div>
+          <div style="font-size:11px;color:var(--creme-60);font-weight:300;line-height:1.6;">These are not just social good sectors. They are the greatest investment opportunity of the next decade — and the most underpriced by conventional capital.</div>
+        </div>
+        <div class="slide-brand" style="color:var(--green-light);opacity:0.5;margin-top:12px;">MAGNA · magna.vip</div>
+      </div>
+
+      <!-- SLIDE 6 — CONVERGENCE -->
+      <div class="slide s6" id="sl6">
+        <span class="slide-counter">6 / 9</span>
+        <div style="font-size:9px;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">The Highest-Conviction Thesis</div>
+        <h2>The real opportunity isn't a sector. It's where three forces intersect.</h2>
+        <div class="convergence-stack">
+          <div class="conv-row core">
+            <span class="conv-label">Core</span>
+            <span class="conv-val">Healthcare Services</span>
+          </div>
+          <div class="conv-row emerging">
+            <span class="conv-label">Emerging</span>
+            <span class="conv-val">AI & Data · Biotech & Genomics</span>
+          </div>
+          <div class="conv-row social">
+            <span class="conv-label">Social</span>
+            <span class="conv-val">Healthcare Access & Systems</span>
+          </div>
+          <div class="conv-equals">↓ convergence</div>
+          <div class="conv-result">AI-Enabled Healthcare — one of the highest-conviction themes in institutional portfolios today.</div>
+        </div>
+        <div class="conv-sub">Three forces reinforcing each other across the entire value chain. This is how institutional investors build — not sector by sector, but theme by theme.</div>
+        <div class="slide-brand" style="margin-top:10px;">MAGNA · magna.vip</div>
+      </div>
+
+      <!-- SLIDE 7 — CORRIDORS -->
+      <div class="slide s7" id="sl7">
+        <span class="slide-counter">7 / 9</span>
+        <div style="font-size:9px;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">The Geographic Dimension</div>
+        <h2>Geography Is Strategy Made Manifest</h2>
+        <div class="corridors-sub">"Understanding where industries are won shapes which investments succeed."</div>
+        <div class="corridor-list">
+          <div class="corridor-row">
+            <span class="corridor-name">Indo-Pacific Digital Belt</span>
+            <span class="corridor-stat">$3T+ GDP</span>
+          </div>
+          <div class="corridor-row">
+            <span class="corridor-name">Gulf Transformation Zone</span>
+            <span class="corridor-stat">$1T+ SWF redeployment</span>
+          </div>
+          <div class="corridor-row">
+            <span class="corridor-name">African Continental Corridor</span>
+            <span class="corridor-stat">Largest youth demographic</span>
+          </div>
+          <div class="corridor-row">
+            <span class="corridor-name">Latin American Resource Belt</span>
+            <span class="corridor-stat">Critical minerals</span>
+          </div>
+          <div class="corridor-row">
+            <span class="corridor-name">European Resilience Cluster</span>
+            <span class="corridor-stat">Industrial re-armament</span>
+          </div>
+          <div class="corridor-row">
+            <span class="corridor-name">Central Asian New Silk Road</span>
+            <span class="corridor-stat">Transit corridor</span>
+          </div>
+        </div>
+        <div class="slide-brand" style="margin-top:12px;">MAGNA · magna.vip</div>
+      </div>
+
+      <!-- SLIDE 8 — FOUNDER LENS -->
+      <div class="slide s8" id="sl8">
+        <span class="slide-counter">8 / 9</span>
+        <h2>Why does this matter to you as a founder?</h2>
+        <div class="compare-label">The question shift</div>
+        <div class="compare-block">
+          <div class="compare-row">
+            <div class="from">What are my competitors doing?</div>
+            <div class="arr">→</div>
+            <div class="to">Which convergence theme is my business downstream of?</div>
+          </div>
+          <div class="compare-row" style="margin-top:1px;">
+            <div class="from">How do I grow this year?</div>
+            <div class="arr">→</div>
+            <div class="to">Where is capital flowing for the next decade — and am I positioned for it?</div>
+          </div>
+        </div>
+        <div class="close-line">"Capital doesn't flow toward opportunity. It flows toward certainty of judgment." — Magna Compass</div>
+        <div class="slide-brand" style="margin-top:12px;">MAGNA · magna.vip</div>
+      </div>
+
+      <!-- SLIDE 9 — CLOSE -->
+      <div class="slide s9" id="sl9">
+        <span class="slide-counter">9 / 9</span>
+        <span class="close-mark">The Magna Compass</span>
+        <h2>This is how we teach founders to see the world.</h2>
+        <div class="close-desc">33 sectors. 3 pillars. 6 corridors. One framework — built into every Magna cohort, investment, and workshop.</div>
+        <div class="close-q">Which of the 33 sectors does your business intersect with? Drop it below.</div>
+        <span class="close-site">magna.vip · reach@magna.vip</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- DOTS -->
+  <div class="dots" id="dots">
+    <button class="dot active" onclick="goTo(0)"></button>
+    <button class="dot" onclick="goTo(1)"></button>
+    <button class="dot" onclick="goTo(2)"></button>
+    <button class="dot" onclick="goTo(3)"></button>
+    <button class="dot" onclick="goTo(4)"></button>
+    <button class="dot" onclick="goTo(5)"></button>
+    <button class="dot" onclick="goTo(6)"></button>
+    <button class="dot" onclick="goTo(7)"></button>
+    <button class="dot" onclick="goTo(8)"></button>
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="controls">
+    <button class="ctrl-btn" id="prev" onclick="prev()">←</button>
+    <span class="slide-label" id="slideLabel">Slide 1 of 9</span>
+    <button class="ctrl-btn" id="next" onclick="next()">→</button>
+  </div>
+
+</div>
+
+<!-- CAPTION COPY -->
+<div class="copy-section">
+  <div class="copy-label">Instagram Caption</div>
+  <div class="copy-text">Most founders have a business strategy. Almost none have a world strategy.
+
+The Magna Compass maps 33 sectors across three investment pillars — Core, Emerging, and Social — and six global growth corridors. It's the same framework sovereign wealth funds use to construct portfolios.
+
+And it's the intellectual spine of everything we build at Magna.
+
+Swipe through to see how we see the world — and which part of it your business sits inside. ↓
+
+Which of the 33 sectors does your business intersect with? Drop it below.</div>
+  <div class="copy-tags">#CompassFramework #MagnaCompass #FounderEducation #GlobalStrategy #ExecutiveEducation #Magna #InstitutionalIntelligence #StartupStrategy #VentureCapital #GlobalBusiness</div>
+</div>
+
+<!-- EDITORIAL NOTE -->
+<div class="editorial">
+  <div class="editorial-label">For Mehr — Why We Made It This Way</div>
+  <p><strong>Why start with "Almost none have a world strategy"?</strong> Our founder audience is smart enough to know they have a business strategy. Telling them that isn't surprising. But "world strategy" is a different frame entirely — it's the one institutional investors use, and most founders have never been asked to think in those terms. That gap is what creates intrigue on slide 1 and makes them swipe.</p>
+  <p><strong>Why show all 33 sectors?</strong> The sheer number of sectors is a credibility signal. When a founder sees that Magna maps everything from Defence to Synthetic Biology to Affordable Housing, they immediately understand this isn't a typical coaching program. It's a worldview. You can't fake 33 sectors — it either exists or it doesn't.</p>
+  <p><strong>Why three different color palettes for the three pillars?</strong> Warm soil/gold for Core (stability, traditional wealth). Cool blue for Emerging (technology, future). Green for Social (growth, resilience, nature). The colors do the emotional work that the words describe. On Instagram, visual memory matters — the three pillars will feel different even before the text is read.</p>
+  <p><strong>Why the convergence slide (slide 6)?</strong> This is the most sophisticated slide in the deck — and the most important. It shows that Magna's framework isn't about picking a sector, it's about seeing where forces intersect. That's the insight that separates institutional thinking from founder thinking. It's the "aha" moment of the whole carousel.</p>
+  <p><strong>Why end with a question ("Which of the 33 sectors does your business intersect with?")?</strong> We never sell. But a question does something better than a CTA — it makes the reader think about themselves in relation to our framework. Every person who answers is telling us exactly where they are and what they need. And the comments become a list of exactly who follows us.</p>
+  <p><strong>On length (9 slides):</strong> For an educational carousel on Instagram, 7–10 slides is the sweet spot. Under 6 feels thin. Over 10 and drop-off increases sharply. The sequence here builds like a story — hook, overview, three pillars, convergence, geography, founder application, close. Each slide earns the next one.</p>
+</div>
+
+<script>
+  let current = 0;
+  const total = 9;
+  const track = document.getElementById('track');
+  const dots = document.querySelectorAll('.dot');
+  const slides = document.querySelectorAll('.slide');
+  const slideLabel = document.getElementById('slideLabel');
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+
+  function getSlideWidth() {
+    return slides[0].offsetWidth + 20; // slide + gap
+  }
+
+  function goTo(n) {
+    current = Math.max(0, Math.min(n, total - 1));
+    const offset = current * getSlideWidth();
+    track.style.transform = `translateX(-${offset}px)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+    slides.forEach((s, i) => s.classList.toggle('inactive', i !== current));
+    slideLabel.textContent = `Slide ${current + 1} of ${total}`;
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === total - 1;
+  }
+
+  function prev() { goTo(current - 1); }
+  function next() { goTo(current + 1); }
+
+  // Keyboard nav
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') next();
+    if (e.key === 'ArrowLeft') prev();
+  });
+
+  // Touch/swipe
+  let touchX = 0;
+  track.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend', e => {
+    const diff = touchX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) diff > 0 ? next() : prev();
+  }, { passive: true });
+
+  // Init
+  goTo(0);
+  window.addEventListener('resize', () => goTo(current));
+</script>
+</body>
+</html>
