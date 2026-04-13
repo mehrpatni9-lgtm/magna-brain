@@ -1,9 +1,8 @@
-name: Publish magna-brain drafts to GitHub Pages
+name: Publish magna-brain drafts and brain to GitHub Pages
 
-# Publishes output/ to GitHub Pages so Mehr sees every generated draft at a
-# clean URL. Fires on push to main when output/ changes (v1: we publish
-# from main directly, not drafts/*, to keep Pages consistent and avoid
-# multi-branch deploy thrash).
+# Publishes output/ (Mehr's drafts) AND output/brain/ (a rendered, browsable
+# view of wiki/) to GitHub Pages. Fires on push to main when anything that
+# affects the published site changes: drafts, the brain, or the renderer.
 
 on:
   push:
@@ -11,6 +10,8 @@ on:
       - main
     paths:
       - 'output/**'
+      - 'wiki/**'
+      - 'tools/**'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
 
@@ -29,6 +30,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install renderer dependencies
+        run: pip install --quiet markdown
+
+      - name: Render wiki/ to output/brain/
+        run: python3 tools/render_brain.py
 
       - name: Assemble site from output/
         run: |

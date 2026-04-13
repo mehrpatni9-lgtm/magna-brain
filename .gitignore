@@ -1,0 +1,11 @@
+# Generated brain HTML (rendered by tools/render_brain.py in CI)
+output/brain/
+
+# Local state
+.DS_Store
+*.swp
+state.json
+
+# Python
+__pycache__/
+*.pyc
