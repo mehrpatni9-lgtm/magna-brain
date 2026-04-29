@@ -665,6 +665,34 @@ def render_engine():
 
   {tone_html}
 
+  <section id="company-voices">
+    <div class="section-label">Company reference voices</div>
+    <h2 class="section-title">Four institutional peers Magna calibrates against</h2>
+    <p class="section-sub">Not to copy — to stay sharp. Each company holds a distinct register in the capital and executive space that informs how Magna positions itself.</p>
+    <div class="grid-2">
+      <a class="card" href="https://www.antler.co/" target="_blank" rel="noopener">
+        <div class="kind">Early-stage company builder</div>
+        <h3>Antler</h3>
+        <p>Motivational with spreadsheet discipline. Punchy sentences, em-dash energy, enthusiasm grounded in proof. <em>"Further — Faster."</em></p>
+      </a>
+      <a class="card" href="https://www.ycombinator.com/" target="_blank" rel="noopener">
+        <div class="kind">Seed accelerator</div>
+        <h3>Y Combinator</h3>
+        <p>Authoritative simplicity. Anti-hype — lets outcomes speak. Four-word clarity. <em>"Make something people want."</em></p>
+      </a>
+      <a class="card" href="https://www.vistage.com/" target="_blank" rel="noopener">
+        <div class="kind">Executive peer advisory</div>
+        <h3>Vistage</h3>
+        <p>Institutional credibility with peer-community warmth. Never condescends to executives. States authority once and trusts it to carry.</p>
+      </a>
+      <a class="card" href="https://westbridgecap.com/" target="_blank" rel="noopener">
+        <div class="kind">Purpose-driven VC</div>
+        <h3>WestBridge Capital</h3>
+        <p>Long-game warmth. Leads with time, not just money. Founder-anchored storytelling. <em>"Fulcrums we think will move the world."</em></p>
+      </a>
+    </div>
+  </section>
+
   <section id="voice-exemplars">
     <div class="section-label">Voice exemplars</div>
     <h2 class="section-title">Reference posts that anchor each voice</h2>
