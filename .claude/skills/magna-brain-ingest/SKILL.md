@@ -1,20 +1,30 @@
 ---
 name: magna-brain-ingest
-description: Silently capture anything Mehr drops into chat — files, links, pasted text, images, voice notes — and inline-compile it into the structured brain so the wiki compounds every time she enriches. Zero confirmations, zero file-path language. TRIGGERS - Use this skill when Mehr attaches a file, pastes a URL or article text, says "here's stuff I found" / "look at this" / "read these" / "add this to the brain" / "I want to remember this" / dictates a voice note / sends an image.
+description: Silently capture anything dropped into chat — files, links, pasted text, images, voice notes — and inline-compile it into the structured brain so the wiki compounds every time the contributor enriches. Captures the contributor's name tag automatically. Zero confirmations, zero file-path language. TRIGGERS - Use this skill when the contributor attaches a file, pastes a URL or article text, says "here's stuff I found" / "look at this" / "read these" / "add this to the brain" / "I want to remember this" / dictates a voice note / sends an image.
 ---
 
 # magna-brain-ingest
 
-The zero-ops capture + self-compile path. Mehr drops stuff; the brain absorbs it AND restructures it into wiki articles in the same turn; everything gets pushed to GitHub so the Pages brain browser updates within ~90 seconds. **Never ask her to confirm.** Act, then respond editorially.
+The zero-ops capture + self-compile path. The contributor drops stuff; the brain absorbs it AND restructures it into wiki articles in the same turn; everything gets pushed to GitHub so the auto-rendered brain page updates within ~90 seconds. **Never ask for confirmation.** Act, then respond editorially.
 
 ## Hard rules
 
-1. **Never mention** `raw/`, `wiki/`, file paths, commits, pushes, compile, or any technical noun. Ever.
+1. **Never mention** `raw/`, `wiki/`, file paths, commits, pushes, compile, contributors, name tags, or any technical noun. Ever.
 2. **Never ask "should I add this to your knowledge base?"** Just do it and respond with an insight.
 3. **Never overwrite or delete** existing wiki files. The compile step is **additive** — new source files, new entity files, new concept files, new synthesis angles. Existing articles are only **appended to** (new facts, new references), never rewritten.
-4. **Never touch `wiki/voice/`**. Voice is hand-curated by Sahil. If Mehr drops a post she likes and it feels like a new exemplar, file a `voice` feedback issue via `magna-brain-feedback` instead of writing the file yourself.
+4. **Never touch `wiki/voice/`**. Voice is hand-curated by Sahil. If a contributor drops a post they like and it feels like a new exemplar, file a `voice` feedback issue via `magna-brain-feedback` instead of writing the file yourself.
 5. **Never make structural changes** to the schema in `AGENTS.md`. Every new file must match the existing frontmatter shape.
-6. **Always commit and push at the end.** A silent capture that isn't pushed doesn't exist.
+6. **Always commit and push at the end** using the contributor's git identity. A silent capture that isn't pushed doesn't exist.
+
+## Step 0 — Resolve the contributor's identity (do this FIRST, every time)
+
+```bash
+contributor=$(git config user.name)
+```
+
+If `git config user.name` is empty, fall back to the value of the `USER` environment variable, then default to `"Unknown"` only as a last resort. Use `$contributor` as the value of every `contributed_by:` frontmatter field you write in this session, and use the contributor's normal git identity for the commit author (do NOT pass `-c user.email=` or `-c user.name=` overrides — let git use the local config that the onboarding paste set).
+
+This identity travels with everything the contributor adds today, so the brain page's contributor strip and every wiki article carry the right name tag.
 
 ## Intent detection
 
@@ -33,14 +43,27 @@ If the message is purely a question about existing knowledge ("what do you know 
 
 ```bash
 today=$(date +%Y-%m-%d)
-raw_file="raw/${today}.md"
+slug=<a 2-4 word kebab-case label for this drop>
+raw_file="raw/${today}-${slug}.md"
 ```
 
-If `raw/${today}.md` doesn't exist, create it with a single header line: `# Raw log — ${today}\n`.
+The repo convention is `raw/<YYYY-MM-DD>-<topic>.md` — multi-file-per-day is allowed. If a file with that exact name already exists, append a `-2` / `-3` suffix to the slug.
 
-## Step 2 — Append each item to the raw log
+Write the raw file with frontmatter that includes `contributed_by: "$contributor"`:
 
-For each piece of content Mehr dropped, append a block to today's raw log:
+```yaml
+---
+date: <YYYY-MM-DD>
+source: <human description of where this came from>
+contributed_by: "<contributor>"
+---
+```
+
+Then write the body — see Step 2.
+
+## Step 2 — Body of the raw file
+
+For each piece of content the contributor dropped, append a block to the raw file body:
 
 ```markdown
 ## [<kind>] <brief label> — <HH:MM>
@@ -50,7 +73,7 @@ For each piece of content Mehr dropped, append a block to today's raw log:
 
 Where `<kind>` is one of: `url`, `pdf`, `image`, `voice`, `note`, `paste`.
 
-- **URL**: append the URL and a short description of what it is. If you can reach the URL (no blanket network access — only what allowed tools expose), extract title + key points. Otherwise, leave the URL and let Mehr's framing guide it.
+- **URL**: append the URL and a short description of what it is. If you can reach the URL (no blanket network access — only what allowed tools expose), extract title + key points. Otherwise, leave the URL and let the contributor's framing guide it.
 - **Pasted text**: append verbatim, each line prefixed with `> ` so it's clearly a quote.
 - **PDF**: use `pdftotext` (allowed). Extract text, append a summary + key quotes.
 - **Image**: describe what you see (brand asset? whiteboard? competitor screenshot?).
@@ -58,26 +81,27 @@ Where `<kind>` is one of: `url`, `pdf`, `image`, `voice`, `note`, `paste`.
 
 ## Step 3 — Inline compile (the self-learning part)
 
-This is the new v1.5 behavior. After the raw log is written, **decide what the wiki should gain from this drop** and make the changes directly.
+After the raw file is written, **decide what the wiki should gain from this drop** and make the changes directly. **Every new wiki file you create in this step MUST include `contributed_by: "$contributor"` in its frontmatter.**
 
 Read these files to ground the compile (only these — do NOT Glob the whole wiki):
 
-1. `wiki/index.md` — the master index (already in session context if loaded at start)
-2. `wiki/_index/topic-summaries.md` — topic clusters
+1. `wiki/index.md` — the master index
+2. `wiki/_index/topic-summaries.md` — topic clusters (if exists)
 3. `AGENTS.md` — the schema every new wiki file must match
 
 Then decide, per dropped item:
 
 ### Is it a new source?
-If the drop is a substantive document (PDF, URL with real content, an article), create a new `wiki/sources/<kebab-slug>.md` file. Filename comes from the title. Frontmatter matches `AGENTS.md` source schema:
+If the drop is a substantive document (PDF, URL with real content, an article), create a new `wiki/sources/<kebab-slug>.md` file. Filename comes from the title. Frontmatter:
 
 ```yaml
 ---
 type: source
 title: "<human title>"
-kind: pdf | url | image | voice | note
+kind: pdf | url | image | voice | note | spreadsheet | research | transcript
 origin: <path in raw/ or URL>
 ingested: <today>
+contributed_by: "<contributor>"
 tags: [relevant, tags]
 sources: []
 corrected_by: []
@@ -87,57 +111,100 @@ corrected_by: []
 Body = faithful extraction, no interpretation.
 
 ### Does it introduce a new entity?
-If the drop names a person, brand, product, campaign, or audience segment that isn't already in `wiki/entities/`, create a new entity file. Filename = kebab-case name. Frontmatter per `AGENTS.md` entity schema. Body structure:
+If the drop names a person, brand, product, campaign, or audience segment that isn't already in `wiki/entities/`, create a new entity file. Filename = kebab-case name. Frontmatter:
 
+```yaml
+---
+type: entity
+name: "<canonical name>"
+kind: person | brand | product | campaign | audience | channel
+aliases: ["<other names>"]
+tags: []
+sources: [[source-slug-1]]
+created: <today>
+updated: <today>
+contributed_by: "<contributor>"
+corrected_by: []
+---
+```
+
+Body sections:
 1. **One-line definition** (≤140 chars)
 2. **Key facts** — every bullet cites `[[source-slug]]`
 3. **Relationships** — wikilinks to other entities
 4. **Open questions** — what's unknown
 
 ### Does it introduce a new concept?
-If the drop contains an idea, framework, or recurring theme not already in `wiki/concepts/`, create a new concept file. Same schema rules.
+Same shape as entity, with `type: concept`. Body: TL;DR · Why it matters for Magna · Supporting sources · Related concepts · Contradictions/open threads.
 
 ### Does it justify a new synthesis angle?
-If the drop connects multiple existing concepts/entities into a new reusable angle for a post, create a new `wiki/synthesis/<slug>.md`. This is the highest-value output of a compile — synthesis angles are what `magna-brain-write-post` reaches for first.
+Create `wiki/synthesis/<slug>.md`. Same frontmatter shape with `type: synthesis` plus `draws_on: [[a]], [[b]]`. Body: The angle · Evidence trail · Counter-angle · Post hooks.
 
 ### Does it update an EXISTING article?
-If the drop adds a new fact to an existing entity or concept, **append** that fact to the relevant article's "Key facts" section. Always cite the new source with a wikilink. **Never rewrite prose that's already there.**
+**Append only.** Add new facts to the relevant article's "Key facts" section with citations. Add a line to the "Contributors" section at the bottom: `- <date> — <contributor> (added <N> facts)`. Never rewrite prose that's already there.
 
 ### Update the master index
-If you created any new wiki files, add one line per file to `wiki/index.md` under the correct section (Entities, Concepts, Sources, Synthesis angles). Keep `wiki/index.md` under 1,500 tokens — if adding new lines would push it over, collapse older lines into `wiki/_index/topic-summaries.md` instead.
+If you created any new wiki files, add one line per file to `wiki/index.md` under the correct section. Keep `wiki/index.md` under 1,500 tokens.
 
 ### Append to the log
 Add a block to `wiki/log.md` (append-only) describing what changed:
 
 ```
 ## <ISO timestamp>
-- ingest: raw/<date>.md (N new items)
+- ingest: raw/<file>.md (N new items)
+- contributed_by: "<contributor>"
 - created: sources/<slug>, concepts/<slug>, ...
 - updated: entities/<slug> (added N facts)
 - refreshed: index.md
+- corrected_by: []
 ```
 
-## Step 4 — Commit and push everything
+## Step 4 — Commit and push everything (using contributor identity)
 
-One commit, everything bundled:
+One commit, everything bundled. **Do NOT pass `-c user.email=` or `-c user.name=` overrides** — let git use the contributor's local config:
 
 ```bash
 git add raw/ wiki/
-git -c user.email='magna-brain@noreply.github.com' -c user.name='magna-brain' \
-    commit -m "ingest: <editorial one-line description of today's drop>"
+git commit -m "ingest: <editorial one-line description of today's drop>"
+git pull --rebase origin main 2>&1 || true
 git push origin main
 ```
 
-Do this silently. Do NOT show Mehr the commands or the output. If `git push` fails (auth, network, whatever), keep the local files and auto-invoke `magna-brain-feedback` with category `skill-bug`.
+The `pull --rebase` is important — multiple contributors push to main, so always rebase before pushing. If the rebase produces conflicts in append-only files (`wiki/log.md`, `wiki/index.md`), accept both sides; the schema is additive.
 
-## Step 5 — Respond editorially
+Do this silently. Do NOT show the contributor the commands or output.
 
-Give Mehr a 2–4 sentence insight about what she just dropped. The insight should:
+## Step 5 — Post-condition check (NEW — guards against compile drift)
+
+Run a quick verification:
+
+```bash
+last_diff=$(git show --stat HEAD)
+```
+
+Inspect `last_diff`. If it touched **only `raw/`** and not any path under `wiki/`, the compile step was silently skipped. **You must retry**:
+
+1. Re-read the raw file you just wrote.
+2. Re-do Step 3 (inline compile) — create the wiki files this time.
+3. Stage `wiki/` and create a SECOND commit with message `ingest: compile — <same editorial description>`.
+4. Pull-rebase and push again.
+
+If after one retry the wiki/ commit STILL didn't happen, auto-invoke `magna-brain-feedback` with category `skill-bug` and note the failure. Then proceed to Step 6 anyway — the contributor still gets a response.
+
+## Step 6 — Respond editorially
+
+Give the contributor a 2–4 sentence insight about what they just dropped. The insight should:
 
 - Name what you saw, in plain language ("a brand guide from a competitor," "a founder post about capital allocation," "three articles on authenticity marketing")
-- Connect it to the existing brain if there's an obvious link ("this lines up with the angle we've been building on clarity-over-information")
-- Acknowledge the compile obliquely, without naming it: *"Added this to your thinking on X — the brain will use it next time you ask for something on this."*
-- Offer one next action as an editorial choice: *"Want me to turn it into a post, or keep stacking?"*
+- Connect it to the existing brain if there's an obvious link
+- Acknowledge the compile obliquely, without naming it
+- Offer one next action as an editorial choice
+
+**End your response with the visibility line** — one italic sentence + a link to the most salient compiled article (the entity/concept/synthesis the compile created or appended to). Format:
+
+> *"Sharper next time you ask about strategy or capital — landed in the brain here: <https://mehrpatni9-lgtm.github.io/magna-brain/brain/article/<section>/<slug>.html>."*
+
+If the compile produced multiple new articles, link to the brain page section anchor (e.g. `/brain/#concepts`) instead of any single article.
 
 **Never say:**
 - "Added to raw/2026-04-13.md"
@@ -145,23 +212,25 @@ Give Mehr a 2–4 sentence insight about what she just dropped. The insight shou
 - "Created wiki/sources/foo.md"
 - "Committed and pushed"
 - "Set compile flag to true"
+- "Tagged you as contributor"
 - Any file system language
 
 ## Budget
 
-SKILL.md body ≤ 3,000 tokens. Per-invocation prompt assembly ≤ 10,000 tokens (slightly higher than query because compile requires reading a handful of wiki files to decide placement). Never Glob `wiki/**`.
+SKILL.md body ≤ 3,500 tokens. Per-invocation prompt assembly ≤ 10,000 tokens. Never Glob `wiki/**`.
 
 ## Safety rails
 
 - **Additive only.** Never delete. Never rewrite existing prose. Append facts, create new files. That's it.
-- **No voice writes.** `wiki/voice/` is denied by settings.json. If you try to write there, it'll be blocked — use `magna-brain-feedback` with the `voice` label instead.
-- **Schema compliance.** Every new file must have valid frontmatter per `AGENTS.md`. If you can't match the schema, write to `raw/` only and log a `skill-bug` feedback issue describing the ambiguity.
-- **Index budget.** `wiki/index.md` must stay under 1,500 tokens. If adding a line would exceed it, demote older entries to `wiki/_index/topic-summaries.md` first.
+- **No voice writes.** `wiki/voice/` is denied by settings.json.
+- **Schema compliance.** Every new file must have valid frontmatter per `AGENTS.md`, including `contributed_by`.
+- **Identity preserved.** Always use `git config user.name` for both commit author and `contributed_by` frontmatter. Never hardcode an author.
+- **Index budget.** `wiki/index.md` must stay under 1,500 tokens. Demote older entries to `wiki/_index/topic-summaries.md` if needed.
 
 ## Failure modes
 
-If any step fails (write blocked, compile confused, commit fails, push fails):
+If any step fails:
 1. Do NOT retry destructively.
-2. Keep whatever succeeded (e.g. if raw/ was written but the compile couldn't place a fact, that's fine — raw/ persists).
+2. Keep whatever succeeded.
 3. Respond editorially: *"Got the core of it down, but I'm still chewing on where it fits in the bigger thinking — I'll flag it so it gets sharper. Hold on to the idea, it's not lost."*
 4. Auto-invoke `magna-brain-feedback` with category `skill-bug`.
