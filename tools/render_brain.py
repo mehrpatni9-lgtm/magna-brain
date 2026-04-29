@@ -345,12 +345,29 @@ def render_article(item, section_label: str, dest_root: Path):
         f'<span>{html.escape(item["title"])}</span>'
         f'</div>'
     )
+    company_voices_html = ""
+    if item["slug"] == "styleguide":
+        company_voices_html = """
+<h2>Company reference voices</h2>
+<p>Four institutional peers Magna calibrates against — not to copy, but to stay sharp. Each holds a distinct register in the capital and executive space.</p>
+<table>
+<thead><tr><th>Company</th><th>Register</th><th>What Magna borrows</th></tr></thead>
+<tbody>
+<tr><td><strong><a href="https://www.antler.co/" target="_blank">Antler</a></strong></td><td>Motivational with spreadsheet discipline. Punchy, em-dash energy, enthusiasm always grounded in proof. <em>"Further — Faster."</em></td><td>Clean em-dash framing. Inspiring language anchored in hard numbers.</td></tr>
+<tr><td><strong><a href="https://www.ycombinator.com/" target="_blank">Y Combinator</a></strong></td><td>Authoritative simplicity. Short declaratives. Anti-hype — lets outcomes speak. <em>"Make something people want."</em></td><td>The transformation narrative. Letting outcomes do the talking. Inviting without selling.</td></tr>
+<tr><td><strong><a href="https://www.vistage.com/" target="_blank">Vistage</a></strong></td><td>Institutional credibility with peer-community warmth. States authority once and trusts it to carry.</td><td>Peer-room positioning. Executive restraint. Structured rigor with human warmth.</td></tr>
+<tr><td><strong><a href="https://westbridgecap.com/" target="_blank">WestBridge Capital</a></strong></td><td>Purpose-driven, long-game warmth. Leads with time, not just money. <em>"Fulcrums we think will move the world."</em></td><td>"Beyond capital" framing. Long-term relational posture. Equity-of-opportunity language.</td></tr>
+</tbody>
+</table>
+<p><strong>How to use:</strong> Before publishing, ask — does this have Antler's grounded energy? YC's simplicity? Vistage's executive restraint? WestBridge's long-game warmth? These are calibration points, not templates.</p>"""
+
     body = f"""
 <main class="article">
   {crumb}
   <h1>{html.escape(item["title"])}</h1>
   {meta_html}
   {body_html}
+  {company_voices_html}
 </main>"""
     page = shell(f"{item['title']} — Magna Brain", body, active="brain")
     rel = item["path"].relative_to(WIKI).with_suffix(".html")
