@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Content Engine — Magna</title>
+  <link href="https://fonts.googleapis.com/css2?family=Forum&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --charcoal: #2D2D2D;
+      --charcoal-deep: #242424;
+      --creme: #E8DFC8;
+      --soil: #5C3518;
+      --soil-light: rgba(92,53,24,0.18);
+      --taupe: #483C32;
+      --gold: #9B7C35;
+      --creme-dim: rgba(232,223,200,0.55);
+      --creme-faint: rgba(232,223,200,0.06);
+      --creme-soft: rgba(232,223,200,0.10);
+      --border: rgba(232,223,200,0.10);
+      --border-soft: rgba(232,223,200,0.06);
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--charcoal); color: var(--creme); font-family: 'Raleway', sans-serif; font-weight: 400; min-height: 100vh; }
+    a { color: inherit; text-decoration: none; }
+    header.top {
+      padding: 44px 60px 32px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+    }
+    .header-left h1 {
+      font-family: 'Forum', serif; font-size: 2.6rem; letter-spacing: 0.12em; color: var(--creme);
+      line-height: 1; text-transform: uppercase;
+    }
+    .header-left p {
+      margin-top: 10px; font-size: 0.74rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--creme-dim);
+    }
+    .header-right {
+      font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--creme-dim); text-align: right; line-height: 1.9;
+    }
+    nav.tabs {
+      display: flex; padding: 0 60px; border-bottom: 1px solid var(--border-soft);
+      background: var(--charcoal-deep); position: sticky; top: 0; z-index: 10;
+    }
+    nav.tabs a {
+      border-bottom: 2px solid transparent; color: var(--creme-dim);
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase;
+      padding: 16px 26px 14px; transition: color 0.2s, border-color 0.2s; cursor: pointer;
+    }
+    nav.tabs a:hover { color: var(--creme); }
+    nav.tabs a.active { color: var(--creme); border-bottom-color: var(--soil); }
+    main { padding: 48px 60px 80px; max-width: 1240px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--soil); margin-bottom: 18px; font-weight: 600;
+    }
+    h2.section-title {
+      font-family: 'Forum', serif; font-size: 1.6rem; letter-spacing: 0.04em; color: var(--creme);
+      margin-bottom: 8px; line-height: 1.2;
+    }
+    p.section-sub {
+      font-size: 0.85rem; color: var(--creme-dim); line-height: 1.7; margin-bottom: 28px; max-width: 820px;
+    }
+    .hero {
+      background: linear-gradient(180deg, rgba(92,53,24,0.10) 0%, rgba(92,53,24,0.0) 100%);
+      border: 1px solid var(--border); border-radius: 6px;
+      padding: 48px 48px 40px; margin-bottom: 48px;
+    }
+    .hero .eyebrow {
+      font-size: 0.65rem; letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold);
+      margin-bottom: 18px; font-weight: 600;
+    }
+    .hero h2 {
+      font-family: 'Forum', serif; font-size: 1.9rem; letter-spacing: 0.04em; color: var(--creme);
+      line-height: 1.35; margin-bottom: 18px; max-width: 920px;
+    }
+    .hero blockquote {
+      padding-left: 18px; border-left: 2px solid var(--soil);
+      font-style: italic; font-size: 0.92rem; color: var(--creme-dim); line-height: 1.7;
+      max-width: 720px; margin-top: 8px;
+    }
+    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 56px; }
+    .stat-card {
+      background: var(--creme-faint); border: 1px solid var(--border); border-radius: 4px;
+      padding: 24px 20px; text-align: center;
+    }
+    .stat-card .num { font-family: 'Forum', serif; font-size: 2.4rem; color: var(--creme); line-height: 1; margin-bottom: 8px; }
+    .stat-card .label { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--creme-dim); line-height: 1.5; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 56px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 56px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 56px; }
+    .card {
+      background: var(--creme-faint); border: 1px solid var(--border); border-radius: 4px;
+      padding: 24px 26px; transition: background 0.15s, border-color 0.15s;
+      display: block; color: inherit;
+    }
+    .card:hover { background: var(--creme-soft); border-color: rgba(232,223,200,0.18); }
+    .card .kind {
+      font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--soil); font-weight: 600; margin-bottom: 10px;
+    }
+    .card h3 { font-family: 'Forum', serif; font-size: 1.05rem; color: var(--creme); margin-bottom: 8px; line-height: 1.3; }
+    .card p { font-size: 0.78rem; line-height: 1.7; color: var(--creme-dim); }
+    .founder-block {
+      background: var(--creme-faint); border: 1px solid var(--border); border-radius: 6px;
+      padding: 36px 40px; margin-bottom: 16px;
+    }
+    .founder-block .eyebrow {
+      font-size: 0.62rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold);
+      margin-bottom: 12px; font-weight: 600;
+    }
+    .founder-block h3 { font-family: 'Forum', serif; font-size: 1.8rem; letter-spacing: 0.04em; color: var(--creme); margin-bottom: 4px; }
+    .founder-block .role { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--creme-dim); margin-bottom: 18px; }
+    .founder-block p { font-size: 0.86rem; line-height: 1.85; color: var(--creme-dim); margin-bottom: 12px; }
+    .founder-block blockquote { padding-left: 16px; border-left: 2px solid var(--soil); font-style: italic; color: var(--creme-dim); margin-top: 16px; line-height: 1.75; font-size: 0.84rem; }
+    .article { max-width: 860px; margin: 0 auto; padding: 56px 28px 96px; }
+    .article .crumb {
+      font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--creme-dim); margin-bottom: 22px;
+    }
+    .article .crumb a { color: var(--creme-dim); border-bottom: 1px solid transparent; }
+    .article .crumb a:hover { color: var(--creme); border-bottom-color: var(--creme-dim); }
+    .article h1 { font-family: 'Forum', serif; font-size: 2.4rem; line-height: 1.15; margin-bottom: 18px; color: var(--creme); }
+    .article h2 { font-family: 'Forum', serif; font-size: 1.4rem; margin-top: 32px; margin-bottom: 12px; color: var(--creme); }
+    .article h3 { font-family: 'Forum', serif; font-size: 1.05rem; margin-top: 24px; margin-bottom: 10px; color: var(--creme); }
+    .article p, .article ul, .article ol { margin-bottom: 16px; color: var(--creme); font-weight: 300; line-height: 1.8; font-size: 0.92rem; }
+    .article ul, .article ol { padding-left: 24px; }
+    .article li { margin-bottom: 6px; }
+    .article a { color: #c0927a; border-bottom: 1px solid rgba(192,146,122,0.3); }
+    .article a:hover { color: var(--creme); border-bottom-color: var(--creme); }
+    .article code { background: var(--creme-soft); padding: 2px 6px; border-radius: 2px; font-family: ui-monospace, Menlo, monospace; font-size: 0.85em; color: var(--creme); }
+    .article blockquote { border-left: 3px solid var(--soil); padding-left: 18px; margin: 18px 0; font-style: italic; color: var(--creme-dim); }
+    .article em { font-style: italic; color: #a07860; }
+    .article strong { font-weight: 500; color: var(--creme); }
+    .article table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.85em; }
+    .article th, .article td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); }
+    .article th { font-family: 'Forum', serif; font-weight: 400; color: var(--creme); }
+    .article td { color: var(--creme-dim); font-weight: 300; }
+    .article hr { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+    .article .meta { display: flex; gap: 14px; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--creme-dim); margin-bottom: 22px; flex-wrap: wrap; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
+    .article .meta-item { padding-right: 14px; border-right: 1px solid var(--border); }
+    .article .meta-item:last-child { border-right: none; }
+    footer {
+      padding: 28px 60px; border-top: 1px solid var(--border-soft);
+      font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(232,223,200,0.22); text-align: center;
+    }
+    @media (max-width: 840px) {
+      header.top { padding: 28px 24px 24px; }
+      nav.tabs { padding: 0 24px; }
+      main { padding: 32px 24px 64px; }
+      .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .hero, .founder-block { padding: 28px 24px; }
+      .article { padding: 32px 20px 64px; }
+    }
+    @media (max-width: 520px) {
+      .grid-3, .grid-4, .grid-2 { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+<header class="top">
+  <div class="header-left">
+    <h1>Magna Brain</h1>
+    <p>Ecosystem Intelligence &amp; Knowledge Architecture</p>
+  </div>
+  <div class="header-right">
+    Chicago · Global<br>
+    magna.vip
+  </div>
+</header>
+<nav class="tabs">
+  <a href="/magna-brain/brain/" class="">The Brain</a>
+  <a href="/magna-brain/engine/" class="active">Content Engine</a>
+</nav>
+
+<main>
+
+  <section class="hero">
+    <div class="eyebrow">The Content Engine</div>
+    <h2>The Content Engine — Mehr&#x27;s evolving creative output for Magna. Series, voices, and every draft she&#x27;s published, all in one place that updates as the work continues.</h2>
+    <blockquote>Built and curated by Mehr. Evolves with every drop.</blockquote>
+  </section>
+
+  <div class="stats-row">
+    <div class="stat-card"><div class="num">9</div><div class="label">Series</div></div><div class="stat-card"><div class="num">10</div><div class="label">Voice exemplars</div></div><div class="stat-card"><div class="num">5</div><div class="label">Recent drafts</div></div><div class="stat-card"><div class="num">6</div><div class="label">Voices in the tone compass</div></div>
+  </div>
+
+  <section id="series">
+    <div class="section-label">The 9 content series</div>
+    <h2 class="section-title">How Magna shows up every week</h2>
+    <p class="section-sub">Nine series across Instagram and LinkedIn — each with its own voice, format, and rhythm. The engine that turns the brain into a posting cadence.</p>
+    <div class="grid-3"><a class="card" href="/magna-brain/brain/article/concepts/content-series-behind-the-build.html"><div class="kind">Series</div><h3>#BehindTheBuild</h3><p>LinkedIn Saturday (alternate weeks) text + photo post. A scene from inside the Magna ecosystem — a roundtable moment, a cohort exchange, an event recap. Simon Sinek register — community over audience.</p></a><a class="card" href="/magna-brain/brain/article/concepts/content-series-compass-framework.html"><div class="kind">Series</div><h3>#CompassFramework</h3><p>LinkedIn monthly document share. A complete, usable framework from the [[magna-compass]] — free and ungated. Magna&#x27;s most authoritative content. Builds inbound from founders who want the application.</p></a><a class="card" href="/magna-brain/brain/article/concepts/content-series-digital-lectures.html"><div class="kind">Series</div><h3>#DigitalLectures</h3><p>LinkedIn Saturday bi-weekly 8–10 slide carousel. Full business lecture, free and ungated. &quot;Give the lecture away. Sell the application.&quot;</p></a><a class="card" href="/magna-brain/brain/article/concepts/content-series-founder-fridays.html"><div class="kind">Series</div><h3>#FounderFridays</h3><p>Instagram Friday reel or story carousel. Real founder stories at inflection points. Simon Sinek register — human first, lesson second.</p></a><a class="card" href="/magna-brain/brain/article/concepts/content-series-inspiration-weekends.html"><div class="kind">Series</div><h3>#InspirationWeekends</h3><p>Instagram Sunday single static. A reflective quote or principle that makes a founder think differently about the week ahead. Daniel Pink register — motivational but grounded.</p></a><a class="card" href="/magna-brain/brain/article/concepts/content-series-magna-mondays.html"><div class="kind">Series</div><h3>#MagnaMondays</h3><p>Instagram Monday static. One sharp business truth per week. Naval Ravikant register. The post founders screenshot before 9am.</p></a><a class="card" href="/magna-brain/brain/article/concepts/content-series-the-principle.html"><div class="kind">Series</div><h3>#ThePrinciple</h3><p>LinkedIn Tuesday long-form text. One operating truth per week, numbered, posted by [[shailu]]. Ray Dalio register. Builds the Magna canon over time.</p></a><a class="card" href="/magna-brain/brain/article/concepts/content-series-the-sharp-take.html"><div class="kind">Series</div><h3>#TheSharpTake</h3><p>LinkedIn Thursday short text post. A contrarian view on a widely-held business belief. Seth Godin register. Drives the most comments and shares of any series.</p></a><a class="card" href="/magna-brain/brain/article/concepts/content-series-wisdom-wednesdays.html"><div class="kind">Series</div><h3>#WisdomWednesdays</h3><p>Instagram Wednesday 5–8 slide carousel. Brand-history case studies ending with a Magna framework takeaway. Seth Godin register.</p></a></div>
+  </section>
+
+  
+  <section id="tone-compass">
+    <div class="section-label">The tone compass</div>
+    <h2 class="section-title">Six voices, one register</h2>
+    <p class="section-sub">Magna&#x27;s voice system — six reference voices (Naval, Dalio, Sinek, Godin, Pink, Robbins) mapped to specific content series.</p>
+    <div class="grid-2">
+      <a class="card" href="/magna-brain/brain/article/entities/tone-compass.html">
+        <div class="kind">System</div>
+        <h3>The Tone Compass</h3>
+        <p>How Magna picks a voice for every series — Naval, Dalio, Godin, Sinek, Pink, Robbins.</p>
+      </a>
+      <a class="card" href="/magna-brain/brain/article/voice/styleguide.html"><div class="kind">Styleguide</div><h3>Magna voice — master styleguide</h3><p>Quiet confidence. Depth of thought. Enduring credibility.</p></a>
+    </div>
+  </section>
+
+  <section id="voice-exemplars">
+    <div class="section-label">Voice exemplars</div>
+    <h2 class="section-title">Reference posts that anchor each voice</h2>
+    <p class="section-sub">Hand-picked exemplars for Naval, Dalio, Godin, Sinek, Pink, and Robbins registers. New posts get checked against these to make sure the voice still lands.</p>
+    <div class="grid-3"><a class="card" href="/magna-brain/brain/article/voice/exemplars/ig-founder-fridays-001-destroying-it.html"><div class="kind">Exemplar</div><h3>Ig Founder Fridays 001 Destroying It</h3><p>**Hook:** He built a $20M company. Then spent three years slowly destroying it.</p></a><a class="card" href="/magna-brain/brain/article/voice/exemplars/ig-inspiration-weekends-001-outlast.html"><div class="kind">Exemplar</div><h3>Ig Inspiration Weekends 001 Outlast</h3><p>**Hook:** The business you&#x27;re building will outlast the version of you that started it. Build accordingly.</p></a><a class="card" href="/magna-brain/brain/article/voice/exemplars/ig-magna-mondays-001-knowing-everything.html"><div class="kind">Exemplar</div><h3>Ig Magna Mondays 001 Knowing Everything</h3><p>**Hook:** At $10M, you&#x27;re celebrated for knowing everything. At $50M, knowing everything is the problem.</p></a><a class="card" href="/magna-brain/brain/article/voice/exemplars/ig-magna-mondays-004-thinking-problem.html"><div class="kind">Exemplar</div><h3>Ig Magna Mondays 004 Thinking Problem</h3><p>**Hook:** &quot;Most founders don&#x27;t have a strategy problem. They have a thinking problem.&quot;</p></a><a class="card" href="/magna-brain/brain/article/voice/exemplars/ig-wisdom-wednesdays-001-apple-1997.html"><div class="kind">Exemplar</div><h3>Ig Wisdom Wednesdays 001 Apple 1997</h3><p>**Hook:** Apple, 1997. 350 products. Losing $1B a year. What happened next changed everything.</p></a><a class="card" href="/magna-brain/brain/article/voice/exemplars/li-sharp-take-001-hustle.html"><div class="kind">Exemplar</div><h3>Li Sharp Take 001 Hustle</h3><p>**Post:**</p></a><a class="card" href="/magna-brain/brain/article/voice/exemplars/li-sharp-take-002-pitch-deck.html"><div class="kind">Exemplar</div><h3>Li Sharp Take 002 Pitch Deck</h3><p>**Post:**</p></a><a class="card" href="/magna-brain/brain/article/voice/exemplars/li-sharp-take-003-networking.html"><div class="kind">Exemplar</div><h3>Li Sharp Take 003 Networking</h3><p>**Post:**</p></a><a class="card" href="/magna-brain/brain/article/voice/exemplars/li-the-principle-004-negotiation.html"><div class="kind">Exemplar</div><h3>Li The Principle 004 Negotiation</h3><p>**Title:** MAGNA PRINCIPLE #004: &quot;Never negotiate a deal you&#x27;re not prepared to walk away from.&quot;</p></a><a class="card" href="/magna-brain/brain/article/voice/exemplars/li-the-principle-011-culture.html"><div class="kind">Exemplar</div><h3>Li The Principle 011 Culture</h3><p>**Title:** MAGNA PRINCIPLE #011: &quot;Culture isn&#x27;t what you say. It&#x27;s what you tolerate.&quot;</p></a></div>
+  </section>
+
+  <section id="recent-drafts">
+    <div class="section-label">Recent drafts</div>
+    <h2 class="section-title">What's been published</h2>
+    <p class="section-sub">Every draft Magna has shipped, newest first. Click any card to open the full post in Magna's brand shell.</p>
+    <div class="grid-3"><a class="card" href="/magna-brain/2026-04-14-magna-compass-carousel.html"><h3>What Is the Magna Compass?</h3><p style="font-size:0.7rem;color:var(--creme-dim);margin-bottom:6px;">2026-04-14</p></a><a class="card" href="/magna-brain/2026-04-13-thinking-that-got-you-here.html"><div class="kind">Newsletter</div><h3>The Thinking That Got You Here</h3><p style="font-size:0.7rem;color:var(--creme-dim);margin-bottom:6px;">2026-04-13</p><p style="margin-top:8px;font-style:italic;">"give me a newsletter crafted for magna"</p></a><a class="card" href="/magna-brain/2026-04-13-the-world-has-already-moved.html"><h3>The World Has Already Moved</h3><p style="font-size:0.7rem;color:var(--creme-dim);margin-bottom:6px;">2026-04-13</p></a><a class="card" href="/magna-brain/2026-04-13-linkedin-calendar-apr13-26.html"><h3>LinkedIn Calendar · Apr 13–26</h3><p style="font-size:0.7rem;color:var(--creme-dim);margin-bottom:6px;">2026-04-13</p></a><a class="card" href="/magna-brain/2026-04-13-instagram-calendar-apr13-26.html"><h3>Instagram Calendar · Apr 13–26</h3><p style="font-size:0.7rem;color:var(--creme-dim);margin-bottom:6px;">2026-04-13</p></a></div>
+  </section>
+
+</main>
+<footer>The Brain · evolves with every drop · contributed_by tracked · 2026-04-29</footer>
+</body>
+</html>
