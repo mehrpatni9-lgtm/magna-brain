@@ -12,6 +12,7 @@ on:
       - 'output/**'
       - 'wiki/**'
       - 'tools/**'
+      - 'raw/**'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
 
