@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Magna Brain</title>
+  <link href="https://fonts.googleapis.com/css2?family=Forum&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --charcoal: #2D2D2D;
+      --creme: #E8DFC8;
+      --soil: #5C3518;
+      --taupe: #483C32;
+      --creme-dim: rgba(232,223,200,0.55);
+      --creme-faint: rgba(232,223,200,0.06);
+      --soil-light: rgba(92,53,24,0.18);
+    }
+
+    body {
+      background: var(--charcoal);
+      color: var(--creme);
+      font-family: 'Raleway', sans-serif;
+      font-weight: 400;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      padding: 52px 60px 36px;
+      border-bottom: 1px solid rgba(232,223,200,0.12);
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .header-left h1 {
+      font-family: 'Forum', serif;
+      font-size: 3rem;
+      letter-spacing: 0.12em;
+      color: var(--creme);
+      line-height: 1;
+      text-transform: uppercase;
+    }
+    .header-left p {
+      margin-top: 10px;
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--creme-dim);
+    }
+    .header-right {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--creme-dim);
+      text-align: right;
+      line-height: 1.9;
+    }
+
+    /* ── TABS ── */
+    nav.tabs {
+      display: flex;
+      padding: 0 60px;
+      border-bottom: 1px solid rgba(232,223,200,0.1);
+    }
+    nav.tabs button {
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--creme-dim);
+      cursor: pointer;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 18px 28px 16px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    nav.tabs button:hover { color: var(--creme); }
+    nav.tabs button.active {
+      color: var(--creme);
+      border-bottom-color: var(--soil);
+    }
+
+    /* ── PANELS ── */
+    .panel { display: none; padding: 52px 60px 80px; }
+    .panel.active { display: block; }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--soil);
+      margin-bottom: 22px;
+      font-weight: 600;
+    }
+
+    /* ── GENERIC CARD ── */
+    .card {
+      background: var(--creme-faint);
+      border: 1px solid rgba(232,223,200,0.1);
+      border-radius: 4px;
+      padding: 32px 36px;
+    }
+    .card h2 {
+      font-family: 'Forum', serif;
+      font-size: 1.25rem;
+      letter-spacing: 0.06em;
+      margin-bottom: 16px;
+      color: var(--creme);
+    }
+    .card p, .card li {
+      font-size: 0.85rem;
+      line-height: 1.85;
+      color: var(--creme-dim);
+    }
+    .card ul { padding-left: 18px; }
+    .card li { margin-bottom: 5px; }
+    .highlight { color: var(--creme); font-weight: 600; }
+
+    /* ── TAG ── */
+    .tag {
+      display: inline-block;
+      background: var(--soil-light);
+      border: 1px solid rgba(92,53,24,0.4);
+      color: var(--creme);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 2px;
+      margin: 3px 4px 3px 0;
+    }
+
+    /* ── FOUNDER ── */
+    .founder-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+    .founder-main {
+      background: var(--creme-faint);
+      border: 1px solid rgba(232,223,200,0.1);
+      border-radius: 4px;
+      padding: 36px 40px;
+    }
+    .founder-main .eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--soil);
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+    .founder-main h2 {
+      font-family: 'Forum', serif;
+      font-size: 2rem;
+      letter-spacing: 0.06em;
+      color: var(--creme);
+      margin-bottom: 6px;
+    }
+    .founder-main .subtitle {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--creme-dim);
+      margin-bottom: 20px;
+    }
+    .founder-main p {
+      font-size: 0.84rem;
+      line-height: 1.85;
+      color: var(--creme-dim);
+    }
+    .founder-main blockquote {
+      margin-top: 20px;
+      padding-left: 16px;
+      border-left: 2px solid var(--soil);
+      font-style: italic;
+      font-size: 0.82rem;
+      color: var(--creme-dim);
+      line-height: 1.75;
+    }
+    .founder-right {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* ── STAT CARDS ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    .stat-card {
+      background: var(--creme-faint);
+      border: 1px solid rgba(232,223,200,0.1);
+      border-radius: 4px;
+      padding: 28px 24px;
+      text-align: center;
+    }
+    .stat-card .num {
+      font-family: 'Forum', serif;
+      font-size: 2.6rem;
+      color: var(--creme);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-card .label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--creme-dim);
+      line-height: 1.5;
+    }
+
+    /* ── THREE ARMS ── */
+    .arms-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+    .arm-card {
+      background: var(--creme-faint);
+      border: 1px solid rgba(232,223,200,0.1);
+      border-radius: 4px;
+      padding: 32px 28px;
+    }
+    .arm-card .arm-letter {
+      font-family: 'Forum', serif;
+      font-size: 3.5rem;
+      color: rgba(92,53,24,0.45);
+      line-height: 1;
+      margin-bottom: 14px;
+    }
+    .arm-card h3 {
+      font-family: 'Forum', serif;
+      font-size: 1.15rem;
+      color: var(--creme);
+      margin-bottom: 12px;
+    }
+    .arm-card p {
+      font-size: 0.8rem;
+      line-height: 1.8;
+      color: var(--creme-dim);
+    }
+
+    /* ── ABCD ── */
+    .abcd-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    .abcd-card {
+      background: var(--creme-faint);
+      border: 1px solid rgba(232,223,200,0.1);
+      border-radius: 4px;
+      padding: 28px 22px;
+      text-align: center;
+    }
+    .abcd-card .letter {
+      font-family: 'Forum', serif;
+      font-size: 3rem;
+      color: var(--creme);
+      opacity: 0.85;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .abcd-card h3 {
+      font-family: 'Forum', serif;
+      font-size: 1rem;
+      color: var(--creme);
+      margin-bottom: 10px;
+    }
+    .abcd-card p {
+      font-size: 0.76rem;
+      line-height: 1.7;
+      color: var(--creme-dim);
+    }
+
+    /* ── EXITS ── */
+    .exits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    .exit-card {
+      background: var(--creme-faint);
+      border: 1px solid rgba(232,223,200,0.1);
+      border-radius: 4px;
+      padding: 24px 24px;
+    }
+    .exit-card .company {
+      font-family: 'Forum', serif;
+      font-size: 1.05rem;
+      color: var(--creme);
+      margin-bottom: 6px;
+    }
+    .exit-card .acquirer {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--soil);
+      margin-bottom: 10px;
+    }
+    .exit-card p {
+      font-size: 0.76rem;
+      line-height: 1.7;
+      color: var(--creme-dim);
+    }
+
+    /* ── COLOSSEUM DIVISIONS ── */
+    .divisions-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 48px;
+    }
+    .division-card {
+      background: var(--creme-faint);
+      border: 1px solid rgba(232,223,200,0.1);
+      border-radius: 4px;
+      padding: 20px 18px;
+    }
+    .division-card h4 {
+      font-family: 'Forum', serif;
+      font-size: 0.95rem;
+      color: var(--creme);
+      margin-bottom: 8px;
+    }
+    .division-card p {
+      font-size: 0.74rem;
+      line-height: 1.65;
+      color: var(--creme-dim);
+    }
+
+    /* ── GEO + INDUSTRY ── */
+    .tags-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+
+    /* ── NETWORK TABLE ── */
+    .network-table-wrap {
+      background: var(--creme-faint);
+      border: 1px solid rgba(232,223,200,0.1);
+      border-radius: 4px;
+      margin-bottom: 48px;
+      overflow: hidden;
+    }
+    .network-table-header {
+      padding: 20px 28px;
+      border-bottom: 1px solid rgba(232,223,200,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .network-table-header span {
+      font-family: 'Forum', serif;
+      font-size: 1.05rem;
+      color: var(--creme);
+    }
+    .network-table-header .badge {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--creme-dim);
+    }
+    table { width: 100%; border-collapse: collapse; }
+    thead tr { background: rgba(232,223,200,0.04); }
+    thead th {
+      padding: 12px 18px;
+      text-align: left;
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(232,223,200,0.4);
+      font-weight: 600;
+      border-bottom: 1px solid rgba(232,223,200,0.06);
+    }
+    tbody tr { border-bottom: 1px solid rgba(232,223,200,0.05); transition: background 0.15s; }
+    tbody tr:hover { background: rgba(232,223,200,0.04); }
+    tbody tr:last-child { border-bottom: none; }
+    tbody td { padding: 12px 18px; font-size: 0.79rem; color: var(--creme-dim); line-height: 1.4; }
+    tbody td.name { color: var(--creme); font-weight: 500; }
+    .eng-badge {
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+    .eng-edu { background: rgba(92,53,24,0.3); border: 1px solid rgba(92,53,24,0.5); color: var(--creme); }
+    .eng-collab { background: rgba(72,60,50,0.5); border: 1px solid rgba(72,60,50,0.7); color: var(--creme); }
+
+    /* ── CONTENT ENGINE (Tab 2) ── */
+    .voice-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    .voice-card {
+      background: var(--creme-faint);
+      border: 1px solid rgba(232,223,200,0.1);
+      border-radius: 4px;
+      padding: 22px 24px;
+    }
+    .voice-card .name { font-family: 'Forum', serif; font-size: 0.95rem; color: var(--creme); margin-bottom: 6px; }
+    .voice-card .role { font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--soil); margin-bottom: 10px; }
+    .voice-card p { font-size: 0.76rem; line-height: 1.7; color: var(--creme-dim); }
+
+    .series-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .series-card {
+      background: var(--creme-faint);
+      border: 1px solid rgba(232,223,200,0.1);
+      border-radius: 4px;
+      padding: 28px 26px;
+    }
+    .series-card .platform { font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--soil); font-weight: 600; margin-bottom: 10px; }
+    .series-card h3 { font-family: 'Forum', serif; font-size: 1.05rem; color: var(--creme); margin-bottom: 8px; }
+    .series-card .hashtag { font-size: 0.7rem; color: rgba(232,223,200,0.4); margin-bottom: 14px; }
+    .series-card .meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .meta-pill {
+      font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 3px 9px; border-radius: 2px;
+      background: rgba(232,223,200,0.06); border: 1px solid rgba(232,223,200,0.1); color: var(--creme-dim);
+    }
+    .series-card p { font-size: 0.79rem; line-height: 1.75; color: var(--creme-dim); }
+
+    /* ── PLATFORM GRID ── */
+    .platform-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 28px 60px;
+      border-top: 1px solid rgba(232,223,200,0.08);
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(232,223,200,0.22);
+      text-align: center;
+    }
+
+    /* ── DIVIDER ── */
+    .divider { height: 1px; background: rgba(232,223,200,0.07); margin: 0 0 48px; }
+
+    /* ── CREDENTIAL LIST ── */
+    .cred-list { list-style: none; padding: 0; }
+    .cred-list li {
+      font-size: 0.8rem;
+      line-height: 1.6;
+      color: var(--creme-dim);
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(232,223,200,0.06);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .cred-list li:last-child { border-bottom: none; }
+    .cred-list li::before { content: "◆"; font-size: 0.45rem; color: var(--soil); margin-top: 5px; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <h1>Magna Brain</h1>
+    <p>Ecosystem Intelligence &amp; Knowledge Architecture</p>
+  </div>
+  <div class="header-right">
+    Chicago · Global<br>
+    magna.vip
+  </div>
+</header>
+
+<nav class="tabs">
+  <button class="active" onclick="showTab('brain', this)">The Brain</button>
+  <button onclick="showTab('content', this)">Content Engine</button>
+</nav>
+
+
+<!-- ══════════════════════════════════════════════════
+     TAB 1 — THE BRAIN
+═══════════════════════════════════════════════════ -->
+<div class="panel active" id="tab-brain">
+
+  <!-- FOUNDER -->
+  <div class="section-label">Founder &amp; Vision</div>
+  <div class="founder-block">
+    <div class="founder-main">
+      <div class="eyebrow">Founder · CEO · Chairman</div>
+      <h2>Shailu Tipparaju</h2>
+      <div class="subtitle">Serial Entrepreneur · Global Educator · Executive Mentor</div>
+      <p>Shailu is a serial entrepreneur, technologist, and educator with over two decades of cross-industry experience. He has guided <strong style="color:var(--creme);">5,000+ senior executives</strong> and supported <strong style="color:var(--creme);">50+ startups</strong> across strategy, innovation, culture, purpose, and leadership.</p>
+      <p style="margin-top:12px;">He built and exited three education technology companies before founding Magna — each acquired by a major institutional player. Today he chairs the Colosseum Group (Chicago, est. 2004) and leads Magna Education as its primary vehicle for entrepreneurial transformation.</p>
+      <blockquote>
+        "True leadership is not about the spotlight you stand in, but the light you help others discover in themselves."
+      </blockquote>
+    </div>
+    <div class="founder-right">
+      <div class="card" style="padding:24px 28px; flex:1;">
+        <h2 style="font-size:1rem; margin-bottom:14px;">Academic Credentials</h2>
+        <ul class="cred-list">
+          <li>BS, Chemical Engineering — Osmania University</li>
+          <li>MS, Computer Science — Loyola University Chicago</li>
+          <li>Owner/President Management — Harvard Business School</li>
+          <li>Organizational Leadership — University of Chicago (Booth)</li>
+          <li>Crisis Leadership — Harvard Kennedy School</li>
+          <li>Program on Negotiations — Harvard Law School</li>
+        </ul>
+      </div>
+      <div class="card" style="padding:24px 28px;">
+        <h2 style="font-size:1rem; margin-bottom:14px;">Current Roles</h2>
+        <ul class="cred-list">
+          <li>Founder &amp; CEO — Magna Education (magna.vip)</li>
+          <li>Founder &amp; Chairman — Colosseum Group</li>
+          <li>Venture Partner — Emerge Education Ventures (Europe)</li>
+          <li>Venture Partner — Dallas Venture Capital</li>
+          <li>Best-selling author on leadership &amp; human potential</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXITS -->
+  <div class="section-label">Founder Track Record — Exits</div>
+  <div class="exits-grid">
+    <div class="exit-card">
+      <div class="company">EdAssist</div>
+      <div class="acquirer">Acquired → Bright Horizons / Bain Capital</div>
+      <p>Co-founded as CTO (2008–2011). Built the platform that became part of Bright Horizons' Solution at Work division — a Bain Capital-backed education benefits company.</p>
+    </div>
+    <div class="exit-card">
+      <div class="company">Strateology</div>
+      <div class="acquirer">Acquired → University Ventures</div>
+      <p>Founded as CEO (2011–2017). Education solutions company acquired by University Ventures, a specialist fund backing higher education innovation.</p>
+    </div>
+    <div class="exit-card">
+      <div class="company">Examity</div>
+      <div class="acquirer">Acquired → Great Hill Partners (2023)</div>
+      <p>Founded as CTO (2013). Online proctoring and academic integrity platform — acquired by private equity firm Great Hill Partners in 2023.</p>
+    </div>
+  </div>
+
+  <!-- MAGNA BRAND -->
+  <div class="section-label">What Magna Is</div>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:48px;">
+    <div class="card">
+      <h2>The Brand</h2>
+      <p>Magna is a <span class="highlight">global strategic research and advisory firm</span> providing institutional-grade sector intelligence to sovereign wealth funds, family offices, private equity firms, multinational corporates, CEOs, and founders.</p>
+      <br/>
+      <p>The model: connect the world's leading educators and researchers with purpose-driven entrepreneurs and executives. Identify founders with merit, market fit, and maturity. Educate them. Grow them through the Magna network.</p>
+      <br/>
+      <p style="font-style:italic; font-size:0.82rem;">"Deep-purpose learning, connecting, and collaboration takes time. This is not a place for the faint of heart."</p>
+    </div>
+    <div class="card">
+      <h2>The Positioning</h2>
+      <p style="margin-bottom:6px;"><span class="highlight">Tagline:</span> Delivering clarity where complexity meets capital allocation.</p>
+      <p style="margin-bottom:14px; font-size:0.8rem; color:var(--creme-dim);">Magna sits at the intersection of depth and clarity. Not a news aggregator. Not a trend-chaser. A firm that sees the full map while others are studying single roads.</p>
+      <div>
+        <span class="tag">Strategy</span>
+        <span class="tag">Innovation</span>
+        <span class="tag">Culture</span>
+        <span class="tag">Purpose</span>
+        <span class="tag">Leadership Communication</span>
+        <span class="tag">Negotiation</span>
+        <span class="tag">Capital Allocation</span>
+        <span class="tag">Sector Intelligence</span>
+        <span class="tag">Geographic Intelligence</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- THE MAGNA COMPASS -->
+  <div class="section-label">The Magna Compass — Global Industry Blueprint · 33 Sectors · 3 Pillars · 4 Geographic Dimensions</div>
+  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:24px;">
+
+    <div class="arm-card" style="border-top: 3px solid #3a7a52;">
+      <div style="font-size:0.6rem; letter-spacing:0.22em; text-transform:uppercase; color:#5aaa72; margin-bottom:10px; font-weight:600;">Pillar I · Core · 15 Sectors · Stable Value Creation</div>
+      <p style="font-style:italic; margin-bottom:14px; font-size:0.74rem; color:var(--creme-dim);">"The bedrock of every economy: where capital compounds reliably across cycles, geographies, and generations."</p>
+      <div>
+        <span class="tag" style="background:rgba(45,90,61,0.2); border-color:rgba(58,122,82,0.5);">Energy &amp; Utilities</span>
+        <span class="tag" style="background:rgba(45,90,61,0.2); border-color:rgba(58,122,82,0.5);">Financial Services</span>
+        <span class="tag" style="background:rgba(45,90,61,0.2); border-color:rgba(58,122,82,0.5);">Advanced Manufacturing</span>
+        <span class="tag" style="background:rgba(45,90,61,0.2); border-color:rgba(58,122,82,0.5);">Real Estate</span>
+        <span class="tag" style="background:rgba(45,90,61,0.2); border-color:rgba(58,122,82,0.5);">Logistics &amp; Transport</span>
+        <span class="tag" style="background:rgba(45,90,61,0.2); border-color:rgba(58,122,82,0.5);">Retail &amp; Consumer</span>
+        <span class="tag" style="background:rgba(45,90,61,0.2); border-color:rgba(58,122,82,0.5);">Agriculture &amp; Food</span>
+        <span class="tag" style="background:rgba(45,90,61,0.2); border-color:rgba(58,122,82,0.5);">Construction &amp; Infrastructure</span>
+        <span class="tag" style="background:rgba(45,90,61,0.2); border-color:rgba(58,122,82,0.5);">Healthcare Services</span>
+        <span class="tag" style="background:rgba(45,90,61,0.2); border-color:rgba(58,122,82,0.5);">Media &amp; Telecom</span>
+        <span class="tag" style="background:rgba(45,90,61,0.2); border-color:rgba(58,122,82,0.5);">Mining &amp; Metals</span>
+        <span class="tag" style="background:rgba(45,90,61,0.2); border-color:rgba(58,122,82,0.5);">Chemical Industries</span>
+        <span class="tag" style="background:rgba(45,90,61,0.2); border-color:rgba(58,122,82,0.5);">Defence &amp; Security</span>
+        <span class="tag" style="background:rgba(45,90,61,0.2); border-color:rgba(58,122,82,0.5);">Water &amp; Environment</span>
+        <span class="tag" style="background:rgba(45,90,61,0.2); border-color:rgba(58,122,82,0.5);">Professional Services</span>
+      </div>
+    </div>
+
+    <div class="arm-card" style="border-top: 3px solid #2a4a6e;">
+      <div style="font-size:0.6rem; letter-spacing:0.22em; text-transform:uppercase; color:#5a85b5; margin-bottom:10px; font-weight:600;">Pillar II · Emerging · 12 Sectors · Transformative Growth</div>
+      <p style="font-style:italic; margin-bottom:14px; font-size:0.74rem; color:var(--creme-dim);">"Where the next decade of global wealth creation will be won — for investors who understand the signal from the noise."</p>
+      <div>
+        <span class="tag" style="background:rgba(42,74,110,0.2); border-color:rgba(42,74,110,0.5);">AI &amp; Data</span>
+        <span class="tag" style="background:rgba(42,74,110,0.2); border-color:rgba(42,74,110,0.5);">Biotechnology &amp; Genomics</span>
+        <span class="tag" style="background:rgba(42,74,110,0.2); border-color:rgba(42,74,110,0.5);">Space &amp; Satellite Economy</span>
+        <span class="tag" style="background:rgba(42,74,110,0.2); border-color:rgba(42,74,110,0.5);">Climate Technology</span>
+        <span class="tag" style="background:rgba(42,74,110,0.2); border-color:rgba(42,74,110,0.5);">Advanced Materials</span>
+        <span class="tag" style="background:rgba(42,74,110,0.2); border-color:rgba(42,74,110,0.5);">Quantum Computing</span>
+        <span class="tag" style="background:rgba(42,74,110,0.2); border-color:rgba(42,74,110,0.5);">Digital Assets &amp; Web3</span>
+        <span class="tag" style="background:rgba(42,74,110,0.2); border-color:rgba(42,74,110,0.5);">Autonomous Systems &amp; Robotics</span>
+        <span class="tag" style="background:rgba(42,74,110,0.2); border-color:rgba(42,74,110,0.5);">New Energy Storage</span>
+        <span class="tag" style="background:rgba(42,74,110,0.2); border-color:rgba(42,74,110,0.5);">Next-Gen Semiconductors</span>
+        <span class="tag" style="background:rgba(42,74,110,0.2); border-color:rgba(42,74,110,0.5);">Synthetic Biology</span>
+        <span class="tag" style="background:rgba(42,74,110,0.2); border-color:rgba(42,74,110,0.5);">Extended Reality &amp; Metaverse</span>
+      </div>
+    </div>
+
+    <div class="arm-card" style="border-top: 3px solid #6e3a5a;">
+      <div style="font-size:0.6rem; letter-spacing:0.22em; text-transform:uppercase; color:#b07090; margin-bottom:10px; font-weight:600;">Pillar III · Social · 6 Sectors · Societal Resilience</div>
+      <p style="font-style:italic; margin-bottom:14px; font-size:0.74rem; color:var(--creme-dim);">"The sectors that define whether societies hold together — increasingly the most critical allocation for long-duration investors."</p>
+      <div>
+        <span class="tag" style="background:rgba(110,58,90,0.2); border-color:rgba(110,58,90,0.5);">Healthcare Access &amp; Systems</span>
+        <span class="tag" style="background:rgba(110,58,90,0.2); border-color:rgba(110,58,90,0.5);">Education &amp; Human Capital</span>
+        <span class="tag" style="background:rgba(110,58,90,0.2); border-color:rgba(110,58,90,0.5);">Affordable Housing</span>
+        <span class="tag" style="background:rgba(110,58,90,0.2); border-color:rgba(110,58,90,0.5);">Public Safety &amp; Justice</span>
+        <span class="tag" style="background:rgba(110,58,90,0.2); border-color:rgba(110,58,90,0.5);">Arts, Culture &amp; Creative Economy</span>
+        <span class="tag" style="background:rgba(110,58,90,0.2); border-color:rgba(110,58,90,0.5);">Food Security &amp; Nutrition</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="card" style="margin-bottom:48px;">
+    <h2 style="margin-bottom:12px;">Geographic Intelligence — 6 Frontier Growth Corridors</h2>
+    <p style="margin-bottom:14px; font-size:0.8rem; color:var(--creme-dim);">"Understanding where industries are won shapes which investments succeed: geography is strategy made manifest."</p>
+    <div>
+      <span class="tag">Indo-Pacific</span>
+      <span class="tag">Gulf Corridor</span>
+      <span class="tag">African Continental</span>
+      <span class="tag">Latin America</span>
+      <span class="tag">European Resilience</span>
+      <span class="tag">Central Asian Silk Road</span>
+    </div>
+  </div>
+
+  <!-- THREE ARMS -->
+  <div class="section-label">The Three Arms of Magna</div>
+  <div class="arms-grid">
+    <div class="arm-card">
+      <div class="arm-letter">S</div>
+      <h3>Magna School</h3>
+      <p>Research-based learning frameworks delivered through individualized workshops and cohorts. A curated content library compiled by education and industry experts. Personalized Magna Concierge onboarding. The ABCD teaching methodology at the core.</p>
+    </div>
+    <div class="arm-card">
+      <div class="arm-letter">C</div>
+      <h3>Magna Capital</h3>
+      <p>Early-stage venture investing guided by entrepreneur empowerment and purpose. Every investor goes through the Magna curriculum first — philosophy before capital. Long-term partnership, not a quick return play.</p>
+    </div>
+    <div class="arm-card">
+      <div class="arm-letter">N</div>
+      <h3>Magna Network</h3>
+      <p>Curated community connecting executives, owners, and entrepreneurs matched by industry, need, and enterprise stage. The Magna network compounds over time — introductions by people who know both sides of the room.</p>
+    </div>
+  </div>
+
+  <!-- TEACHING METHODOLOGY -->
+  <div class="section-label">Teaching Methodology — ABCD Framework</div>
+  <div class="abcd-grid">
+    <div class="abcd-card">
+      <div class="letter">A</div>
+      <h3>Awareness</h3>
+      <p>The foundation. Knowing yourself, your context, and what is actually happening around you — before you act.</p>
+    </div>
+    <div class="abcd-card">
+      <div class="letter">B</div>
+      <h3>Balance</h3>
+      <p>Holding competing priorities without losing clarity. The capacity to be decisive without being rigid.</p>
+    </div>
+    <div class="abcd-card">
+      <div class="letter">C</div>
+      <h3>Creativity</h3>
+      <p>The ability to see paths others don't. Building solutions from constraints, not in spite of them.</p>
+    </div>
+    <div class="abcd-card">
+      <div class="letter">D</div>
+      <h3>Design</h3>
+      <p>Translating vision into structure. The discipline to architect outcomes, not just pursue them.</p>
+    </div>
+  </div>
+
+  <!-- TEAM -->
+  <div class="section-label">The Team</div>
+  <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:48px;">
+    <div class="card" style="padding:24px;">
+      <h2 style="font-size:1rem; margin-bottom:8px;">Shailu</h2>
+      <p style="font-size:0.72rem; color:var(--soil); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:10px;">Founder · Strategic Voice</p>
+      <p style="font-size:0.78rem;">Serial entrepreneur. 3 exits. 25+ years. The intellect and philosophy behind everything Magna builds.</p>
+    </div>
+    <div class="card" style="padding:24px;">
+      <h2 style="font-size:1rem; margin-bottom:8px;">Sireesha</h2>
+      <p style="font-size:0.72rem; color:var(--soil); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:10px;">Co-Founder · Operations</p>
+      <p style="font-size:0.78rem;">Shailu's partner and co-founder. Backend operations, platform infrastructure, and business continuity.</p>
+    </div>
+    <div class="card" style="padding:24px;">
+      <h2 style="font-size:1rem; margin-bottom:8px;">Raju</h2>
+      <p style="font-size:0.72rem; color:var(--soil); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:10px;">Team · Technical &amp; Design</p>
+      <p style="font-size:0.78rem;">Image bank, Wix development, graphic design coordination. The technical backbone of Magna's digital presence.</p>
+    </div>
+    <div class="card" style="padding:24px;">
+      <h2 style="font-size:1rem; margin-bottom:8px;">Mehr</h2>
+      <p style="font-size:0.72rem; color:var(--soil); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:10px;">Creative Director</p>
+      <p style="font-size:0.78rem;">Leads creative strategy for Magna and Shailosophy. Content architecture, brand voice, storytelling direction, social media, and digital presence.</p>
+    </div>
+  </div>
+
+  <!-- SHAILOSOPHY -->
+  <div class="section-label">Related Brand — Shailosophy</div>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:48px;">
+    <div class="card">
+      <h2>Shailosophy</h2>
+      <p>Shailu's personal philosophy and leadership brand. Lives at <span class="highlight">shailosophy.life</span>. Covers reflective leadership, life wisdom, emotional intelligence, and human potential — the personal voice behind the institutional Magna brand.</p>
+      <br/>
+      <p>Active projects: website revamp (structural redesign, cleaner intellectual flow, premium digital presence) and a joint Magna/Shailosophy newsletter.</p>
+    </div>
+    <div class="card">
+      <h2>"How Shailu Would Do It"</h2>
+      <p>A recurring video series — Shailu's personal social media IP. Built around topic &amp; question development, a defined episode framework, and multi-platform distribution. 1.5 hours of shoot time per session.</p>
+      <br/>
+      <p style="font-size:0.78rem; color:var(--creme-dim);">Production setup: lean (iPhone + tripod) or professional (camera person + podcast lighting). Budget pending.</p>
+    </div>
+  </div>
+
+  <!-- COLOSSEUM GROUP -->
+  <div class="section-label">The Parent Ecosystem — Colosseum Group</div>
+  <div style="margin-bottom:20px;" class="card">
+    <h2>Colosseum Group</h2>
+    <p>Chicago-based multinational enterprise, est. 2004. Spans investments, incubation, engineering, design, research, and education across the Americas, EMEA, and Asia. Magna Education operates as one of its primary ventures.</p>
+  </div>
+  <div class="divisions-grid">
+    <div class="division-card"><h4>Academy</h4><p>Entrepreneurial education and executive training.</p></div>
+    <div class="division-card"><h4>Foundation</h4><p>Non-profit enablement and social impact. Building self-belief across generations.</p></div>
+    <div class="division-card"><h4>Labs</h4><p>Research and market validation for emerging ideas.</p></div>
+    <div class="division-card"><h4>Launchpad</h4><p>Early-stage product development support.</p></div>
+    <div class="division-card"><h4>Partners</h4><p>Investment guidance and pitch preparation.</p></div>
+    <div class="division-card"><h4>Studios</h4><p>MVP framework creation and design.</p></div>
+    <div class="division-card"><h4>Ventures</h4><p>Full product development — from design through infrastructure.</p></div>
+    <div class="division-card"><h4>Magna Education</h4><p>Global school for entrepreneurship. The flagship brand.</p></div>
+  </div>
+
+  <!-- NETWORK STATS -->
+  <div class="section-label">Priority Community — At a Glance</div>
+  <div class="stats-row" style="margin-bottom:24px;">
+    <div class="stat-card"><div class="num">94</div><div class="label">Priority Members</div></div>
+    <div class="stat-card"><div class="num">5,000+</div><div class="label">Executives Guided</div></div>
+    <div class="stat-card"><div class="num">50+</div><div class="label">Startups Supported</div></div>
+    <div class="stat-card"><div class="num">3</div><div class="label">Partner Networks<br/>(YPO · OPM · NASA)</div></div>
+  </div>
+
+  <!-- GEO + INDUSTRY -->
+  <div class="tags-section">
+    <div class="card">
+      <h2 style="margin-bottom:16px;">Community Geographies</h2>
+      <div>
+        <span class="tag">Chicago</span><span class="tag">Dubai</span><span class="tag">New Delhi</span>
+        <span class="tag">Hyderabad</span><span class="tag">Mumbai</span><span class="tag">New York</span>
+        <span class="tag">London</span><span class="tag">Boston</span><span class="tag">Miami</span>
+        <span class="tag">Bengaluru</span><span class="tag">Chennai</span><span class="tag">Paris</span>
+        <span class="tag">Dallas</span><span class="tag">New Jersey</span><span class="tag">San Francisco</span>
+        <span class="tag">Bangkok</span><span class="tag">Colombo</span><span class="tag">Brazil</span>
+        <span class="tag">Nigeria</span><span class="tag">San Diego</span>
+      </div>
+    </div>
+    <div class="card">
+      <h2 style="margin-bottom:16px;">Industry Footprint</h2>
+      <div>
+        <span class="tag">Real Estate</span><span class="tag">Venture Capital</span><span class="tag">FinTech</span>
+        <span class="tag">IT Services</span><span class="tag">EdTech</span><span class="tag">Pharma &amp; Life Sciences</span>
+        <span class="tag">Media &amp; Journalism</span><span class="tag">Luxury Goods</span><span class="tag">Management Consulting</span>
+        <span class="tag">Healthcare</span><span class="tag">Agribusiness</span><span class="tag">Semiconductors</span>
+        <span class="tag">Energy &amp; Renewables</span><span class="tag">Supply Chain</span><span class="tag">F&amp;B &amp; Hospitality</span>
+        <span class="tag">Legal Services</span><span class="tag">Aerospace</span><span class="tag">Transportation</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- NETWORK TABLE -->
+  <!-- network table stored in brain only -->
+
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     TAB 2 — CONTENT ENGINE
+═══════════════════════════════════════════════════ -->
+<div class="panel" id="tab-content">
+
+  <!-- Voice System -->
+  <div class="section-label">The Six-Voice System</div>
+  <div class="voice-grid">
+    <div class="voice-card">
+      <div class="name">Naval Ravikant</div>
+      <div class="role">Magna Mondays · Instagram</div>
+      <p>Philosophical and precise. One big idea, stripped bare. No warm-ups, no padding.</p>
+    </div>
+    <div class="voice-card">
+      <div class="name">Ray Dalio</div>
+      <div class="role">The Principle · Digital Lectures · Compass Framework</div>
+      <p>Systems thinking. Numbered principles. Rigorous, repeatable, data-grounded.</p>
+    </div>
+    <div class="voice-card">
+      <div class="name">Seth Godin</div>
+      <div class="role">The Sharp Take · Wisdom Wednesdays</div>
+      <p>Contrarian reframes. Two sentences that flip the room. Never obvious.</p>
+    </div>
+    <div class="voice-card">
+      <div class="name">Simon Sinek</div>
+      <div class="role">Founder Fridays · Behind the Build</div>
+      <p>Why-first storytelling. The human before the company. Inflection moments made vivid.</p>
+    </div>
+    <div class="voice-card">
+      <div class="name">Daniel Pink</div>
+      <div class="role">Inspiration Weekends</div>
+      <p>Reflective and motivating. Behavioural science meets real-world application. Hopeful without being hollow.</p>
+    </div>
+    <div class="voice-card">
+      <div class="name">Tony Robbins</div>
+      <div class="role">Event CTAs · Reserved</div>
+      <p>Energy and urgency. Reserved exclusively for live event calls-to-action. Never in regular content.</p>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:8px;">The Nine Content Series</div>
+  <div class="series-grid">
+    <div class="series-card">
+      <div class="platform">Instagram · Monday</div>
+      <h3>Magna Mondays</h3>
+      <div class="hashtag">#MagnaMondays</div>
+      <div class="meta"><span class="meta-pill">Static Post</span><span class="meta-pill">Naval Voice</span><span class="meta-pill">Weekly</span></div>
+      <p>One big, standalone idea. Screenshot-worthy in the first line. Philosophical and stripped bare — the kind of thought that makes a founder stop scrolling.</p>
+    </div>
+    <div class="series-card">
+      <div class="platform">Instagram · Wednesday</div>
+      <h3>Wisdom Wednesdays</h3>
+      <div class="hashtag">#WisdomWednesdays</div>
+      <div class="meta"><span class="meta-pill">Carousel</span><span class="meta-pill">Godin Voice</span><span class="meta-pill">Weekly</span></div>
+      <p>Brand case studies — real companies, real decisions, real lessons. Each slide builds a tighter argument.</p>
+    </div>
+    <div class="series-card">
+      <div class="platform">Instagram · Friday</div>
+      <h3>Founder Fridays</h3>
+      <div class="hashtag">#FounderFridays</div>
+      <div class="meta"><span class="meta-pill">Reel / Carousel</span><span class="meta-pill">Sinek Voice</span><span class="meta-pill">Weekly</span></div>
+      <p>Founder inflection stories. The moment everything changed. Why-first — the person before the company.</p>
+    </div>
+    <div class="series-card">
+      <div class="platform">Instagram · Sunday</div>
+      <h3>Inspiration Weekends</h3>
+      <div class="hashtag">#InspirationWeekends</div>
+      <div class="meta"><span class="meta-pill">Static Post</span><span class="meta-pill">Pink Voice</span><span class="meta-pill">Weekly</span></div>
+      <p>Reflective. Designed for the founder catching breath on a Sunday. Behavioural science meets lived experience.</p>
+    </div>
+    <div class="series-card">
+      <div class="platform">LinkedIn · Tuesday</div>
+      <h3>The Principle</h3>
+      <div class="hashtag">#ThePrinciple</div>
+      <div class="meta"><span class="meta-pill">Long-Form Post</span><span class="meta-pill">Dalio Voice</span><span class="meta-pill">Weekly</span></div>
+      <p>Numbered principles. Systems thinking applied to the real decisions founders face. Drawn from two decades on the ground — not a textbook.</p>
+    </div>
+    <div class="series-card">
+      <div class="platform">LinkedIn · Thursday</div>
+      <h3>The Sharp Take</h3>
+      <div class="hashtag">#TheSharpTake</div>
+      <div class="meta"><span class="meta-pill">Short Post</span><span class="meta-pill">Godin Voice</span><span class="meta-pill">Weekly</span></div>
+      <p>Two sentences. One contrarian reframe. Flips a conventional wisdom and makes the reader think: "I've never heard it put that way."</p>
+    </div>
+    <div class="series-card">
+      <div class="platform">LinkedIn · Saturday (Bi-weekly)</div>
+      <h3>Digital Lectures</h3>
+      <div class="hashtag">#DigitalLectures</div>
+      <div class="meta"><span class="meta-pill">8–10 Slide Document</span><span class="meta-pill">Dalio Voice</span><span class="meta-pill">Bi-weekly</span></div>
+      <p>Full lectures. The ungated give. Dense, useful, and worth saving — not just reading once.</p>
+    </div>
+    <div class="series-card">
+      <div class="platform">LinkedIn · Saturday (Alt. weeks)</div>
+      <h3>Behind the Build</h3>
+      <div class="hashtag">#BehindTheBuild</div>
+      <div class="meta"><span class="meta-pill">Community Scenes</span><span class="meta-pill">Sinek Voice</span><span class="meta-pill">Bi-weekly</span></div>
+      <p>Scenes from inside the Magna community — workshop moments, cohort conversations, founder exchanges. Trust built in public.</p>
+    </div>
+    <div class="series-card">
+      <div class="platform">LinkedIn · Monthly</div>
+      <h3>Compass Framework</h3>
+      <div class="hashtag">#CompassFramework</div>
+      <div class="meta"><span class="meta-pill">Document Release</span><span class="meta-pill">Dalio Voice</span><span class="meta-pill">Monthly</span></div>
+      <p>Full framework release. The definitive Magna document of the month — the one that gets saved, shared, and referenced.</p>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:52px;">Platform Architecture</div>
+  <div class="platform-grid">
+    <div class="card" style="text-align:center;">
+      <h2 style="font-size:1rem; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:12px;">Instagram</h2>
+      <p><strong style="color:var(--creme);">Magna Brand Account</strong><br/>Emotional resonance. Recognition over reach. Founders screenshot before 9am.</p>
+    </div>
+    <div class="card" style="text-align:center;">
+      <h2 style="font-size:1rem; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:12px;">LinkedIn</h2>
+      <p><strong style="color:var(--creme);">Shailu's Personal Brand</strong><br/>Thought leadership. No selling. Ever. Principles that build credibility over time.</p>
+    </div>
+    <div class="card" style="text-align:center;">
+      <h2 style="font-size:1rem; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:12px;">YouTube</h2>
+      <p><strong style="color:var(--creme);">Magna Academy</strong><br/>Long-form lectures. Ungated. Full frameworks without a paywall.</p>
+    </div>
+    <div class="card" style="text-align:center;">
+      <h2 style="font-size:1rem; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:12px;">Twitter / X</h2>
+      <p><strong style="color:var(--creme);">Compressed Mirror</strong><br/>IG and LI content distilled. Same voice, tighter format, wider reach.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Magna Brain &nbsp;·&nbsp; Quiet Confidence. Depth of Thought. Enduring Credibility. &nbsp;·&nbsp; 2026
+</footer>
+
+<script>
+  function showTab(id, btn) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('nav.tabs button').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
