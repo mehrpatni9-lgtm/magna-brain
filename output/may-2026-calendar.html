@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>May 2026 — Content Calendar — Magna</title>
+<link href="https://fonts.googleapis.com/css2?family=Forum&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --charcoal: #2D2D2D;
+    --creme: #E8DFC8;
+    --creme-dim: rgba(232,223,200,0.6);
+    --creme-soft: rgba(232,223,200,0.08);
+    --soil: #5C3518;
+    --taupe: #483C32;
+    --gold: #9B7C35;
+    --border: rgba(232,223,200,0.12);
+
+    --academy: #4a7c6f;
+    --academy-bg: rgba(74,124,111,0.12);
+    --strategy: #7c6a4a;
+    --strategy-bg: rgba(124,106,74,0.12);
+    --capital: #4a5d7c;
+    --capital-bg: rgba(74,93,124,0.12);
+
+    --ig: #c96a3a;
+    --ig-bg: rgba(201,106,58,0.12);
+    --li: #2867b2;
+    --li-bg: rgba(40,103,178,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--charcoal);
+    color: var(--creme);
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    background: var(--charcoal);
+    z-index: 100;
+  }
+  nav .logo { font-family: 'Forum', serif; font-size: 1.1rem; letter-spacing: 0.1em; color: var(--creme); text-decoration: none; }
+  nav .nav-links { display: flex; gap: 28px; }
+  nav .nav-links a { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--creme-dim); text-decoration: none; }
+  nav .nav-links a:hover { color: var(--creme); }
+
+  /* HEADER */
+  header {
+    padding: 64px 40px 48px;
+    border-bottom: 1px solid var(--border);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  header .eyebrow {
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+  header h1 {
+    font-family: 'Forum', serif;
+    font-size: 2.6rem;
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--creme);
+    margin-bottom: 16px;
+  }
+  header p {
+    font-size: 0.85rem;
+    color: var(--creme-dim);
+    line-height: 1.7;
+    max-width: 560px;
+  }
+
+  /* LEGEND */
+  .legend {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 28px 40px;
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+  }
+  .legend-group { display: flex; gap: 16px; align-items: center; }
+  .legend-label { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--creme-dim); margin-right: 4px; }
+  .pill {
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 2px;
+    font-weight: 500;
+  }
+  .pill.academy { background: var(--academy-bg); color: #7fbfb2; border: 1px solid rgba(74,124,111,0.3); }
+  .pill.strategy { background: var(--strategy-bg); color: #c4a97a; border: 1px solid rgba(124,106,74,0.3); }
+  .pill.capital { background: var(--capital-bg); color: #7a9fc4; border: 1px solid rgba(74,93,124,0.3); }
+  .pill.ig { background: var(--ig-bg); color: #e8956a; border: 1px solid rgba(201,106,58,0.3); }
+  .pill.li { background: var(--li-bg); color: #6a9ed4; border: 1px solid rgba(40,103,178,0.3); }
+
+  /* WEEK BLOCK */
+  .week-block {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 40px 0;
+  }
+  .week-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .week-title {
+    font-family: 'Forum', serif;
+    font-size: 1.4rem;
+    color: var(--creme);
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* POST GRID */
+  .post-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    margin-bottom: 56px;
+  }
+
+  /* POST CARD */
+  .post-card {
+    background: var(--creme-soft);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: border-color 0.2s;
+  }
+  .post-card:hover { border-color: rgba(232,223,200,0.28); }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .card-date {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--creme-dim);
+  }
+  .card-badges { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+
+  .series-name {
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .card-hook {
+    font-family: 'Forum', serif;
+    font-size: 1rem;
+    line-height: 1.45;
+    color: var(--creme);
+  }
+
+  .card-body {
+    font-size: 0.75rem;
+    line-height: 1.75;
+    color: var(--creme-dim);
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+  }
+  .card-geo {
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--creme-dim);
+  }
+  .card-source {
+    font-size: 0.58rem;
+    color: var(--gold);
+    opacity: 0.7;
+  }
+
+  /* FORMAT TAG */
+  .format-tag {
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--creme-dim);
+    background: rgba(232,223,200,0.05);
+    border: 1px solid var(--border);
+    padding: 2px 8px;
+    border-radius: 2px;
+  }
+
+  /* DIVIDER */
+  .week-divider {
+    max-width: 1100px;
+    margin: 0 auto 0;
+    padding: 0 40px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* FOOTER */
+  footer {
+    max-width: 1100px;
+    margin: 48px auto 0;
+    padding: 28px 40px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer p { font-size: 0.65rem; color: var(--creme-dim); letter-spacing: 0.06em; }
+
+  @media (max-width: 700px) {
+    header, .legend, .week-block, footer { padding-left: 20px; padding-right: 20px; }
+    header h1 { font-size: 1.8rem; }
+    nav { padding: 0 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="/magna-brain/">MAGNA</a>
+  <div class="nav-links">
+    <a href="/magna-brain/brain/">Brain</a>
+    <a href="/magna-brain/engine/">Engine</a>
+    <a href="/magna-brain/magna-brain-overview.html">Overview</a>
+  </div>
+</nav>
+
+<header>
+  <div class="eyebrow">Content Calendar</div>
+  <h1>May 2026 — Two Weeks</h1>
+  <p>10 posts. Three arms balanced across Academy, Strategy, and Capital. Four geographies: USA, UAE, India, Global. Every factual claim sourced.</p>
+</header>
+
+<div class="legend">
+  <div class="legend-group">
+    <span class="legend-label">Arm</span>
+    <span class="pill academy">Academy</span>
+    <span class="pill strategy">Strategy</span>
+    <span class="pill capital">Capital</span>
+  </div>
+  <div class="legend-group">
+    <span class="legend-label">Platform</span>
+    <span class="pill ig">Instagram</span>
+    <span class="pill li">LinkedIn</span>
+  </div>
+</div>
+
+<!-- WEEK 1 -->
+<div class="week-block">
+  <div class="week-label">Week One</div>
+  <div class="week-title">May 5 – 10, 2026</div>
+  <div class="post-grid">
+
+    <!-- POST 1 -->
+    <div class="post-card">
+      <div class="card-top">
+        <div>
+          <div class="card-date">Monday · May 5</div>
+          <div class="series-name">#MagnaMondays</div>
+        </div>
+        <div class="card-badges">
+          <span class="pill ig">Instagram</span>
+          <span class="pill strategy">Strategy</span>
+        </div>
+      </div>
+      <div class="card-hook">"Speed is a proxy for confidence. Most founders mistake it for clarity."</div>
+      <div class="card-body">The $10M founder who moves fast is often avoiding the question they don't want to answer. The $50M founder knows which 3 decisions actually matter — and is slow and deliberate on exactly those. One idea. Naval voice. Screenshot-worthy in the first line.</div>
+      <div class="card-footer">
+        <span class="card-geo">🇺🇸 USA · Global</span>
+        <span class="format-tag">Single Post</span>
+      </div>
+    </div>
+
+    <!-- POST 2 -->
+    <div class="post-card">
+      <div class="card-top">
+        <div>
+          <div class="card-date">Tuesday · May 6</div>
+          <div class="series-name">#ThePrinciple</div>
+        </div>
+        <div class="card-badges">
+          <span class="pill li">LinkedIn</span>
+          <span class="pill academy">Academy</span>
+        </div>
+      </div>
+      <div class="card-hook">India raised $11B in 2025. Deals fell 39%. That's not a slowdown — that's a market maturing.</div>
+      <div class="card-body">3 numbered principles for what this means for Indian founders building in 2026. Domestic funds now lead (45% of all funding, up from 28% in 2020). Deep tech is where the next decade flows. Dalio voice — pattern recognition distilled.</div>
+      <div class="card-footer">
+        <span class="card-geo">🇮🇳 India — Bangalore · Mumbai</span>
+        <span class="card-source">Source: TechCrunch Dec 2025</span>
+      </div>
+    </div>
+
+    <!-- POST 3 -->
+    <div class="post-card">
+      <div class="card-top">
+        <div>
+          <div class="card-date">Wednesday · May 7</div>
+          <div class="series-name">#WisdomWednesdays</div>
+        </div>
+        <div class="card-badges">
+          <span class="pill ig">Instagram</span>
+          <span class="pill academy">Academy</span>
+        </div>
+      </div>
+      <div class="card-hook">Everyone called MENA the "emerging opportunity" for a decade. $7.5 billion in 2025 says it's not emerging anymore.</div>
+      <div class="card-body">225% year-on-year increase. UAE leading the region. The founders who positioned early aren't scrambling now. Godin-style reframe — two lines that flip the room. Savable for anyone watching the GCC.</div>
+      <div class="card-footer">
+        <span class="card-geo">🇦🇪 UAE · MENA</span>
+        <span class="card-source">Source: Wamda Jan 2026</span>
+      </div>
+    </div>
+
+    <!-- POST 4 -->
+    <div class="post-card">
+      <div class="card-top">
+        <div>
+          <div class="card-date">Thursday · May 8</div>
+          <div class="series-name">#TheSharpTake</div>
+        </div>
+        <div class="card-badges">
+          <span class="pill li">LinkedIn</span>
+          <span class="pill capital">Capital</span>
+        </div>
+      </div>
+      <div class="card-hook">96% of UAE tech funding flows through Dubai. If you're raising in the UAE and not in that city — you're not in that conversation.</div>
+      <div class="card-body">Carousel: 6 active UAE firms — BECO Capital, Shorooq Partners, Nuwa Capital, Wamda Capital, Dubai Future District Fund — thesis, check size, what they back. Slide-by-slide, fully sourced. The most savable post of the week.</div>
+      <div class="card-footer">
+        <span class="card-geo">🇦🇪 UAE · GCC Founders</span>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span class="card-source">Source: Economy Middle East 2026</span>
+          <span class="format-tag">Carousel</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST 5 -->
+    <div class="post-card">
+      <div class="card-top">
+        <div>
+          <div class="card-date">Saturday · May 10</div>
+          <div class="series-name">#BehindTheBuild</div>
+        </div>
+        <div class="card-badges">
+          <span class="pill li">LinkedIn</span>
+          <span class="pill strategy">Strategy</span>
+        </div>
+      </div>
+      <div class="card-hook">India has 400,000 software engineers in Bangalore alone. And yet most Indian founders are still building for a customer 9,000 miles away.</div>
+      <div class="card-body">Before the "when do we expand to the US" — ask the why. The founders who built the most durable companies from India answered a different question first. Sinek voice — human before company. India-first thesis, not anti-global.</div>
+      <div class="card-footer">
+        <span class="card-geo">🇮🇳 India — All Cities</span>
+        <span class="card-source">Source: Growthlist 2026</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="week-divider"></div>
+
+<!-- WEEK 2 -->
+<div class="week-block">
+  <div class="week-label">Week Two</div>
+  <div class="week-title">May 12 – 17, 2026</div>
+  <div class="post-grid">
+
+    <!-- POST 6 -->
+    <div class="post-card">
+      <div class="card-top">
+        <div>
+          <div class="card-date">Monday · May 12</div>
+          <div class="series-name">#MagnaMondays</div>
+        </div>
+        <div class="card-badges">
+          <span class="pill ig">Instagram</span>
+          <span class="pill capital">Capital</span>
+        </div>
+      </div>
+      <div class="card-hook">US venture exits hit $301B in 2025. Up from $154B in 2024. The market is moving. The question is whether your fundamentals are.</div>
+      <div class="card-body">The top 5 companies raised $84B — 20% of all global VC. The capital is concentrating fast. For everyone else: revenue, retention, clear path to profitability. The era of raising on a story ended. Naval voice, compressed truth.</div>
+      <div class="card-footer">
+        <span class="card-geo">🇺🇸 USA</span>
+        <span class="card-source">Source: SVB State of Markets 2026</span>
+      </div>
+    </div>
+
+    <!-- POST 7 -->
+    <div class="post-card">
+      <div class="card-top">
+        <div>
+          <div class="card-date">Tuesday · May 13</div>
+          <div class="series-name">#ThePrinciple</div>
+        </div>
+        <div class="card-badges">
+          <span class="pill li">LinkedIn</span>
+          <span class="pill strategy">Strategy</span>
+        </div>
+      </div>
+      <div class="card-hook">Global VC fundraising hit a 10-year low. Dry powder sits at $1.1 trillion. The money exists — the bar to access it has moved.</div>
+      <div class="card-body">3 principles for raising in a market that has fundamentally changed. You're not competing against other startups — you're competing against inaction. Geography is now a competitive advantage. Dalio voice, numbered, actionable.</div>
+      <div class="card-footer">
+        <span class="card-geo">🇮🇳 India · 🇺🇸 USA</span>
+        <span class="card-source">Source: Cambridge Associates 2026</span>
+      </div>
+    </div>
+
+    <!-- POST 8 -->
+    <div class="post-card">
+      <div class="card-top">
+        <div>
+          <div class="card-date">Wednesday · May 14</div>
+          <div class="series-name">#WisdomWednesdays</div>
+        </div>
+        <div class="card-badges">
+          <span class="pill ig">Instagram</span>
+          <span class="pill academy">Academy</span>
+        </div>
+      </div>
+      <div class="card-hook">Bangalore raised $2.5B in H1 2025. 26% of all Indian startup funding from one city. That's not an ecosystem story. That's a concentration problem disguised as success.</div>
+      <div class="card-body">The founders outside Bangalore — Chennai, Hyderabad, Pune — aren't just underfunded. They have a structural disadvantage that has nothing to do with their idea. The gap between where insight lives and where money flows is where the best opportunities always are.</div>
+      <div class="card-footer">
+        <span class="card-geo">🇮🇳 India — Bangalore · Chennai · Hyderabad</span>
+        <span class="card-source">Source: Growthlist 2026 · TechCrunch</span>
+      </div>
+    </div>
+
+    <!-- POST 9 -->
+    <div class="post-card">
+      <div class="card-top">
+        <div>
+          <div class="card-date">Thursday · May 15</div>
+          <div class="series-name">#TheSharpTake</div>
+        </div>
+        <div class="card-badges">
+          <span class="pill li">LinkedIn</span>
+          <span class="pill capital">Capital</span>
+        </div>
+      </div>
+      <div class="card-hook">Thoma Bravo manages $179B in assets. From Chicago. Most founders outside the city have no idea who else is in that room.</div>
+      <div class="card-body">Carousel: Chicago's PE and VC landscape — Thoma Bravo, GTCR (40+ years), ARCH Venture ($3.1B), Lightbank. Who they back, what their thesis is, what they actually look for. The Midwest is not a consolation prize — it's a different kind of capital.</div>
+      <div class="card-footer">
+        <span class="card-geo">🇺🇸 USA — Chicago · Midwest</span>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span class="card-source">Source: Chicago Business Journal</span>
+          <span class="format-tag">Carousel</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST 10 -->
+    <div class="post-card">
+      <div class="card-top">
+        <div>
+          <div class="card-date">Saturday · May 17</div>
+          <div class="series-name">#DigitalLectures</div>
+        </div>
+        <div class="card-badges">
+          <span class="pill li">LinkedIn</span>
+          <span class="pill academy">Academy</span>
+        </div>
+      </div>
+      <div class="card-hook">There are four types of capital available to a scaling founder. Most only know how to ask for one.</div>
+      <div class="card-body">Venture equity. Private credit. Family office capital. Sovereign / government capital. Each type, who offers it in our markets (UAE, India, USA), what the trade-offs are, when to use which. Dalio voice — structured, educational, globally applicable.</div>
+      <div class="card-footer">
+        <span class="card-geo">🌍 Global — All Geographies</span>
+        <span class="card-source">Source: Startup India FoF 2.0 · Dubai Future District Fund</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <p>Magna Brain · May 2026 Content Calendar · Built by Mehr</p>
+  <p>Academy 4 · Strategy 3 · Capital 3</p>
+</footer>
+
+</body>
+</html>
