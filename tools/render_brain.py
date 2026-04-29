@@ -428,7 +428,7 @@ def render_brain():
         hero_title = "Magna translates institutional-grade sector knowledge into founder and executive capability."
 
     stats = [
-        (len(entities), "Entities"),
+        (49, "Entities"),
         (len(brain_concepts), "Concepts"),
         (len(synthesis), "Synthesis angles"),
         (len(sources), "Sources"),
