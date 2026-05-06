@@ -7,7 +7,7 @@ topics: [captions, instagram, events, april-2026, harvard, kennedy, mexico, glc]
 
 # Event Captions — April 2026 (Instagram)
 
-One caption per event. Sourced directly from conference downloads. Post with the best photo from each event.
+One caption per event. Written from the actual conference notes. Post with the best photo from each event.
 
 ---
 
@@ -15,18 +15,17 @@ One caption per event. Sourced directly from conference downloads. Post with the
 Tag: Ani Kharajian, @harvardexed
 
 **Caption:**
-The Crimson Corridor isn't a program. It's a bridge.
+Something I've been thinking about since Boston —
 
-A bridge for the leaders of emerging industries who haven't started their Harvard journey yet — but who are already building, already contributing, already shaping what comes next.
+We talk a lot about getting more women into rooms like Harvard. What we talk about less is what happens before that. The years before someone is "Harvard-ready." The building, the failing, the figuring-it-out that happens long before any application is written.
 
-At Harvard Business School Executive Education, we talked about what it means to bring more women entrepreneurs into the Harvard ecosystem — not after they've arrived, but while they're still building the thing that will earn them the room.
+The Crimson Corridor is trying to change that sequence. It's about bringing women entrepreneurs into the Harvard ecosystem earlier — not as future applicants waiting to qualify, but as contributors and participants right now. Learning from each other, from the research, from the HBS community — while they're still in the thick of building.
 
-The leaders who change industries don't always wait for the institution to come to them.
-Sometimes they build until the institution comes looking.
+It's a small but important distinction. You don't wait until someone has arrived to invest in them.
 
-Thank you Ani Kharajian for the vision behind the Crimson Corridor — and for making Harvard a destination, not just a destination for the already-arrived.
+Thank you Ani Kharajian and the Harvard Business School Executive Education team for building something that starts earlier than most programs are willing to.
 
-#HarvardBusinessSchool #CrimsonCorridor #WomenEntrepreneurs #Leadership #Magna #ExecutiveEducation
+#HarvardBusinessSchool #CrimsonCorridor #WomenEntrepreneurs #Leadership #Magna
 
 ---
 
@@ -34,17 +33,19 @@ Thank you Ani Kharajian for the vision behind the Crimson Corridor — and for m
 Tag: Heather Conrad, @harvardkennedyschool
 
 **Caption:**
-The Harvard Kennedy School mission is clear: improve public policy and leadership to create safer, freer, more just, and more prosperous societies.
+Two days in Boston, two very different kinds of conversations.
 
-What struck me in Boston was this: the work doesn't stay in the classroom. It follows practitioners into the public sector, the private sector, and the places in between.
+The one at Kennedy School stayed with me for a different reason.
 
-Our conversation with the HKS team was about exactly that — curating programs in Public Leadership and Adaptive Social Leadership that carry enterprise thinking into social impact contexts across geographies. Bringing the rigour of business leadership into the rooms where policy is made.
+The Harvard Kennedy School works across public policy, non-profit, and private sector — the mission is genuinely about better societies, not just better organizations. What we were exploring with the HKS team was how Magna's cohort of business leaders could go deeper into that work — specifically through programs in Public Leadership and Adaptive Social Leadership.
 
-The best leaders don't choose between the two. They carry both.
+The interesting question underneath it all: what do people who've built enterprises actually have to offer in public and social systems? And how do you structure that exchange so it's useful rather than just well-intentioned?
 
-Thank you Heather Conrad and the Harvard Kennedy School team for the conversation, and for the mission that makes it matter.
+No tidy answer. But a conversation worth continuing.
 
-#HarvardKennedySchool #PublicLeadership #SocialLeadership #SocialImpact #Magna #GlobalLeadership
+Thank you Heather Conrad for making space for it.
+
+#HarvardKennedySchool #PublicLeadership #SocialImpact #Magna
 
 ---
 
@@ -52,22 +53,27 @@ Thank you Heather Conrad and the Harvard Kennedy School team for the conversatio
 Tag: Temo Mikalzade, Robert Rodriguez, Javier Marin, Tahsin Khan
 
 **Caption:**
-"82% of Mexico's exports go to the United States."
+I went to Mexico City expecting a conversation about opportunity.
 
-One sentence. Delivered by Carlos Elizondo in Mexico City — and it changed the texture of every conversation that followed.
+I got a much more honest one.
 
-Mexico is the most integrated economy in the world to the US. That's not proximity. That's dependency. And the implications for any global business strategy built around nearshoring, supply chain diversification, or emerging market exposure are enormous.
+Three speakers — Carlos Elizondo on economics and politics, Enrique Madrid (former tourism minister), and Andrey Zanur on biotech and supply chains — and between them, a picture of Mexico that's more complicated than the nearshoring narrative most people are working from.
 
-A few things worth sitting with from the HBS Learning Session in Mexico City:
+A few things that changed how I'm thinking:
 
-— Consumption is growing faster than GDP, driven by rising wages and remittances. Plan for demand from higher pay, not GDP growth.
-— 40% of active pharmaceutical ingredients used in Mexico come from China. 100% of key agricultural starting materials come from China. Nearshoring alone doesn't solve upstream input dependence.
-— Private investment has gone slightly down. Public infrastructure projects have been poorly designed and executed.
-— The Supreme Court was dissolved. Half of all federal judges were replaced. Regulatory predictability is lower than it was.
+Mexico's GDP is growing slowly. But consumption is growing faster — because wages have risen. If you're planning for the Mexican market, you're not betting on GDP. You're betting on what people do with higher pay.
 
-Thank you to Carlos Elizondo, Enrique Madrid, and Andrey Zanur for the intellectual honesty — and to everyone in the room who came prepared to think, not just to listen.
+82% of Mexico's exports go to the United States. That's not an integration story. That's a dependency story. US policy shifts don't ripple into Mexico — they land.
 
-#MexicoCity #HarvardBusiness #GlobalStrategy #SupplyChain #Magna #Leadership #Nearshoring
+And the supply chain piece: 40% of active pharmaceutical ingredients used in Mexico come from China. 100% of key agricultural starting materials come from China. Nearshoring addresses geography. It doesn't address that.
+
+The legal environment has also changed significantly — the Supreme Court was dissolved, half of federal judges replaced. Regulatory predictability is genuinely lower.
+
+None of this makes Mexico the wrong bet. It makes it a more informed one.
+
+Thank you to everyone in the room for the intellectual honesty.
+
+#MexicoCity #GlobalStrategy #SupplyChain #Magna #Leadership
 
 ---
 
@@ -75,21 +81,16 @@ Thank you to Carlos Elizondo, Enrique Madrid, and Andrey Zanur for the intellect
 Tag: YPO
 
 **Caption:**
-1,600+ world leaders. One room. Chicago.
+1,600 world leaders in one room in Chicago — and I spent most of the week making sure the room worked.
 
-The Global Leadership Conference didn't offer frameworks. It offered a reckoning.
+Hosting at this scale is its own kind of observation post. You notice things you'd miss if you were just attending.
 
-The operating equation from the week:
-**Leadership = Humanity × Resilience × Reinvention × Peer Intelligence**
+What I kept noticing: the most important conversations weren't happening on stage. They were happening in the hallways, at dinner, in the ten minutes between sessions where someone said something honest to someone they trusted.
 
-What that actually means in practice:
+That was actually the thesis of the conference — the idea that peer exchange between operators who are willing to be unfiltered with each other is where real learning happens. Not keynotes. Not frameworks. The conversation where someone admits what's actually breaking.
 
-— The CEO title is changing. The new job description is Chief Resilience Officer of the Polycrisis. Geopolitics. Technology disruption. Climate stress. Strategy is no longer about efficiency — it's resilience engineering under uncertainty.
+The framework the GLC kept coming back to: Leadership = Humanity × Resilience × Reinvention × Peer Intelligence. What that means in practice is that the leaders doing this well aren't just optimizing — they're absorbing. They're operating in conditions that are genuinely volatile (geopolitics, technology disruption, climate) and making decisions without complete information. That's a different skill than running a stable business well.
 
-— Static competitive advantage is dead. Reinvention isn't a crisis response. It's continuous. The edge belongs to whoever is willing to rebuild before the market forces them to.
+Proud of the Chicago team for everything that went into making this happen.
 
-— The highest ROI room at any leadership conference isn't the keynote. It's the unfiltered operator conversation — where people speak honestly about what's breaking, not what's working. That's where the real learning lives.
-
-Proud to be part of hosting this in Chicago alongside the most extraordinary hospitality team.
-
-#GLC2026 #GlobalLeadershipConference #YPO #Leadership #Chicago #Magna #Polycrisis
+#GLC2026 #YPO #Leadership #Chicago #Magna
