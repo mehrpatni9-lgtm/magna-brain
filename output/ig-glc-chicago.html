@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>GLC Chicago — IG Carousel</title>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #111;
+    font-family: 'Raleway', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    gap: 20px;
+  }
+
+  .slide {
+    width: 540px;
+    height: 540px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  /* Photo placeholder — Raju replaces with event photo */
+  .photo-bg {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.2);
+  }
+
+  /* Gradient overlays */
+  .overlay-dark {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+  }
+  .overlay-bottom {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.2) 55%, transparent 100%);
+  }
+  .overlay-cover {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, rgba(44,22,8,0.85) 0%, rgba(0,0,0,0.7) 100%);
+  }
+
+  /* MAGNA logo */
+  .logo {
+    position: absolute;
+    top: 20px;
+    right: 22px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    z-index: 10;
+  }
+  .tri {
+    width: 0; height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 12px solid #9B7C35;
+    position: relative;
+  }
+  .tri::after {
+    content: '';
+    position: absolute;
+    bottom: -7px; left: -4px;
+    width: 0; height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-bottom: 6px solid transparent; /* invisible — shows logo cutout */
+  }
+  .logo-text {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: #fff;
+  }
+
+  /* Slide number */
+  .slide-num {
+    position: absolute;
+    top: 22px;
+    left: 22px;
+    font-size: 10px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.08em;
+    z-index: 10;
+  }
+
+  /* Content block — sits at bottom */
+  .content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 32px 30px 28px;
+    z-index: 10;
+  }
+
+  .tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #9B7C35;
+    margin-bottom: 10px;
+  }
+
+  .headline {
+    font-size: 26px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.18;
+    letter-spacing: -0.01em;
+  }
+
+  .headline.large {
+    font-size: 32px;
+  }
+
+  .sub {
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.55;
+    margin-top: 10px;
+  }
+
+  /* Cover slide */
+  .cover-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 36px 32px;
+    z-index: 10;
+  }
+  .cover-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #9B7C35;
+    margin-bottom: 12px;
+  }
+  .cover-headline {
+    font-size: 38px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .cover-date {
+    font-size: 12px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.6);
+    margin-top: 14px;
+    letter-spacing: 0.06em;
+  }
+
+  /* Equation slide */
+  .equation-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 36px;
+    z-index: 10;
+    text-align: center;
+  }
+  .eq-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #9B7C35;
+    margin-bottom: 20px;
+  }
+  .eq-text {
+    font-size: 24px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+  .eq-times {
+    color: #9B7C35;
+  }
+
+  /* Background placeholder colors per slide */
+  .bg1 { background: linear-gradient(135deg, #1a0a00 0%, #2C1608 100%); }
+  .bg2 { background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 100%); }
+  .bg3 { background: linear-gradient(135deg, #001a0a 0%, #0a2e1a 100%); }
+  .bg4 { background: linear-gradient(135deg, #1a0a1a 0%, #2e0a2e 100%); }
+  .bg5 { background: linear-gradient(135deg, #1a1a00 0%, #2e2e0a 100%); }
+  .bg6 { background: linear-gradient(135deg, #001a1a 0%, #0a2e2e 100%); }
+  .bg7 { background: linear-gradient(135deg, #1a0000 0%, #2e0a0a 100%); }
+  .bg8 { background: linear-gradient(135deg, #2C1608 0%, #1a0a00 100%); }
+
+  /* Labels above slides */
+  .slide-label {
+    color: rgba(255,255,255,0.3);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    align-self: flex-start;
+    margin-bottom: -10px;
+  }
+  .nav-hint {
+    color: rgba(255,255,255,0.25);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-align: center;
+  }
+
+  /* Gold accent bar */
+  .accent-bar {
+    width: 36px;
+    height: 3px;
+    background: #9B7C35;
+    border-radius: 2px;
+    margin-bottom: 14px;
+  }
+</style>
+</head>
+<body>
+
+<div class="nav-hint">↓ 8 slides — 1:1 square — drop event photos behind each</div>
+
+<!-- SLIDE 1 — COVER -->
+<div class="slide-label">Slide 1 / 8 — Cover</div>
+<div class="slide">
+  <div class="photo-bg bg1">[ Event photo — wide room shot, crowd, Chicago ]</div>
+  <div class="overlay-cover"></div>
+  <div class="logo"><div class="tri"></div><span class="logo-text">MAGNA</span></div>
+  <div class="slide-num">1 / 8</div>
+  <div class="cover-content">
+    <div class="cover-eyebrow">Global Leadership Conference · Chicago</div>
+    <div class="cover-headline">1,600+<br>world leaders.<br>One room.</div>
+    <div class="cover-date">April 28, 2026 · #GLC2026</div>
+  </div>
+</div>
+
+
+<!-- SLIDE 2 — THE EQUATION -->
+<div class="slide-label">Slide 2 / 8 — The Equation</div>
+<div class="slide">
+  <div class="photo-bg bg2">[ Event photo — stage or session shot ]</div>
+  <div class="overlay-dark"></div>
+  <div class="logo"><div class="tri"></div><span class="logo-text">MAGNA</span></div>
+  <div class="slide-num">2 / 8</div>
+  <div class="equation-content">
+    <div class="eq-label">The conference came back to this — again and again</div>
+    <div class="eq-text">
+      Leadership =<br>
+      Humanity<br>
+      <span class="eq-times">×</span> Resilience<br>
+      <span class="eq-times">×</span> Reinvention<br>
+      <span class="eq-times">×</span> Peer Intelligence
+    </div>
+  </div>
+</div>
+
+
+<!-- SLIDE 3 — HUMANITY -->
+<div class="slide-label">Slide 3 / 8 — Humanity</div>
+<div class="slide">
+  <div class="photo-bg bg3">[ Event photo — candid of someone speaking or listening ]</div>
+  <div class="overlay-bottom"></div>
+  <div class="logo"><div class="tri"></div><span class="logo-text">MAGNA</span></div>
+  <div class="slide-num">3 / 8</div>
+  <div class="content">
+    <div class="accent-bar"></div>
+    <div class="headline">Leadership isn't being measured by scale anymore.</div>
+    <div class="sub">It's being measured by depth, humanity, and responsibility. Awe and reflection — framed as strategic tools, not soft ones.</div>
+  </div>
+</div>
+
+
+<!-- SLIDE 4 — RESILIENCE / POLYCRISIS -->
+<div class="slide-label">Slide 4 / 8 — Resilience</div>
+<div class="slide">
+  <div class="photo-bg bg4">[ Event photo — panel or audience ]</div>
+  <div class="overlay-bottom"></div>
+  <div class="logo"><div class="tri"></div><span class="logo-text">MAGNA</span></div>
+  <div class="slide-num">4 / 8</div>
+  <div class="content">
+    <div class="accent-bar"></div>
+    <div class="headline">The CEO job has changed.</div>
+    <div class="sub">Geopolitics. Technology disruption. Climate. A constant state of overlapping crises. Strategy is no longer about efficiency — it's about making decisions when the conditions keep shifting.</div>
+  </div>
+</div>
+
+
+<!-- SLIDE 5 — REINVENTION -->
+<div class="slide-label">Slide 5 / 8 — Reinvention</div>
+<div class="slide">
+  <div class="photo-bg bg5">[ Event photo — networking, hallway, or group ]</div>
+  <div class="overlay-bottom"></div>
+  <div class="logo"><div class="tri"></div><span class="logo-text">MAGNA</span></div>
+  <div class="slide-num">5 / 8</div>
+  <div class="content">
+    <div class="accent-bar"></div>
+    <div class="headline">Static advantage doesn't hold anymore.</div>
+    <div class="sub">Markets move too fast. The edge belongs to whoever is willing to rebuild — before the market forces them to.</div>
+  </div>
+</div>
+
+
+<!-- SLIDE 6 — PEER TRUTH EXCHANGE -->
+<div class="slide-label">Slide 6 / 8 — Peer Intelligence</div>
+<div class="slide">
+  <div class="photo-bg bg6">[ Event photo — small group conversation or roundtable ]</div>
+  <div class="overlay-bottom"></div>
+  <div class="logo"><div class="tri"></div><span class="logo-text">MAGNA</span></div>
+  <div class="slide-num">6 / 8</div>
+  <div class="content">
+    <div class="accent-bar"></div>
+    <div class="headline">The highest ROI in a room of 1,600 leaders?</div>
+    <div class="sub">Not the keynotes. The unfiltered operator conversations — where people speak honestly about what's actually breaking.</div>
+  </div>
+</div>
+
+
+<!-- SLIDE 7 — THE REAL INSIGHT -->
+<div class="slide-label">Slide 7 / 8 — The Real Insight</div>
+<div class="slide">
+  <div class="photo-bg bg7">[ Event photo — candid moment, Shailu in room ]</div>
+  <div class="overlay-bottom"></div>
+  <div class="logo"><div class="tri"></div><span class="logo-text">MAGNA</span></div>
+  <div class="slide-num">7 / 8</div>
+  <div class="content">
+    <div class="accent-bar"></div>
+    <div class="headline large">"Not what's working.<br>What's breaking."</div>
+    <div class="sub">That's where the real learning lives. Vulnerability accelerates learning cycles — lived experience over theoretical insight.</div>
+  </div>
+</div>
+
+
+<!-- SLIDE 8 — CLOSE -->
+<div class="slide-label">Slide 8 / 8 — Close</div>
+<div class="slide">
+  <div class="photo-bg bg8">[ Event photo — Shailu + Chicago team, or room wide ]</div>
+  <div class="overlay-cover"></div>
+  <div class="logo"><div class="tri"></div><span class="logo-text">MAGNA</span></div>
+  <div class="slide-num">8 / 8</div>
+  <div class="cover-content">
+    <div class="cover-eyebrow">Chicago · April 2026</div>
+    <div class="cover-headline">Proud of<br>the Chicago<br>team.</div>
+    <div class="cover-date">#GLC2026 &nbsp;·&nbsp; #YPO &nbsp;·&nbsp; #Leadership &nbsp;·&nbsp; #Magna</div>
+  </div>
+</div>
+
+<div class="nav-hint" style="margin-top:8px; margin-bottom:40px;">— End of carousel —</div>
+
+</body>
+</html>
