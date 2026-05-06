@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Wisdom Wednesdays — Duolingo</title>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;700;800&display=swap" rel="stylesheet"/>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #1a1007;
+    font-family: 'Raleway', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    gap: 24px;
+  }
+
+  .slide { width: 540px; height: 540px; position: relative; overflow: hidden; flex-shrink: 0; }
+
+  /* ── COVER ── */
+  .cover { background: #2C1608; padding: 32px 36px; display: flex; flex-direction: column; }
+  .logo { position: absolute; top: 28px; right: 32px; display: flex; align-items: center; gap: 7px; }
+  .tri { width: 0; height: 0; border-left: 9px solid transparent; border-right: 9px solid transparent; border-bottom: 15px solid #9B7C35; position: relative; }
+  .tri::after { content: ''; position: absolute; bottom: -9px; left: -5px; width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 8px solid #2C1608; }
+  .logo-text { font-size: 11px; font-weight: 700; letter-spacing: 0.22em; color: #fff; }
+  .left-strip { position: absolute; left: 0; top: 38%; width: 10px; height: 80px; background: #8B6535; border-radius: 0 3px 3px 0; }
+  .headline { margin-top: 120px; margin-left: 12px; line-height: 1; }
+  .hash-wisdom { font-size: 56px; font-weight: 800; color: #fff; letter-spacing: -0.01em; }
+  .wednesdays-box { display: inline-block; background: #8B6535; padding: 2px 10px 4px; font-size: 56px; font-weight: 800; color: #fff; letter-spacing: -0.01em; margin-left: 2px; }
+  .subhead { margin-top: 10px; margin-left: 12px; font-size: 30px; font-weight: 700; color: #fff; line-height: 1.15; position: relative; display: inline-block; }
+  .subhead::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 68%; height: 3px; background: #8B6535; border-radius: 2px; opacity: 0.9; }
+  .body-text { margin-top: 26px; margin-left: 12px; font-size: 18px; font-weight: 400; color: #fff; line-height: 1.55; max-width: 380px; }
+  .source { position: absolute; bottom: 30px; left: 36px; font-size: 12px; color: rgba(255,255,255,0.75); line-height: 1.5; }
+  .source em { font-style: italic; }
+
+  /* ── CONTENT SLIDES ── */
+  .content-slide { background: #fff; display: flex; flex-direction: column; }
+  .photo-area { position: relative; height: 52%; overflow: hidden; flex-shrink: 0; }
+  .photo-area.d1 { background: linear-gradient(135deg, #1a3a0a 0%, #0d2005 100%); }
+  .photo-area.d2 { background: linear-gradient(135deg, #0a1a3a 0%, #05100d 100%); }
+  .photo-area.d3 { background: linear-gradient(135deg, #3a1a0a 0%, #200d05 100%); }
+  .photo-area.d4 { background: linear-gradient(135deg, #1a0a3a 0%, #0d0520 100%); }
+  .photo-area.d5 { background: linear-gradient(135deg, #0a3a2a 0%, #051a14 100%); }
+  .photo-area::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 40%; background: linear-gradient(to top, rgba(0,0,0,0.5), transparent); }
+  .photo-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.25); z-index: 1; }
+  .slide-num { position: absolute; top: 14px; left: 16px; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.7); letter-spacing: 0.06em; z-index: 2; }
+  .text-area { flex: 1; background: #fff; padding: 20px 24px 16px; display: flex; flex-direction: column; justify-content: space-between; }
+  .big-text { font-size: 22px; font-weight: 800; color: #111; line-height: 1.2; letter-spacing: -0.01em; }
+  .sub-text { font-size: 12px; font-weight: 400; color: #555; line-height: 1.55; margin-top: 8px; }
+  .slide-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; }
+  .ww-label { font-size: 11px; font-weight: 600; color: #2C1608; letter-spacing: 0.04em; }
+  .swipe-btn { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: #2C1608; }
+  .swipe-circle { width: 26px; height: 26px; border-radius: 50%; background: #2C1608; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; }
+
+  .slide-label { color: rgba(255,255,255,0.4); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; align-self: flex-start; margin-bottom: -16px; }
+  .nav-hint { color: rgba(255,255,255,0.3); font-size: 11px; letter-spacing: 0.1em; text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="nav-hint">↓ Scroll — all 6 slides, 1:1 square, ready for Instagram</div>
+
+<!-- SLIDE 1 — COVER -->
+<div class="slide-label">Slide 1 / 6 — Cover</div>
+<div class="slide cover">
+  <div class="logo"><div class="tri"></div><span class="logo-text">MAGNA</span></div>
+  <div class="left-strip"></div>
+  <div class="headline">
+    <span class="hash-wisdom">#Wisdom</span><span class="wednesdays-box">Wednesdays</span>
+  </div>
+  <div class="subhead" style="margin-top:14px; margin-left:12px;">is the brand story<br>behind the business.</div>
+  <div class="body-text">MAGNA breaks down the<br>decisions that changed<br>industries.</div>
+  <div class="source">
+    Today's Source: <em>Fortune / The Verge</em><br>
+    "Duolingo Goes 'AI-First' — And Ignites<br>a Firestorm About the Future of Work"
+  </div>
+</div>
+
+
+<!-- SLIDE 2 -->
+<div class="slide-label">Slide 2 / 6</div>
+<div class="slide content-slide">
+  <div class="photo-area d1">
+    <div class="slide-num">2 / 6</div>
+    <div class="photo-placeholder">[ Photo: Duolingo app / green owl — brand visual ]</div>
+  </div>
+  <div class="text-area">
+    <div>
+      <div class="big-text">500 million users. The world's #1 education app. And a memo that broke the internet.</div>
+      <div class="sub-text">In April 2025, Duolingo's CEO sent a company-wide email that sparked more debate about AI and work than almost anything that year.</div>
+    </div>
+    <div class="slide-footer">
+      <span class="ww-label">Wisdom Wednesdays</span>
+      <span class="swipe-btn">Swipe <span class="swipe-circle">›</span></span>
+    </div>
+  </div>
+</div>
+
+
+<!-- SLIDE 3 -->
+<div class="slide-label">Slide 3 / 6</div>
+<div class="slide content-slide">
+  <div class="photo-area d2">
+    <div class="slide-num">3 / 6</div>
+    <div class="photo-placeholder">[ Photo: Screenshot of Luis von Ahn memo / Duolingo HQ ]</div>
+  </div>
+  <div class="text-area">
+    <div>
+      <div class="big-text">"We will gradually stop using contractors to do work that AI can handle."</div>
+      <div class="sub-text">CEO Luis von Ahn said it publicly, deliberately. Headcount would only grow if teams couldn't automate more. AI would factor into hiring and performance reviews.</div>
+    </div>
+    <div class="slide-footer">
+      <span class="ww-label">Wisdom Wednesdays</span>
+      <span class="swipe-btn">Swipe <span class="swipe-circle">›</span></span>
+    </div>
+  </div>
+</div>
+
+
+<!-- SLIDE 4 -->
+<div class="slide-label">Slide 4 / 6</div>
+<div class="slide content-slide">
+  <div class="photo-area d3">
+    <div class="slide-num">4 / 6</div>
+    <div class="photo-placeholder">[ Photo: Social media backlash screenshots / protest imagery ]</div>
+  </div>
+  <div class="text-area">
+    <div>
+      <div class="big-text">The backlash was immediate. Within months, he walked it back.</div>
+      <div class="sub-text">"I did not give enough context." Users threatened to delete the app. A year later — AI usage was quietly removed from performance evaluations entirely. "I'm not going to force you."</div>
+    </div>
+    <div class="slide-footer">
+      <span class="ww-label">Wisdom Wednesdays</span>
+      <span class="swipe-btn">Swipe <span class="swipe-circle">›</span></span>
+    </div>
+  </div>
+</div>
+
+
+<!-- SLIDE 5 — MAGNA LENS -->
+<div class="slide-label">Slide 5 / 6 — The Magna Lens</div>
+<div class="slide content-slide">
+  <div class="photo-area d4">
+    <div class="slide-num">5 / 6</div>
+    <div class="photo-placeholder">[ Photo: Duolingo product / learning screen ]</div>
+  </div>
+  <div class="text-area">
+    <div>
+      <div class="big-text">The memo wasn't wrong. The sequencing was.</div>
+      <div class="sub-text">Duolingo had the right direction — AI will reshape language learning at scale. But declaring it before the operations, culture, and communication were ready turned a strategy into a crisis. The best bold moves are built before they're announced.</div>
+    </div>
+    <div class="slide-footer">
+      <span class="ww-label">Wisdom Wednesdays</span>
+      <span class="swipe-btn">Swipe <span class="swipe-circle">›</span></span>
+    </div>
+  </div>
+</div>
+
+
+<!-- SLIDE 6 — TAKEAWAY -->
+<div class="slide-label">Slide 6 / 6 — Takeaway</div>
+<div class="slide content-slide">
+  <div class="photo-area d5">
+    <div class="slide-num">6 / 6</div>
+    <div class="photo-placeholder">[ Photo: Duolingo office or bold brand image ]</div>
+  </div>
+  <div class="text-area">
+    <div>
+      <div class="big-text">The question isn't: are you going AI-first? Every serious company is.</div>
+      <div class="sub-text">The question is: are you building the capability before you make the claim? What are you saying you're doing — that you haven't actually built yet?</div>
+    </div>
+    <div class="slide-footer">
+      <span class="ww-label">Wisdom Wednesdays</span>
+      <span class="swipe-btn">Swipe <span class="swipe-circle">›</span></span>
+    </div>
+  </div>
+</div>
+
+<div class="nav-hint" style="margin-top:8px; margin-bottom:40px;">— End of carousel —</div>
+
+</body>
+</html>
