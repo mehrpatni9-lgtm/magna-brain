@@ -1,10 +1,10 @@
 ---
 type: concept
 name: "#FounderFridays"
-tags: [content-series, instagram, sinek]
-sources: [[magna-content-platform]]
+tags: [content-series, instagram, sinek, founder-interviews, may-2026]
+sources: [[magna-content-platform]], [[may-strategy-meetings-may-2026]]
 created: 2026-04-13
-updated: 2026-04-13
+updated: 2026-05-09
 corrected_by: []
 ---
 
@@ -31,3 +31,24 @@ corrected_by: []
 ## Related concepts
 
 - [[magna-pillar-leadership]], [[quantum-leap]] — founder stories often come from the cohort
+- [[may-2026-priorities]] — the interview series is Rail 1 of the May plan
+- [[personalization-tagging-framework]] — interview material is the upstream supply for personalized posts
+
+## Production model — monthly interview series (added May 2026)
+
+A new production rail layered on top of the weekly content cadence. Mehr conducts **one founder interview per month** via Zoom; the recorded conversation supplies the raw material for multiple `#FounderFridays` posts across that month. Shailu facilitates introductions.
+
+- **Cadence:** one interview/month, multiple posts produced from each
+- **Format:** Zoom call (recorded), notes captured, post written from notes
+- **Sourcing:** community members in prioritized cities (May: California + Dubai)
+- **Voice:** Sinek register holds — start with the human, then the inflection, then the lesson
+
+### Initial candidates (May 2026)
+
+- **Sylvie** — first interview; Shailu to facilitate intro
+- **Heather Conrad**
+- **Ani**
+
+## Contributors
+
+- 2026-05-09 — Mehr Patni (added monthly interview production model + initial candidate list).

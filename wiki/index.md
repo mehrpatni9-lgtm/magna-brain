@@ -2,7 +2,7 @@
 type: index
 tags: [master-index, auto-loaded]
 created: 2026-04-13
-updated: 2026-04-29
+updated: 2026-05-09
 contributed_by: "Mehr Patni"
 ---
 
@@ -82,6 +82,13 @@ Auto-loaded at every session start. Budget ≤ 1,500 tokens. Older detail collap
 - [[three-cs-founder-balance]] — Content · Community · Calendar (do not confuse with [[magna-3cs]])
 - [[context-engineering]] — the Intelligent Intern AI metaphor
 
+## Concepts — May 2026 operational layer
+
+- [[positioning-shift-strategy-firm]] — repositioning from academic platform → strategy firm helping founders scale revenue + find exits
+- [[may-2026-priorities]] — three projects, three execution rails, three customer buckets — the May plan
+- [[personalization-tagging-framework]] — every post tags individual + company + industry + geography + area of interest
+- [[customer-buckets-economic-strategy-capital]] — triage taxonomy for all 109 community members
+
 ## Voice layer
 
 - [[voice/styleguide]] — the master tone document (≤ 1,000 tokens)
@@ -101,6 +108,7 @@ Auto-loaded at every session start. Budget ≤ 1,500 tokens. Older detail collap
 - [[strategic-investment-readiness-workshop]] — workshop handout (Apr 14, Mehr)
 - [[magna-portfolio-companies]] — portfolio + affiliations + content plan (Apr 14, Mehr)
 - [[shailu-live-workshop-transcripts]] — live transcripts: strategy/negotiation/sales (Apr 14, Mehr)
+- [[may-strategy-meetings-may-2026]] — May 1 + May 8 strategy meetings (May 9, Mehr)
 
 ## Synthesis angles
 
@@ -108,13 +116,15 @@ Auto-loaded at every session start. Budget ≤ 1,500 tokens. Older detail collap
 - [[institutional-grade-meets-founder]] — the Magna moat = the translation layer
 - [[practitioner-intelligence-not-advice]] — content register; not advice, intelligence
 - [[magna-invests-in-its-own-thesis]] — every portfolio company aligns with the Compass
+- [[strategy-firm-not-classroom]] — the May 2026 positioning POV: founders have decision problems, not learning problems
 
 ## Recent activity
 
 - 2026-04-13 — Mehr Patni: brain seeded from `reference/`; 6 deep-read ingests (curriculum R4 + deck R27, Compass R3, master enrichment, vip site, books, ideology).
 - 2026-04-14 — Mehr Patni: Investment Readiness workshop, portfolio research + content plan, 3 live workshop transcripts (strategy/negotiation/sales).
 - 2026-04-29 — Mehr Patni (via backfill): all 9 ingests above compiled into the brain — 9 source records, 11 new entities, 17 new concepts, 3 new synthesis angles, [[magna]] / [[shailu]] / [[magna-compass]] enriched.
+- 2026-05-09 — Mehr Patni: May 1 + May 8 strategy meetings ingested — 1 source, 4 new concepts (positioning shift, May priorities, personalization framework, customer buckets), 1 new synthesis angle (strategy firm not classroom), [[content-series-founder-fridays]] enriched with monthly interview production model + Sylvie/Heather Conrad/Ani candidate list.
 
 ## Contributors
 
-- **Mehr Patni** — every ingest and the entire backfill.
+- **Mehr Patni** — every ingest, the entire backfill, and the May 2026 strategy compile.

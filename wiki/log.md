@@ -2,6 +2,17 @@
 
 Append-only. Every compile run and every architectural PR appends a block here.
 
+## 2026-05-09T00:00:00Z — May strategy meetings (May 1 + May 8) ingest + compile
+- ingest: raw/2026-05-09-may-strategy-meetings-may-1-and-may-8.md (2 meeting transcripts, single source record)
+- contributed_by: "Mehr Patni"
+- created sources: [[may-strategy-meetings-may-2026]]
+- created concepts: [[positioning-shift-strategy-firm]], [[may-2026-priorities]], [[personalization-tagging-framework]], [[customer-buckets-economic-strategy-capital]]
+- created synthesis: [[strategy-firm-not-classroom]]
+- updated concepts: [[content-series-founder-fridays]] (added monthly interview production model + Sylvie/Heather Conrad/Ani candidate list; sources extended)
+- refreshed: [[index]]
+- corrected_by: []
+
+
 ## 2026-04-13T16:10:00Z — initial seed (Phase 2 bootstrap)
 - ingest: reference/design/Magna Brand Guide.pdf → [[magna-brand-guide]]
 - ingest: reference/magna-content-platform.html → [[magna-content-platform]]
