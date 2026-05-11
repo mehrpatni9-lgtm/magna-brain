@@ -115,6 +115,7 @@ Auto-loaded at every session start. Budget ≤ 1,500 tokens. Older detail collap
 - [[shailu-live-workshop-transcripts]] — live transcripts: strategy/negotiation/sales (Apr 14, Mehr)
 - [[may-strategy-meetings-may-2026]] — May 1 + May 8 strategy meetings (May 9, Mehr)
 - [[shailu-intel-sylvie-lynxeducate]] — Shailu briefing on Sylvie + LynxEducate ahead of Founder Friday outreach (May 11, Mehr)
+- [[sylvie-milverton-bio-dossier]] — Sylvie's official CEO bio card (May 11, Mehr)
 
 ## Synthesis angles
 

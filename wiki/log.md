@@ -20,6 +20,14 @@ Append-only. Every compile run and every architectural PR appends a block here.
 - refreshed: [[index]]
 - corrected_by: []
 
+## 2026-05-11T01:00:00Z — Sylvie official bio dossier ingest
+- ingest: raw/2026-05-11-sylvie-bio-dossier.md (image of her CEO bio card)
+- contributed_by: "Mehr Patni"
+- created sources: [[sylvie-milverton-bio-dossier]]
+- updated entities: [[sylvie-milverton]] (added Wharton MBA, UPenn Lauder MA, INSEEC U. CFO + successful LBO, 13-yr Laureate Education tenure across Mexico + Miami, co-founder clarification); [[lynxeducate]] (CEO+co-founder clarification on founder field)
+- refreshed: [[index]]
+- corrected_by: []
+
 
 ## 2026-04-13T16:10:00Z — initial seed (Phase 2 bootstrap)
 - ingest: reference/design/Magna Brand Guide.pdf → [[magna-brand-guide]]

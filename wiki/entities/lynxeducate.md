@@ -16,7 +16,7 @@ corrected_by: []
 ## Key facts
 
 - Headquartered: Paris. [[shailu-intel-sylvie-lynxeducate]]
-- Founder: [[sylvie-milverton]]. [[shailu-intel-sylvie-lynxeducate]]
+- CEO and co-founder: [[sylvie-milverton]]. [[sylvie-milverton-bio-dossier]]
 - **Named enterprise clients:** IBM, Deliveroo (plus "others" not specified). [[shailu-intel-sylvie-lynxeducate]]
 - Stage: EMEA-established; actively expanding to Americas + Asia. [[shailu-intel-sylvie-lynxeducate]]
 - Web: lynxeducate.com. [[shailu-intel-sylvie-lynxeducate]]
