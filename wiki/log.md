@@ -12,6 +12,14 @@ Append-only. Every compile run and every architectural PR appends a block here.
 - refreshed: [[index]]
 - corrected_by: []
 
+## 2026-05-11T00:00:00Z — Shailu briefing on Sylvie + LynxEducate
+- ingest: raw/2026-05-11-shailu-intel-sylvie-lynxeducate.md
+- contributed_by: "Mehr Patni"
+- created sources: [[shailu-intel-sylvie-lynxeducate]]
+- created entities: [[sylvie-milverton]], [[lynxeducate]]
+- refreshed: [[index]]
+- corrected_by: []
+
 
 ## 2026-04-13T16:10:00Z — initial seed (Phase 2 bootstrap)
 - ingest: reference/design/Magna Brand Guide.pdf → [[magna-brand-guide]]

@@ -33,6 +33,11 @@ Auto-loaded at every session start. Budget ≤ 1,500 tokens. Older detail collap
 - [[muffins]] — Dubai remote-tech-teams; 1 IPO + 2 unicorns + 5 unicorn-acquired out of 21 partners
 - [[docsynk]] — Healthcare AI, Dallas
 
+### Community founders & companies (Founder Fridays / case studies)
+
+- [[sylvie-milverton]] — Paris founder of [[lynxeducate]]; Cohort 2 topper; UChicago tie; first Founder Friday slot (May 2026)
+- [[lynxeducate]] — Paris EdTech; IBM + Deliveroo clients; EMEA → Americas + Asia expansion
+
 ### Affiliations
 
 - [[dallas-venture-capital]] — Shailu Venture Partner since 2020
@@ -109,6 +114,7 @@ Auto-loaded at every session start. Budget ≤ 1,500 tokens. Older detail collap
 - [[magna-portfolio-companies]] — portfolio + affiliations + content plan (Apr 14, Mehr)
 - [[shailu-live-workshop-transcripts]] — live transcripts: strategy/negotiation/sales (Apr 14, Mehr)
 - [[may-strategy-meetings-may-2026]] — May 1 + May 8 strategy meetings (May 9, Mehr)
+- [[shailu-intel-sylvie-lynxeducate]] — Shailu briefing on Sylvie + LynxEducate ahead of Founder Friday outreach (May 11, Mehr)
 
 ## Synthesis angles
 
@@ -124,6 +130,7 @@ Auto-loaded at every session start. Budget ≤ 1,500 tokens. Older detail collap
 - 2026-04-14 — Mehr Patni: Investment Readiness workshop, portfolio research + content plan, 3 live workshop transcripts (strategy/negotiation/sales).
 - 2026-04-29 — Mehr Patni (via backfill): all 9 ingests above compiled into the brain — 9 source records, 11 new entities, 17 new concepts, 3 new synthesis angles, [[magna]] / [[shailu]] / [[magna-compass]] enriched.
 - 2026-05-09 — Mehr Patni: May 1 + May 8 strategy meetings ingested — 1 source, 4 new concepts (positioning shift, May priorities, personalization framework, customer buckets), 1 new synthesis angle (strategy firm not classroom), [[content-series-founder-fridays]] enriched with monthly interview production model + Sylvie/Heather Conrad/Ani candidate list.
+- 2026-05-11 — Mehr Patni: Shailu briefing on [[sylvie-milverton]] + [[lynxeducate]] ahead of Founder Friday outreach — 1 new source, 2 new entities.
 
 ## Contributors
 
