@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Magna Community — Directory</title>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&family=Forum&display=swap" rel="stylesheet"/>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #1e1e1e; color: #E8DFC8; font-family: 'Raleway', sans-serif; min-height: 100vh; }
+
+/* NAV */
+nav { background: #181818; border-bottom: 1px solid rgba(155,124,53,0.25); padding: 16px 32px; display: flex; align-items: center; gap: 16px; position: sticky; top: 0; z-index: 100; }
+.nav-logo { font-family: 'Forum', serif; font-size: 16px; letter-spacing: 0.2em; color: #E8DFC8; }
+.nav-title { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(232,223,200,0.4); }
+.nav-count { margin-left: auto; font-size: 11px; color: rgba(155,124,53,0.8); letter-spacing: 0.1em; }
+
+/* HEADER */
+.header { padding: 40px 32px 28px; border-bottom: 1px solid rgba(155,124,53,0.15); }
+.header h1 { font-family: 'Forum', serif; font-size: 28px; font-weight: 400; color: #E8DFC8; margin-bottom: 6px; }
+.header p { font-size: 12px; color: rgba(232,223,200,0.4); letter-spacing: 0.08em; }
+
+/* CONTROLS */
+.controls { padding: 20px 32px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; background: #1a1a1a; border-bottom: 1px solid rgba(72,60,50,0.5); }
+.search-wrap { position: relative; flex: 1; min-width: 220px; max-width: 420px; }
+.search-wrap input { width: 100%; background: #242424; border: 1px solid rgba(155,124,53,0.3); color: #E8DFC8; padding: 10px 16px 10px 38px; font-family: 'Raleway', sans-serif; font-size: 13px; outline: none; border-radius: 2px; }
+.search-wrap input::placeholder { color: rgba(232,223,200,0.3); }
+.search-wrap input:focus { border-color: rgba(155,124,53,0.7); }
+.search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: rgba(155,124,53,0.6); font-size: 14px; pointer-events: none; }
+.filter-select { background: #242424; border: 1px solid rgba(155,124,53,0.3); color: #E8DFC8; padding: 10px 14px; font-family: 'Raleway', sans-serif; font-size: 12px; outline: none; border-radius: 2px; cursor: pointer; }
+.filter-select:focus { border-color: rgba(155,124,53,0.7); }
+.result-count { font-size: 11px; color: rgba(232,223,200,0.35); letter-spacing: 0.1em; margin-left: auto; }
+
+/* ENGAGEMENT PILLS */
+.pill { display: inline-block; padding: 2px 8px; border-radius: 2px; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
+.pill-collaboration { background: rgba(155,124,53,0.2); color: #C4A055; border: 1px solid rgba(155,124,53,0.35); }
+.pill-education { background: rgba(92,53,24,0.25); color: #B08060; border: 1px solid rgba(92,53,24,0.4); }
+.pill-none { color: rgba(232,223,200,0.2); font-size: 10px; }
+
+/* TYPE PILLS */
+.type-scale { background: rgba(60,120,60,0.2); color: #7DBF7D; border: 1px solid rgba(60,120,60,0.3); }
+.type-growth { background: rgba(60,90,150,0.2); color: #7AADDB; border: 1px solid rgba(60,90,150,0.3); }
+.type-launch { background: rgba(120,80,160,0.2); color: #B89FD8; border: 1px solid rgba(120,80,160,0.3); }
+
+/* TABLE */
+.table-wrap { overflow-x: auto; padding: 0 32px 60px; }
+table { width: 100%; border-collapse: collapse; margin-top: 4px; }
+thead th { text-align: left; padding: 12px 16px; font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(155,124,53,0.8); border-bottom: 1px solid rgba(155,124,53,0.2); cursor: pointer; user-select: none; white-space: nowrap; }
+thead th:hover { color: #C4A055; }
+thead th.sorted-asc::after { content: ' ↑'; color: #C4A055; }
+thead th.sorted-desc::after { content: ' ↓'; color: #C4A055; }
+tbody tr { border-bottom: 1px solid rgba(72,60,50,0.3); transition: background 0.12s; }
+tbody tr:hover { background: rgba(155,124,53,0.06); }
+tbody td { padding: 12px 16px; font-size: 12px; vertical-align: middle; }
+.td-name { font-weight: 600; color: #E8DFC8; white-space: nowrap; }
+.td-role { color: rgba(232,223,200,0.55); font-size: 11px; }
+.td-company { color: rgba(232,223,200,0.75); font-weight: 500; }
+.td-location { color: rgba(232,223,200,0.45); font-size: 11px; white-space: nowrap; }
+.td-industry { color: rgba(232,223,200,0.45); font-size: 11px; max-width: 220px; }
+.no-results { text-align: center; padding: 60px 20px; color: rgba(232,223,200,0.25); font-size: 13px; letter-spacing: 0.1em; }
+
+/* HIGHLIGHT */
+mark { background: rgba(155,124,53,0.3); color: #E8DFC8; border-radius: 1px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">MAGNA</span>
+  <span class="nav-title">Community Directory</span>
+  <span class="nav-count" id="navCount">136 members</span>
+</nav>
+
+<div class="header">
+  <h1>Community Directory</h1>
+  <p>136 members · USA · India · UAE · UK · and more</p>
+</div>
+
+<div class="controls">
+  <div class="search-wrap">
+    <span class="search-icon">⌕</span>
+    <input type="text" id="searchInput" placeholder="Search by name, company, city, industry…" autocomplete="off"/>
+  </div>
+  <select class="filter-select" id="countryFilter">
+    <option value="">All Countries</option>
+  </select>
+  <select class="filter-select" id="engagementFilter">
+    <option value="">All Engagement</option>
+    <option value="Magna Collaboration">Magna Collaboration</option>
+    <option value="Magna Education">Magna Education</option>
+  </select>
+  <span class="result-count" id="resultCount"></span>
+</div>
+
+<div class="table-wrap">
+  <table id="communityTable">
+    <thead>
+      <tr>
+        <th data-col="name">Name</th>
+        <th data-col="role">Role</th>
+        <th data-col="company">Company</th>
+        <th data-col="city">City</th>
+        <th data-col="country">Country</th>
+        <th data-col="industry">Industry</th>
+        <th data-col="engagement">Engagement</th>
+        <th data-col="type">Type</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+  <div class="no-results" id="noResults" style="display:none">No members match your search.</div>
+</div>
+
+<script>
+const members = [
+  {name:"Abhaykumar Salunkhe",role:"Founder / Chairman",company:"Cresta International Holding",city:"Mauritius / Pune",country:"Africa / India",industry:"Paint, Real Estate",engagement:"",type:""},
+  {name:"Abidali Neemuchwala",role:"Co-Founder & Director",company:"Wipro",city:"Dallas",country:"USA",industry:"Venture Capital",engagement:"",type:""},
+  {name:"Adam Spector",role:"Partner",company:"DLA Piper",city:"Chicago",country:"USA",industry:"Legal",engagement:"",type:""},
+  {name:"Ajay Mittal",role:"Shareholder & Director",company:"LaQshya",city:"Mumbai",country:"India",industry:"Media",engagement:"",type:""},
+  {name:"Ajay Sajnani",role:"Founder & CEO",company:"AJS Capital",city:"Dubai",country:"UAE",industry:"Real Estate / Investment",engagement:"",type:""},
+  {name:"Alejandro De Marco",role:"Managing Partner",company:"Cognitus Capital",city:"Florida",country:"USA",industry:"Finance",engagement:"",type:""},
+  {name:"Alok Jalan",role:"MD & Founder",company:"LaQshya",city:"Mumbai",country:"India",industry:"Advertising / OOH / Experiential",engagement:"",type:""},
+  {name:"Amit Dhamani",role:"MD & CEO",company:"Dhamani Jewels Group",city:"Dubai",country:"UAE",industry:"Luxury / Jewellery",engagement:"",type:""},
+  {name:"Amit Gupta",role:"Founder & CEO",company:"Agrifields",city:"Dubai",country:"UAE",industry:"Agribusiness / Trade",engagement:"",type:""},
+  {name:"Amit Malhotra",role:"Founder & CEO",company:"McCoy Group",city:"New Delhi",country:"India",industry:"Construction / E-commerce / Media",engagement:"",type:""},
+  {name:"Amit Sevak",role:"CEO",company:"ETS",city:"Washington DC",country:"USA",industry:"Education / EdTech",engagement:"",type:""},
+  {name:"Anil Baid",role:"Founder & Chairman",company:"PureSoftware",city:"New Delhi",country:"India",industry:"IT / FinTech",engagement:"",type:""},
+  {name:"Ankur Gupta",role:"CEO",company:"mithAI Labs, Bitwise Inc.",city:"Chicago",country:"USA",industry:"AI / IT / VC",engagement:"",type:""},
+  {name:"Anthony Contrucci",role:"Managing Partner",company:"119th Street Capital",city:"Chicago",country:"USA",industry:"Finance / Banking",engagement:"",type:""},
+  {name:"Antonio Ellek",role:"Co-Founder & CEO",company:"POSHI, CAS Auto Group",city:"Miami",country:"USA",industry:"Auto / Consumer",engagement:"",type:""},
+  {name:"Archana Reddy Poddutoori",role:"President",company:"ISITVA Inc.",city:"Chicago",country:"USA",industry:"",engagement:"",type:""},
+  {name:"Aravind Sanka",role:"Co-Founder & CEO",company:"Rapido",city:"Bengaluru",country:"India",industry:"Transport",engagement:"",type:""},
+  {name:"Arush Gupta",role:"Director & CEO",company:"Okaya Power Group",city:"New Delhi",country:"India",industry:"Energy / EV",engagement:"",type:""},
+  {name:"Ashoo Sinchawla",role:"Director",company:"Sant Enterprises",city:"Bangkok",country:"Thailand",industry:"Gemstones / Jewellery",engagement:"",type:""},
+  {name:"Ashwajit Singh",role:"Founder & MD",company:"IPE Global Group",city:"New Delhi",country:"India",industry:"Management Consulting",engagement:"",type:""},
+  {name:"Bartosz Dajnowski",role:"President",company:"G.C.Laser Systems",city:"Chicago",country:"USA",industry:"Manufacturing",engagement:"",type:""},
+  {name:"Becky Feinberg",role:"CEO & Co-owner",company:"Candorthreads",city:"Chicago",country:"USA",industry:"Apparel / Corporate Gifting",engagement:"",type:""},
+  {name:"Ben Van Vlerah",role:"Illinois Market President",company:"KeyBank / YPO",city:"Chicago",country:"USA",industry:"Banking",engagement:"",type:""},
+  {name:"Benjamin Altman",role:"CEO",company:"Altman Advisors",city:"Chicago",country:"USA",industry:"Advisory",engagement:"",type:""},
+  {name:"Boma Oguntoyinbo",role:"Business Analyst",company:"WestPoint Financial Group",city:"Indianapolis",country:"USA",industry:"Finance",engagement:"",type:""},
+  {name:"Callie Sher",role:"VP Operations & Board Member",company:"Evanger's / OrgaNOMics",city:"Illinois",country:"USA",industry:"Pet Food Manufacturing",engagement:"Magna Education",type:"Launch"},
+  {name:"Charan Lakkaraju",role:"Founder & CEO",company:"Student Tribe",city:"Hyderabad",country:"India",industry:"EdTech / Community",engagement:"",type:""},
+  {name:"Charmi Patel",role:"Hospitalist",company:"Northwestern Medicine",city:"Chicago",country:"USA",industry:"Healthcare",engagement:"",type:""},
+  {name:"Cristina Taboada",role:"Director of Executive Coaching",company:"HBS Executive Education",city:"Boston",country:"USA",industry:"Coaching / Education",engagement:"",type:""},
+  {name:"Dave Martinelli",role:"Business Advisor",company:"M&B Enterprises",city:"DuPage County",country:"USA",industry:"Advisory",engagement:"",type:""},
+  {name:"Davide Tomassoni",role:"Chairman",company:"3DOTS Capital Advisory",city:"Miami",country:"USA",industry:"Finance / VC",engagement:"",type:""},
+  {name:"Dayakar Puskoor",role:"Founder & MD",company:"Shreem Capital, Motivity Labs",city:"Dallas / Hyderabad",country:"USA / India",industry:"VC / AI / Cloud",engagement:"",type:""},
+  {name:"Deepak Chowdhary",role:"Founder & MD",company:"MPM Group",city:"Nagpur",country:"India",industry:"Manufacturing / Industrial Software",engagement:"",type:""},
+  {name:"Denys Paniv",role:"President",company:"Alvil Trucking Inc.",city:"Chicago",country:"USA",industry:"Logistics",engagement:"",type:""},
+  {name:"Dhrumil Patel",role:"Director, Founder",company:"Nilamber Group",city:"Vadodara",country:"India",industry:"Real Estate",engagement:"Magna Collaboration",type:"Scale"},
+  {name:"Dinesh Bhatia",role:"CEO",company:"India Today Group",city:"New Delhi",country:"India",industry:"Media",engagement:"",type:""},
+  {name:"Divya Ramraika",role:"MD & Director",company:"Star Engineers (India)",city:"Pune",country:"India",industry:"Automotive / EV / Robotics",engagement:"",type:""},
+  {name:"Diya Inanez",role:"Chairperson & MD",company:"Garware Fulflex Group",city:"Miami",country:"USA",industry:"Automotive / Medical / Textiles",engagement:"",type:""},
+  {name:"Geeta Ramakrishnan",role:"Life Coach & Director",company:"Coachingwithgeeta, Transworld",city:"Dubai / Mumbai",country:"UAE / India",industry:"Coaching / Logistics",engagement:"",type:""},
+  {name:"Geetanjali Alamshah",role:"Founder & MD",company:"Ed2Careers, Universal Journeys India",city:"New Delhi",country:"India",industry:"Skill Dev / Travel",engagement:"",type:""},
+  {name:"Girish Prabhu",role:"VP & Head of Amazon Ads India",company:"Amazon",city:"Bengaluru",country:"India",industry:"Tech / Advertising",engagement:"",type:""},
+  {name:"GS Periwal",role:"Managing Partner",company:"Seed VC Innovation, VJAL.AI",city:"Dubai",country:"UAE",industry:"VC / AI",engagement:"",type:""},
+  {name:"Hari Kiran Chereddi",role:"CEO & MD",company:"HRV Global LifeSciences",city:"Hyderabad",country:"India / Multi",industry:"Pharma / VC / Energy",engagement:"",type:""},
+  {name:"Hemant Shah",role:"Chairman & Co-Founder",company:"HUBTOWN LIMITED",city:"Mumbai",country:"India",industry:"Real Estate",engagement:"",type:""},
+  {name:"Inam Qureshi",role:"Founder & CEO",company:"Syndicate Lending Corp",city:"Vancouver",country:"Canada",industry:"Finance / Education",engagement:"",type:""},
+  {name:"Janak Mehta",role:"Chairman & MD",company:"FRR Worldwide FZE",city:"Dubai / Mumbai",country:"UAE / India",industry:"Forex / Investment Migration",engagement:"",type:""},
+  {name:"Jassi Chadha",role:"President & CEO",company:"Axtria",city:"New Jersey",country:"USA",industry:"Software / Analytics / Life Sciences",engagement:"",type:""},
+  {name:"Jay Madipadaga",role:"CEO",company:"GAC Solutions, Muffins AI",city:"Chicago",country:"USA",industry:"IT / Staffing / AI",engagement:"Magna Collaboration",type:"Scale"},
+  {name:"Jay Sidhu",role:"CEO",company:"Customers Bancorp",city:"Pennsylvania",country:"USA",industry:"Banking",engagement:"",type:""},
+  {name:"Jeffrey Brandt",role:"CEO",company:"Xamin Inc.",city:"Chicago",country:"USA",industry:"Tech",engagement:"",type:""},
+  {name:"Jijimon Chandran",role:"Founder & CEO",company:"Acsia Technologies",city:"Trivandrum",country:"India",industry:"IT",engagement:"",type:""},
+  {name:"Jital Shah",role:"Managing Partner",company:"Sanghar Group",city:"Pune",country:"India",industry:"",engagement:"",type:""},
+  {name:"Jordan Hansel",role:"Founder & CEO",company:"TRADEPOST LLC",city:"Daufuskie Island",country:"USA",industry:"Trade",engagement:"",type:""},
+  {name:"Julie Cook",role:"Founder & CEO",company:"Leadership Essentials",city:"Barcelona / Geneva / NYC",country:"Spain / Switzerland / USA",industry:"Leadership Development",engagement:"",type:""},
+  {name:"Kali Prasad Gudiraju",role:"Chairman",company:"EThames Business School",city:"Hyderabad",country:"India",industry:"Education",engagement:"",type:""},
+  {name:"Kalli Purie",role:"Vice Chairperson & Editor-in-Chief",company:"India Today Group",city:"New Delhi",country:"India",industry:"Media",engagement:"",type:""},
+  {name:"Ketlin Pinheiro",role:"General Director, Hematologist",company:"INGOH",city:"Goiás",country:"Brazil",industry:"Healthcare",engagement:"Magna Education",type:"Growth"},
+  {name:"Kevin Schoedinger",role:"President",company:"Schoedinger Funeral & Cremation",city:"Columbus",country:"USA",industry:"Services",engagement:"",type:""},
+  {name:"Magdalena Dajnowski",role:"CEO",company:"G.C.Laser Systems",city:"Chicago",country:"USA",industry:"Manufacturing",engagement:"",type:""},
+  {name:"Mahesh Shahdadpuri",role:"Entrepreneur & CEO",company:"TASC Outsourcing, Nikai Group",city:"Dubai",country:"UAE",industry:"Staffing / Consumer",engagement:"",type:""},
+  {name:"Mark Weiss",role:"Interim Director",company:"NASA CRE2DO",city:"Florida",country:"USA",industry:"Aerospace",engagement:"",type:""},
+  {name:"Marko Kovacevic",role:"Managing Director",company:"Digital Supply Chain Institute",city:"Chicago",country:"USA",industry:"Supply Chain",engagement:"",type:""},
+  {name:"Maximo Cirio",role:"Director",company:"St. Clare's College, LAHC",city:"Punta del Este",country:"Uruguay",industry:"Education",engagement:"",type:""},
+  {name:"Mohit Jain",role:"MD",company:"Krisumi Corporation",city:"Haryana",country:"India",industry:"Real Estate",engagement:"",type:""},
+  {name:"Mustapha Shaikh",role:"CEO",company:"Ellora Systems",city:"Boston",country:"USA",industry:"Tech",engagement:"",type:""},
+  {name:"Naveen Gattu",role:"Chief Growth Officer",company:"Straive",city:"New Jersey",country:"USA",industry:"Data / Publishing",engagement:"Magna Collaboration",type:"Scale"},
+  {name:"Nayan Parekh",role:"Executive Director & President",company:"Nilkamal Limited",city:"Mumbai",country:"India",industry:"Manufacturing / Retail",engagement:"",type:""},
+  {name:"Ninad Daftari",role:"President",company:"SNT Biotech",city:"Chicago",country:"USA",industry:"Biotech",engagement:"",type:""},
+  {name:"Niraj Shah",role:"Managing Partner",company:"Asian Builders",city:"Gujarat",country:"India",industry:"Real Estate",engagement:"",type:""},
+  {name:"Niro Sivanathan",role:"Professor & Chair",company:"London Business School, BetterUp",city:"London",country:"UK",industry:"Education / Coaching",engagement:"",type:""},
+  {name:"Pajani Singah",role:"Co-Founder & Investment Director",company:"Amazonia Impact Ventures",city:"London",country:"UK",industry:"Impact Investing",engagement:"",type:""},
+  {name:"Pardis Nasseri",role:"Founder & CEO",company:"Palm Tree LLC",city:"Los Angeles",country:"USA",industry:"",engagement:"",type:""},
+  {name:"Pratik Vemuri",role:"President",company:"Stashem",city:"North Carolina",country:"USA",industry:"",engagement:"",type:""},
+  {name:"Priya Bubna",role:"Co-founder & CEO",company:"The Morning Context",city:"Mumbai",country:"India",industry:"Media",engagement:"",type:""},
+  {name:"Raghav Venkat",role:"Chief Innovation Officer",company:"Learning Room Education",city:"Chennai",country:"India",industry:"EdTech",engagement:"",type:""},
+  {name:"Rajan Mohindra",role:"Founder & MD",company:"Dynaspede, Spaceage Storage",city:"Dubai",country:"UAE",industry:"Industrial",engagement:"",type:""},
+  {name:"Rakesh Munnanooru",role:"Founder",company:"WhistleDrive",city:"Hyderabad",country:"India",industry:"Transport / Tech",engagement:"Magna Collaboration",type:""},
+  {name:"Ram Gangupanthulu",role:"CTO",company:"Astute Group, Harris Freeman",city:"Orlando",country:"USA",industry:"Tech",engagement:"Magna Education",type:"Growth"},
+  {name:"Ram Katamaraja",role:"Founder & CEO",company:"Colaberry Inc., Refactored.ai",city:"Massachusetts",country:"USA",industry:"Data / AI",engagement:"",type:""},
+  {name:"Ramesh Ramakrishnan",role:"Executive Chairman",company:"Transworld Group",city:"Dubai / Mumbai",country:"UAE / India",industry:"Logistics",engagement:"",type:""},
+  {name:"Ramesh Shah",role:"Founding Chairperson",company:"RK Group, HBS Alumni Angels India",city:"Karnataka",country:"India",industry:"Investment",engagement:"",type:""},
+  {name:"Ravikanth Vangala",role:"Director, Founder",company:"National Grid, Cosmosapient",city:"New York",country:"USA",industry:"Energy / AI",engagement:"",type:""},
+  {name:"Ravinder Ireddy",role:"COO & Co-Founder",company:"Cannyfore, Gramener",city:"Hyderabad",country:"India",industry:"Tech / Analytics",engagement:"",type:""},
+  {name:"Revathi Kamath",role:"Entrepreneur & Philanthropist",company:"Calyx Organic Landscape",city:"Bengaluru",country:"India",industry:"Environment",engagement:"",type:""},
+  {name:"Ricardo De La Fuente",role:"Managing Partner",company:"AIE, PathFinder",city:"San Diego",country:"USA",industry:"Advisory / Education",engagement:"",type:""},
+  {name:"Rita Singh",role:"CEO",company:"S R International Inc.",city:"Chicago",country:"USA",industry:"",engagement:"",type:""},
+  {name:"Ritesh Sivaswamy Ramakrishnan",role:"MD",company:"Transworld Group",city:"Dubai",country:"UAE",industry:"Logistics",engagement:"",type:""},
+  {name:"Rohit Dhamani",role:"Executive Director & CEO",company:"Dhamani Jewels Group",city:"Dubai",country:"UAE",industry:"Luxury / Jewellery",engagement:"",type:""},
+  {name:"Ruchika Mehta",role:"Editor",company:"India Today Group",city:"New Delhi",country:"India",industry:"Media",engagement:"",type:""},
+  {name:"Sajju Jain",role:"Regional Director (Asia Pacific)",company:"Harvard Alumni Association",city:"Karnataka",country:"India",industry:"Non-profit / Education",engagement:"",type:""},
+  {name:"Sakshi Kohli",role:"COO, Lifestyles & Events",company:"India Today Group",city:"Noida",country:"India",industry:"Media",engagement:"",type:""},
+  {name:"Salman Babukhan",role:"Chairman & MD",company:"BK Family Office",city:"Hyderabad",country:"India",industry:"Family Office",engagement:"",type:""},
+  {name:"Sam R. Patel",role:"CEO",company:"Astra Culture",city:"Chicago",country:"USA",industry:"",engagement:"",type:""},
+  {name:"Sandeep Bhargava",role:"Co-Founder & CEO",company:"Arcanum Entertainment",city:"Maharashtra",country:"India",industry:"Entertainment",engagement:"",type:""},
+  {name:"Sandeep Khanna",role:"MD & Board Chairman",company:"Stonetown Capital, Joint Medical, Libstar",city:"Johannesburg",country:"Africa",industry:"Healthcare / Finance",engagement:"",type:""},
+  {name:"Sanjay Kucheria",role:"CEO & Founder",company:"Trinus Corporation, YPO",city:"Pasadena",country:"USA",industry:"Tech / Advisory",engagement:"",type:""},
+  {name:"Santpal Sinchawla",role:"MD & Owner",company:"Sant Enterprises",city:"Bangkok",country:"Thailand",industry:"Gemstones / Jewellery",engagement:"",type:""},
+  {name:"Sarah Shoemaker",role:"Chapter Administrator",company:"YPO Chicagoland",city:"Chicago",country:"USA",industry:"Association",engagement:"",type:""},
+  {name:"Saurav Arora",role:"Founder & MD",company:"Horizon Homes, Horizon Renewable Power",city:"New Delhi",country:"India",industry:"Real Estate / Energy",engagement:"",type:""},
+  {name:"Scott Kapp",role:"Partner",company:"DLA Piper",city:"Chicago",country:"USA",industry:"Legal",engagement:"",type:""},
+  {name:"Sean Keeley",role:"President",company:"Keeley Construction",city:"Illinois",country:"USA",industry:"Construction",engagement:"",type:""},
+  {name:"Shamsh Hadi",role:"MD & CEO",company:"The Hadi Group, Zafer AI, ZorroSign",city:"Dubai",country:"UAE",industry:"Family Office / AI",engagement:"",type:""},
+  {name:"Shashikanth Kanaparthi",role:"Serial Entrepreneur",company:"Volta - Ride App",city:"Irving",country:"USA",industry:"Urban Mobility",engagement:"",type:""},
+  {name:"Shelina Shamji",role:"Director & Solicitor",company:"Gilt Edge Property & Wellness",city:"London",country:"UK",industry:"Property / Wellness",engagement:"Magna Education",type:"Launch"},
+  {name:"Sheran Fernando",role:"Consultant",company:"Dilmah Tea (MJF Group)",city:"Colombo",country:"Sri Lanka",industry:"FMCG / Innovation",engagement:"",type:""},
+  {name:"Shirish Pareek",role:"Senior Advisor",company:"McKinsey, Jewett Automation, McNally Capital",city:"Maryland",country:"USA",industry:"Advisory / Manufacturing",engagement:"",type:""},
+  {name:"Shital Daftari",role:"Founder & CEO",company:"SNT Biotech",city:"Chicago",country:"USA",industry:"Biotech",engagement:"",type:""},
+  {name:"Shyam Penumaka",role:"VC & Co-Founder",company:"Dallas Venture Capital",city:"Hyderabad",country:"India",industry:"VC",engagement:"",type:""},
+  {name:"Somdutta Singh",role:"Founder & CEO",company:"Assiduus Global",city:"Dubai / Bengaluru / Atlanta",country:"UAE / India / USA",industry:"E-commerce",engagement:"",type:""},
+  {name:"Sowmya Iyer",role:"Founder & CEO",company:"DViO Digital",city:"Dubai",country:"UAE",industry:"Digital Marketing / AI",engagement:"",type:""},
+  {name:"Sree Harsha Vadlamudi",role:"Entrepreneur & Investor",company:"Ironhill India, Loca Loka",city:"Hyderabad",country:"India",industry:"F&B / Hospitality",engagement:"",type:""},
+  {name:"Sreenadha Reddy",role:"Founder & CMD",company:"Sai Srushti Group",city:"Bengaluru",country:"India",industry:"Real Estate",engagement:"",type:""},
+  {name:"Srinivas Arasada",role:"CEO & CTA",company:"Evolutyz",city:"Chicago",country:"USA",industry:"IT / Consulting",engagement:"",type:""},
+  {name:"Srinivas Ponugoti",role:"Technology Architect",company:"Ford Motor Credit Company",city:"Dearborn",country:"USA",industry:"Automotive / Finance",engagement:"",type:""},
+  {name:"Srinivas Poddutoori",role:"COO",company:"Artha Solutions",city:"Chicago",country:"USA",industry:"Tech",engagement:"",type:""},
+  {name:"Sranyoo Chanate",role:"CEO",company:"Kluaynamthai Hospital",city:"Bangkok",country:"Thailand",industry:"Healthcare",engagement:"",type:""},
+  {name:"Sudhakar Balachandran",role:"Academic Director & Professor",company:"University of Illinois",city:"Chicago",country:"USA",industry:"Education",engagement:"",type:""},
+  {name:"Sujee Jagannadhan",role:"Founder & CEO",company:"TrustClarity Inc., YPO",city:"Chicago",country:"USA",industry:"AI / SaaS",engagement:"",type:""},
+  {name:"Sujith Shetty",role:"MD",company:"TESPA India",city:"Bengaluru",country:"India",industry:"",engagement:"",type:""},
+  {name:"Suresh Mutha",role:"MD & Executive Director",company:"Mohan Mutha Infra / Exports",city:"Chennai",country:"India",industry:"Infrastructure / Trade",engagement:"",type:""},
+  {name:"Suresh Nichani",role:"MD & CEO",company:"I-Chain Capital, RootCorp",city:"New York",country:"USA",industry:"Finance / Investment",engagement:"",type:""},
+  {name:"Swapnakumar Yenuga",role:"Co-Founder & MD",company:"Honer Homes, BIG C Mobiles",city:"Hyderabad",country:"India",industry:"Real Estate / Retail",engagement:"",type:""},
+  {name:"Sylvie Milverton",role:"CEO & Co-Founder",company:"Lynx Educate",city:"Paris",country:"France / UK",industry:"EdTech",engagement:"Magna Collaboration",type:"Growth"},
+  {name:"Tajuddin Haslani",role:"Founder & CEO",company:"JobTalk AI, ApTask, Hudson Data",city:"New Jersey",country:"USA",industry:"HR Tech / AI",engagement:"",type:""},
+  {name:"Tarun Arora",role:"CEO & Founder",company:"Knimbus",city:"New Delhi / Gurgaon",country:"India",industry:"EdTech / Knowledge Mgmt",engagement:"",type:""},
+  {name:"Uday Hegde",role:"Co-Founder & CEO",company:"USEReady",city:"New York",country:"USA",industry:"Data Analytics",engagement:"",type:""},
+  {name:"Upasana Gala",role:"Founder & CEO",company:"Evolve Brain Training",city:"Dubai",country:"UAE",industry:"Wellness / Neuroscience",engagement:"",type:""},
+  {name:"Vandana",role:"CEO & Founder",company:"British Orchard Nursery",city:"Dubai",country:"UAE",industry:"Education / Childcare",engagement:"",type:""},
+  {name:"Vasant Chheda",role:"Senior Leadership",company:"Athena Medical, HBS OPM",city:"New York",country:"USA",industry:"Healthcare",engagement:"",type:""},
+  {name:"Venkat Mattela",role:"Founder & CEO",company:"Ceremorphic",city:"California / Hyderabad",country:"USA / India",industry:"Semiconductor / AI",engagement:"",type:""},
+  {name:"Vidhatha Annamaneni",role:"CEO & Co-Founder",company:"Ironhill, Yardhouse Brewery",city:"Hyderabad",country:"India",industry:"F&B / Hospitality",engagement:"",type:""},
+  {name:"Vijayam Sirikonda",role:"SVP Sales",company:"Gramener Inc.",city:"Hyderabad",country:"India",industry:"Data / Analytics",engagement:"",type:""},
+  {name:"Vikas Pota",role:"Founder & CEO",company:"T4 Education",city:"London",country:"UK",industry:"EdTech / Policy",engagement:"",type:""},
+  {name:"Vinil Ranga",role:"Founder & CEO",company:"SquareBox.ai",city:"Hyderabad",country:"India",industry:"AI / SaaS",engagement:"",type:""},
+  {name:"Vinay Velivela",role:"Chairman & CEO",company:"CittaAI, Fixity Technologies",city:"Chicago",country:"USA",industry:"AI / EdTech",engagement:"",type:""},
+  {name:"Yogesh Sood",role:"Chairman & MD",company:"BYLD Group",city:"Gurgaon",country:"India",industry:"L&D / Consulting",engagement:"",type:""},
+];
+
+// Populate country filter
+const countries = [...new Set(members.map(m => m.country).filter(Boolean))].sort();
+const cf = document.getElementById('countryFilter');
+countries.forEach(c => { const o = document.createElement('option'); o.value = c; o.textContent = c; cf.appendChild(o); });
+
+function engagementPill(e, type) {
+  if (!e) return '<span class="pill pill-none">—</span>';
+  const cls = e.includes('Collaboration') ? 'pill-collaboration' : 'pill-education';
+  return `<span class="pill ${cls}">${e.replace('Magna ','')}</span>`;
+}
+function typePill(t) {
+  if (!t) return '';
+  const cls = t === 'Scale' ? 'type-scale' : t === 'Growth' ? 'type-growth' : 'type-launch';
+  return `<span class="pill ${cls}">${t}</span>`;
+}
+function highlight(text, query) {
+  if (!query || !text) return text || '';
+  const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
+  return String(text).replace(regex, '<mark>$1</mark>');
+}
+
+let sortCol = 'name', sortDir = 1;
+let filtered = [...members];
+
+function render(query) {
+  const tbody = document.getElementById('tableBody');
+  const noRes = document.getElementById('noResults');
+  if (filtered.length === 0) {
+    tbody.innerHTML = '';
+    noRes.style.display = 'block';
+    document.getElementById('resultCount').textContent = '0 results';
+    document.getElementById('navCount').textContent = '0 members';
+    return;
+  }
+  noRes.style.display = 'none';
+  document.getElementById('resultCount').textContent = filtered.length + ' of ' + members.length;
+  document.getElementById('navCount').textContent = filtered.length + ' members';
+  tbody.innerHTML = filtered.map(m => `
+    <tr>
+      <td class="td-name">${highlight(m.name, query)}</td>
+      <td class="td-role">${highlight(m.role, query)}</td>
+      <td class="td-company">${highlight(m.company, query)}</td>
+      <td class="td-location">${highlight(m.city, query)}</td>
+      <td class="td-location">${highlight(m.country, query)}</td>
+      <td class="td-industry">${highlight(m.industry, query)}</td>
+      <td>${engagementPill(m.engagement)}</td>
+      <td>${typePill(m.type)}</td>
+    </tr>`).join('');
+}
+
+function applyFilters() {
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  const country = document.getElementById('countryFilter').value;
+  const eng = document.getElementById('engagementFilter').value;
+  filtered = members.filter(m => {
+    const matchQ = !q || [m.name, m.role, m.company, m.city, m.country, m.industry].some(v => v && v.toLowerCase().includes(q));
+    const matchC = !country || m.country === country;
+    const matchE = !eng || m.engagement === eng;
+    return matchQ && matchC && matchE;
+  });
+  filtered.sort((a, b) => {
+    const av = (a[sortCol] || '').toLowerCase();
+    const bv = (b[sortCol] || '').toLowerCase();
+    return av < bv ? -sortDir : av > bv ? sortDir : 0;
+  });
+  render(q);
+}
+
+// Sort headers
+document.querySelectorAll('thead th').forEach(th => {
+  th.addEventListener('click', () => {
+    const col = th.dataset.col;
+    if (sortCol === col) { sortDir *= -1; } else { sortCol = col; sortDir = 1; }
+    document.querySelectorAll('thead th').forEach(t => t.classList.remove('sorted-asc','sorted-desc'));
+    th.classList.add(sortDir === 1 ? 'sorted-asc' : 'sorted-desc');
+    applyFilters();
+  });
+});
+
+document.getElementById('searchInput').addEventListener('input', applyFilters);
+document.getElementById('countryFilter').addEventListener('change', applyFilters);
+document.getElementById('engagementFilter').addEventListener('change', applyFilters);
+
+applyFilters();
+</script>
+</body>
+</html>
