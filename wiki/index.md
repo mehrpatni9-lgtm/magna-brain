@@ -37,6 +37,7 @@ Auto-loaded at every session start. Budget ≤ 1,500 tokens. Older detail collap
 
 - [[sylvie-milverton]] — Paris founder of [[lynxeducate]]; Cohort 2 topper; UChicago tie; first Founder Friday slot (May 2026)
 - [[lynxeducate]] — Paris EdTech; IBM + Deliveroo clients; EMEA → Americas + Asia expansion
+- [[sowmya-iyer]] — Dubai/Mumbai; CEO of DViO Digital; Harvard OPM 63; 20+ yrs digital; bought back her own agency; next Founder Friday (June 2026)
 
 ### Affiliations
 
@@ -116,6 +117,7 @@ Auto-loaded at every session start. Budget ≤ 1,500 tokens. Older detail collap
 - [[may-strategy-meetings-may-2026]] — May 1 + May 8 strategy meetings (May 9, Mehr)
 - [[shailu-intel-sylvie-lynxeducate]] — Shailu briefing on Sylvie + LynxEducate ahead of Founder Friday outreach (May 11, Mehr)
 - [[sylvie-milverton-bio-dossier]] — Sylvie's official CEO bio card (May 11, Mehr)
+- [[central-info-archive-may-2026]] — full Magna community roster; 136 members; geo + engagement + industry breakdown (May 29, Mehr)
 
 ## Synthesis angles
 
@@ -132,6 +134,7 @@ Auto-loaded at every session start. Budget ≤ 1,500 tokens. Older detail collap
 - 2026-04-29 — Mehr Patni (via backfill): all 9 ingests above compiled into the brain — 9 source records, 11 new entities, 17 new concepts, 3 new synthesis angles, [[magna]] / [[shailu]] / [[magna-compass]] enriched.
 - 2026-05-09 — Mehr Patni: May 1 + May 8 strategy meetings ingested — 1 source, 4 new concepts (positioning shift, May priorities, personalization framework, customer buckets), 1 new synthesis angle (strategy firm not classroom), [[content-series-founder-fridays]] enriched with monthly interview production model + Sylvie/Heather Conrad/Ani candidate list.
 - 2026-05-11 — Mehr Patni: Shailu briefing on [[sylvie-milverton]] + [[lynxeducate]] ahead of Founder Friday outreach — 1 new source, 2 new entities.
+- 2026-05-29 — Mehr Patni: full community roster ingested — 136 members, geo + engagement + industry mapped; 1 new source ([[central-info-archive-may-2026]]), 1 new entity ([[sowmya-iyer]]), index updated.
 
 ## Contributors
 
