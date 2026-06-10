@@ -110,3 +110,11 @@ block compiles all 9 raw drops at once.
 
 ### Corrected_by
 - []
+
+## 2026-06-10T15:20:00Z
+- ingest: raw/2026-06-10-sowmya-interview.md (1 new item — Founder Fridays interview recording)
+- contributed_by: "Mehr Patni"
+- created: sources/sowmya-iyer-founder-friday-interview
+- updated: entities/sowmya-iyer (added 9 facts from her own words)
+- refreshed: index.md
+- corrected_by: []

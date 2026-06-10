@@ -4,9 +4,9 @@ name: "Sowmya Iyer"
 kind: person
 aliases: ["Sowmya"]
 tags: [founder, dubai, india, digital-marketing, ai, founder-fridays, june-2026, dvio-digital, harvard-opm]
-sources: [[sowmya-iyer-bio-dossier]], [[central-info-archive-may-2026]]
+sources: [[sowmya-iyer-bio-dossier]], [[central-info-archive-may-2026]], [[sowmya-iyer-founder-friday-interview]]
 created: 2026-05-29
-updated: 2026-05-29
+updated: 2026-06-10
 contributed_by: "Mehr Patni"
 corrected_by: []
 ---
@@ -67,10 +67,23 @@ Brands need compounding growth systems, not more campaigns. DViO has evolved fro
 - **Dubai base** — relevant to Mehr's geography; both in Dubai, natural connective tissue.
 - **17-year-old with a web portal** — founding origin story is unusually early and specific.
 
+## In her own words (Founder Fridays interview, June 2026)
+
+- **Pull vs push** — "marketing that doesn't look like marketing" = brands people come to vs. brands that push themselves in your face and breed skeptics. [[sowmya-iyer-founder-friday-interview]]
+- **On AI** — "the last 18 months have made my last 13 years feel slow"; she's prepared while others are in a "we need to catch up" rut. [[sowmya-iyer-founder-friday-interview]]
+- **Systems, not services** — traditional agencies bill hours and ignore outcomes; DViO is a "growth operating system." [[sowmya-iyer-founder-friday-interview]]
+- **The buyout, in her words** — "I had to mortgage the house I lived in"; every consultant said no; she trusted the "entrepreneur's gut." [[sowmya-iyer-founder-friday-interview]]
+- **Leadership** — quotes Simon Sinek's "leaders eat last"; her own line: "one leg in the future, one leg in the present." [[sowmya-iyer-founder-friday-interview]]
+- **OPM rationale** — entrepreneurs become "a frog in the well"; "increase your surface area for opportunities to come." [[sowmya-iyer-founder-friday-interview]]
+- **On gender** — self-funded, never raised capital, never faced discrimination (incl. an all-male Sharia-compliant board still on her roster); "women tend to identify so much with their own gender that they ruin it for themselves." Controversial; has taken public backlash. [[sowmya-iyer-founder-friday-interview]]
+- **Superpower wish** — to be in multiple places at once. [[sowmya-iyer-founder-friday-interview]]
+- **This or That** — Boardroom · work-life integration (freedom) · Solo founder · Client dinner. [[sowmya-iyer-founder-friday-interview]]
+
 ## Relationships
 
-- [[content-series-founder-fridays]] — confirmed next interview slot (June 2026)
+- [[content-series-founder-fridays]] — confirmed next interview slot (June 2026); interview now recorded
 - [[magna]] — community member, no engagement tier yet
+- [[sowmya-iyer-founder-friday-interview]] — full interview transcript
 
 ## Open questions
 
@@ -81,3 +94,4 @@ Brands need compounding growth systems, not more campaigns. DViO has evolved fro
 ## Contributors
 
 - 2026-05-29 — Mehr Patni (created from bio dossier + community archive).
+- 2026-06-10 — Mehr Patni (added 9 facts from the Founder Fridays interview transcript).

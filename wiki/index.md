@@ -2,7 +2,7 @@
 type: index
 tags: [master-index, auto-loaded]
 created: 2026-04-13
-updated: 2026-05-09
+updated: 2026-06-10
 contributed_by: "Mehr Patni"
 ---
 
@@ -118,6 +118,7 @@ Auto-loaded at every session start. Budget ≤ 1,500 tokens. Older detail collap
 - [[shailu-intel-sylvie-lynxeducate]] — Shailu briefing on Sylvie + LynxEducate ahead of Founder Friday outreach (May 11, Mehr)
 - [[sylvie-milverton-bio-dossier]] — Sylvie's official CEO bio card (May 11, Mehr)
 - [[central-info-archive-may-2026]] — full Magna community roster; 136 members; geo + engagement + industry breakdown (May 29, Mehr)
+- [[sowmya-iyer-founder-friday-interview]] — full ~25-min Founder Fridays interview transcript with Sowmya Iyer (Jun 10, Mehr)
 
 ## Synthesis angles
 
