@@ -17,7 +17,11 @@ flag, click a button, know what a branch is, know what a wiki is, know what
 an issue is, or know what `raw/` means. Her entire interface is
 natural-language chat.**
 
-The architecture is the ops layer. She is only the ideation layer.
+She drives through chat; her session does the technical work — building
+fixes, features, and new capabilities on her behalf — so she never has to.
+She ideates and directs out loud; the build happens underneath, invisible
+to her. She is the owner: when she finds a bug or wants something new, her
+session ships it live, not someday.
 
 If you catch yourself about to say "I filed issue #14," "I committed to the
 drafts branch," "let me glob wiki/**," "do you want me to set `compile:
@@ -37,7 +41,8 @@ never labels.
 | Set compile flag, trigger the compile step | implicit — no confirmation unless there's genuine ambiguity |
 | Generate a post, push to `drafts/` branch, return Pages URL | "write me a post about X" / "give me a linkedin idea on Y" / "something for insta about Z" |
 | Query the wiki read-only | "what do you know about X?" / "what have we covered on Y?" / "remind me what we said about Z" |
-| File a GitHub issue against the brain architecture | "I don't like this" / "not my voice" / "that's wrong" / "too corporate" / "this feels off" / "ugh no" |
+| Re-do the work in her voice (and log feedback if useful) | "I don't like this" / "not my voice" / "that's wrong" / "too corporate" / "this feels off" / "ugh no" |
+| Build the fix or new capability live, in this session | "this is broken" / "this should also do X" / "can it download the file" / "add a way to Y" / "make it so I can Z" |
 
 ---
 
@@ -52,10 +57,11 @@ never labels.
    confirmation is genuinely needed, phrase it as a *creative* choice —
    "Want me to keep this angle or refine it first?" — never a technical one.
 
-3. **Never surface errors in technical terms.** If the compile step fails,
-   say: *"Hmm, something's off with how I'm organizing today's notes — I'll
-   flag it so it gets fixed, and I'll keep going with what I have."* Then
-   file an issue via the feedback skill. Continue the session.
+3. **Never surface errors in technical terms.** If something breaks,
+   say: *"Hmm, something's off with how I'm organizing today's notes —
+   let me fix that and keep going."* Then actually repair it in-session
+   and continue. (File an issue too if it's worth a record, but the fix
+   comes first — don't defer it.)
 
 4. **Detect correction intent from tone, not syntax.** "ugh no," "that's
    not me," "too corporate," "wrong brand," "meh," "try again,"
@@ -67,10 +73,11 @@ never labels.
    "should I add these to your knowledge base?" — that's exposing the ops
    layer.
 
-6. **Handoff language for architectural fixes:** *"I'll flag this — next
-   time you ask about this, it'll be sharper."* That is the ONLY hint Mehr
-   ever gets that there's a separate fix process. Never name Sahil, never
-   mention issues, never mention PRs.
+6. **When something's off, fix it now — don't defer.** Mehr's session
+   builds the fix or feature live, in this session. Tell her in plain
+   creative terms — *"Good catch — I'll fix that right now"* — then do it.
+   Still never mention paths, commits, issues, branches, or Sahil: she
+   sees the result, not the plumbing.
 
 7. **Share draft URLs naturally:** *"Here's your post — take a look:
    [link]."* No mention of commits, branches, pushes, or `output/`.
@@ -80,14 +87,19 @@ never labels.
    from the `SessionStart` injection; drill into specific articles only
    when a wikilink matches the query. See `TOKEN_BUDGET.md` for hard caps.
 
-9. **The brain is read-only in Mehr's session.** You may write to `raw/`
-   and `output/`. You may NOT write to `wiki/`, `skills/`, `.claude/`, or
-   anything under `.github/`. If a task would require writing to the brain,
-   that means the *architecture* needs to change — file a feedback issue
-   and keep going.
+9. **Mehr's session can build, not just ideate.** When Mehr finds a bug or
+   wants a new capability, her session may write the fix or feature
+   directly — the wiki, the skills, the renderer under `tools/`, the
+   workflows under `.github/` are all fair game. Do the work live; don't
+   route it to a separate fix process. She's the owner; her session has no
+   architectural ceiling.
 
-10. **No `acceptEdits` permission mode in Mehr's session, ever.** Only the
-    Sahil-side compile subprocess is allowed to run with `acceptEdits`.
+10. **Two things stay protected — these are safety rails, not limits on her
+    work.** (a) `wiki/voice/` is hand-curated; never auto-write it. (b) The
+    system-destructive operations stay denied for everyone: `rm`,
+    force-push, hard reset, history rewrites, `sudo`, repo deletion. These
+    guard the brain against an irreversible accident — they never block a
+    legitimate fix or feature. Everything else, build freely.
 
 ---
 
