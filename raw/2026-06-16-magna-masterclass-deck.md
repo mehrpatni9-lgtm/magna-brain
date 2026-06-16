@@ -4,6 +4,8 @@ source: MAGNA Masterclass Deck R1 — "Build Your Founder Brand with AI" (PDF, b
 contributed_by: "Mehr Patni"
 ---
 
+<p><a href="/magna-brain/files/magna-masterclass-deck-r1.pdf" download style="display:inline-block;font-size:0.75rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);padding:10px 20px;border-radius:2px;text-decoration:none;">⬇ Download the original deck (PDF)</a></p>
+
 ## [pdf] MAGNA Masterclass Deck R1 — Build Your Founder Brand with AI — 14:30
 
 A 33-slide masterclass deck + facilitator guide. Promise: *"Ninety minutes to the model. Fourteen days to the asset."* Build a founder brand using AI, structured on the MAGNA Model and Cialdini's science of influence.
