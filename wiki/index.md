@@ -2,7 +2,7 @@
 type: index
 tags: [master-index, auto-loaded]
 created: 2026-04-13
-updated: 2026-06-10
+updated: 2026-06-16
 contributed_by: "Mehr Patni"
 ---
 
@@ -64,6 +64,12 @@ Auto-loaded at every session start. Budget ≤ 1,500 tokens. Older detail collap
 - [[magna-pillar-culture]] — behaviour at the edge, not posters on the wall
 - [[magna-pillar-leadership]] — becoming the version of yourself the next phase needs
 
+## Concepts — Founder Brand masterclass
+
+- [[magna-model-five-pillars]] — BRAND = Identity × Narrative × System × Reach × Revenue (multiplicative; find the zero)
+- [[science-of-influence-cialdini]] — Cialdini's 7 principles + pre-suasion; the force under each pillar
+- [[fourteen-day-brand-sprint]] — "two weeks, one living asset"; Generate → Expand → Repurpose
+
 ## Concepts — Magna program frameworks
 
 - [[quantum-of-greatness]] — registered trademark; "Applied-MBA in a box"
@@ -119,6 +125,7 @@ Auto-loaded at every session start. Budget ≤ 1,500 tokens. Older detail collap
 - [[sylvie-milverton-bio-dossier]] — Sylvie's official CEO bio card (May 11, Mehr)
 - [[central-info-archive-may-2026]] — full Magna community roster; 136 members; geo + engagement + industry breakdown (May 29, Mehr)
 - [[sowmya-iyer-founder-friday-interview]] — full ~25-min Founder Fridays interview transcript with Sowmya Iyer (Jun 10, Mehr)
+- [[magna-masterclass-deck-r1]] — Shailu's "Build Your Founder Brand with AI" masterclass deck (Jun 16, Mehr)
 
 ## Synthesis angles
 

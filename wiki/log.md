@@ -118,3 +118,10 @@ block compiles all 9 raw drops at once.
 - updated: entities/sowmya-iyer (added 9 facts from her own words)
 - refreshed: index.md
 - corrected_by: []
+
+## 2026-06-16T14:30:00Z
+- ingest: raw/2026-06-16-magna-masterclass-deck.md (1 new item — masterclass deck PDF)
+- contributed_by: "Mehr Patni"
+- created: sources/magna-masterclass-deck-r1, concepts/magna-model-five-pillars, concepts/science-of-influence-cialdini, concepts/fourteen-day-brand-sprint
+- refreshed: index.md
+- corrected_by: []
