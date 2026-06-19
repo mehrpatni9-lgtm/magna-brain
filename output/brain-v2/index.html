@@ -3,144 +3,183 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Magna Brain — v2 (prototype)</title>
+<title>Magna — Ecosystem Intelligence & Knowledge Architecture</title>
 <link href="https://fonts.googleapis.com/css2?family=Forum&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#262524; --bg2:#2f2e2c; --ink:#ece3cf; --muted:#a99f86;
-    --gold:#c9a24b; --gold-soft:rgba(201,162,75,.16); --line:rgba(201,162,75,.32);
+    --bg:#222120; --bg2:#2d2c2a; --ink:#ece3cf; --muted:#a99f86;
+    --gold:#c9a24b; --line:rgba(201,162,75,.34);
   }
   *{box-sizing:border-box}
-  body{margin:0;background:radial-gradient(1200px 800px at 50% -10%,#34322e 0%,var(--bg) 55%);color:var(--ink);font-family:Raleway,system-ui,sans-serif;min-height:100vh;overflow-x:hidden}
-  .wrap{max-width:1180px;margin:0 auto;padding:34px 24px 80px}
-  .badge{display:inline-block;font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);border:1px solid var(--line);border-radius:40px;padding:6px 14px}
-  h1{font-family:Forum,Georgia,serif;font-weight:400;font-size:2.7rem;margin:.5rem 0 .2rem;letter-spacing:.01em}
-  .sub{color:var(--muted);font-size:.95rem;max-width:640px;line-height:1.5}
-  .gsearch{margin:22px 0 6px;position:relative;max-width:520px}
-  .gsearch input{width:100%;background:var(--bg2);border:1px solid var(--line);color:var(--ink);border-radius:40px;padding:13px 18px 13px 44px;font-size:.95rem;font-family:inherit;outline:none}
+  body{margin:0;background:radial-gradient(1300px 900px at 50% -8%,#33312d 0%,var(--bg) 58%);color:var(--ink);font-family:Raleway,system-ui,sans-serif;min-height:100vh;overflow-x:hidden}
+  .wrap{max-width:980px;margin:0 auto;padding:30px 22px 70px;text-align:center}
+  .badge{display:inline-block;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);border:1px solid var(--line);border-radius:40px;padding:6px 14px}
+  h1{font-family:Forum,Georgia,serif;font-weight:400;font-size:2.5rem;margin:.55rem 0 .1rem;letter-spacing:.01em;line-height:1.12}
+  .kick{font-size:.7rem;letter-spacing:.34em;text-transform:uppercase;color:var(--muted)}
+  .sub{color:var(--muted);font-size:.92rem;max-width:600px;margin:.5rem auto 0;line-height:1.5}
+  .gsearch{margin:20px auto 0;position:relative;max-width:460px}
+  .gsearch input{width:100%;background:var(--bg2);border:1px solid var(--line);color:var(--ink);border-radius:40px;padding:12px 18px 12px 44px;font-size:.92rem;font-family:inherit;outline:none;text-align:left}
   .gsearch input::placeholder{color:var(--muted)}
-  .gsearch svg{position:absolute;left:16px;top:13px;opacity:.6}
+  .gsearch svg{position:absolute;left:16px;top:12px;opacity:.6}
 
-  /* node map */
-  .map{position:relative;height:640px;margin-top:18px}
-  .hub{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:168px;height:168px;border-radius:50%;
-    background:radial-gradient(circle at 50% 35%,#3c3a35,#2a2926);border:1px solid var(--line);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;z-index:5;
-    box-shadow:0 0 0 10px rgba(201,162,75,.05),0 0 60px rgba(201,162,75,.10);animation:pulse 4.5s ease-in-out infinite}
-  .hub b{font-family:Forum,serif;font-size:1.25rem;line-height:1.1}
-  .hub span{font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-top:6px}
-  @keyframes pulse{0%,100%{box-shadow:0 0 0 10px rgba(201,162,75,.05),0 0 60px rgba(201,162,75,.10)}50%{box-shadow:0 0 0 14px rgba(201,162,75,.08),0 0 90px rgba(201,162,75,.18)}}
-  svg.links{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
-  svg.links line{stroke:var(--line);stroke-width:1;stroke-dasharray:5 6;animation:dash 22s linear infinite}
-  @keyframes dash{to{stroke-dashoffset:-200}}
-  .node{position:absolute;transform:translate(-50%,-50%) scale(.6);opacity:0;z-index:4;cursor:pointer;
-    width:148px;text-align:center;animation:popin .7s cubic-bezier(.2,.8,.2,1) forwards}
-  .node .disc{width:80px;height:80px;margin:0 auto;border-radius:50%;background:var(--bg2);border:1px solid var(--line);
-    display:flex;align-items:center;justify-content:center;font-size:1.7rem;transition:.25s;box-shadow:0 6px 22px rgba(0,0,0,.35)}
-  .node:hover .disc{border-color:var(--gold);background:#34322d;transform:translateY(-4px);box-shadow:0 0 26px rgba(201,162,75,.25)}
-  .node .lab{margin-top:9px;font-size:.78rem;letter-spacing:.04em;color:var(--ink)}
-  .node .cnt{font-size:.62rem;color:var(--muted)}
+  .brainwrap{position:relative;max-width:840px;aspect-ratio:4/3;margin:6px auto 0}
+  svg.brain{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+  .brain .outline{fill:rgba(201,162,75,.05);stroke:var(--line);stroke-width:2.4}
+  .brain .gyri{fill:none;stroke:rgba(201,162,75,.28);stroke-width:1.6;stroke-linecap:round}
+  .brain .synapse{stroke:var(--line);stroke-width:1;stroke-dasharray:4 7;animation:dash 20s linear infinite}
+  @keyframes dash{to{stroke-dashoffset:-160}}
+  .core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:13px;height:13px;border-radius:50%;
+    background:var(--gold);box-shadow:0 0 0 8px rgba(201,162,75,.10),0 0 26px rgba(201,162,75,.5);z-index:3;animation:beat 3.6s ease-in-out infinite}
+  @keyframes beat{0%,100%{box-shadow:0 0 0 8px rgba(201,162,75,.10),0 0 26px rgba(201,162,75,.5)}50%{box-shadow:0 0 0 13px rgba(201,162,75,.06),0 0 40px rgba(201,162,75,.8)}}
+
+  .node{position:absolute;transform:translate(-50%,-50%) scale(.5);opacity:0;z-index:4;cursor:pointer;width:130px;text-align:center;
+    animation:popin .7s cubic-bezier(.2,.8,.2,1) forwards}
+  .node .disc{width:66px;height:66px;margin:0 auto;border-radius:50%;background:var(--bg2);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-size:1.45rem;transition:.25s;box-shadow:0 6px 20px rgba(0,0,0,.4)}
+  .node:hover .disc{border-color:var(--gold);background:#34322d;transform:translateY(-3px);box-shadow:0 0 24px rgba(201,162,75,.3)}
+  .node .lab{margin-top:7px;font-size:.74rem;letter-spacing:.03em}
+  .node .cnt{font-size:.6rem;color:var(--muted)}
   @keyframes popin{to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
 
-  /* panel */
-  .scrim{position:fixed;inset:0;background:rgba(15,14,13,.62);backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:.25s;z-index:20}
+  .scrim{position:fixed;inset:0;background:rgba(12,11,10,.64);backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:.25s;z-index:20}
   .scrim.on{opacity:1;pointer-events:auto}
-  .panel{position:fixed;top:0;right:0;height:100%;width:min(520px,94vw);background:linear-gradient(180deg,#2c2b28,#262524);
-    border-left:1px solid var(--line);transform:translateX(102%);transition:transform .32s cubic-bezier(.3,.8,.3,1);z-index:21;display:flex;flex-direction:column}
+  .panel{position:fixed;top:0;right:0;height:100%;width:min(520px,94vw);background:linear-gradient(180deg,#2b2a27,#222120);
+    border-left:1px solid var(--line);transform:translateX(102%);transition:transform .32s cubic-bezier(.3,.8,.3,1);z-index:21;display:flex;flex-direction:column;text-align:left}
   .panel.on{transform:translateX(0)}
   .phead{padding:24px 26px 14px;border-bottom:1px solid var(--line)}
   .phead .badge{margin-bottom:10px}
-  .phead h2{font-family:Forum,serif;font-weight:400;font-size:1.7rem;margin:0}
-  .phead p{color:var(--muted);font-size:.84rem;margin:.4rem 0 0}
-  .psearch{padding:14px 26px 0;position:relative}
-  .psearch input{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 14px;font-size:.88rem;font-family:inherit;outline:none}
-  .plist{flex:1;overflow-y:auto;padding:14px 26px 40px}
-  .item{padding:13px 0;border-bottom:1px solid rgba(201,162,75,.12)}
-  .item b{font-size:.96rem;font-weight:600}
-  .item .tag{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-left:8px}
-  .item p{margin:.3rem 0 0;color:var(--muted);font-size:.82rem;line-height:1.45}
-  .close{position:absolute;top:20px;right:22px;cursor:pointer;color:var(--muted);font-size:1.4rem;line-height:1;z-index:22}
+  .phead h2{font-family:Forum,serif;font-weight:400;font-size:1.6rem;margin:0}
+  .phead p{color:var(--muted);font-size:.83rem;margin:.4rem 0 0;line-height:1.45}
+  .psearch{padding:13px 26px 0;position:relative}
+  .psearch input{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 14px;font-size:.86rem;font-family:inherit;outline:none}
+  .plist{flex:1;overflow-y:auto;padding:10px 26px 40px}
+  .item{border-bottom:1px solid rgba(201,162,75,.12)}
+  .item .row{padding:13px 0;cursor:pointer;display:flex;align-items:flex-start;gap:10px}
+  .item .row:hover b{color:var(--gold)}
+  .item .car{color:var(--gold);font-size:.8rem;margin-top:2px;transition:transform .2s;flex:0 0 auto}
+  .item.open .car{transform:rotate(90deg)}
+  .item b{font-size:.94rem;font-weight:600;transition:.15s}
+  .item .tag{font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-left:8px}
+  .item .body{max-height:0;overflow:hidden;transition:max-height .28s ease;color:var(--muted);font-size:.82rem;line-height:1.5}
+  .item.open .body{max-height:320px}
+  .item .body .inner{padding:0 0 14px 26px}
+  .item .more{display:block;margin-top:7px;color:var(--ink);opacity:.8}
   .empty{color:var(--muted);font-size:.85rem;padding:20px 0}
-  .note{margin-top:40px;color:var(--muted);font-size:.74rem;border-top:1px solid var(--line);padding-top:16px;line-height:1.6}
-  @media(max-width:720px){.map{height:auto;display:flex;flex-wrap:wrap;gap:16px;justify-content:center}.hub,.node{position:static;transform:none;opacity:1;animation:none}svg.links{display:none}.node{width:46%}}
+  .close{position:absolute;top:20px;right:22px;cursor:pointer;color:var(--muted);font-size:1.4rem;z-index:22}
+  .note{margin-top:34px;color:var(--muted);font-size:.72rem;line-height:1.6;max-width:680px;margin-left:auto;margin-right:auto}
+  @media(max-width:720px){.brainwrap{display:none}.mobilegrid{display:grid!important}}
+  .mobilegrid{display:none;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+  .mobilegrid .mcard{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:16px;cursor:pointer;text-align:center}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <span class="badge">Prototype · for review</span>
-  <h1>The Magna Brain</h1>
-  <p class="sub">A living map of everything Magna knows — built by operators, enriched daily. Tap a node to explore. This is a clickable preview of the new structure.</p>
+  <span class="badge">The Magna Brain</span>
+  <h1>Ecosystem Intelligence<br>& Knowledge Architecture</h1>
+  <p class="sub">A living map of everything Magna knows. Explore the brain — tap any region, then any line inside it, to go deeper.</p>
 
   <div class="gsearch">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c9a24b" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
     <input id="g" placeholder="Search the whole brain…">
   </div>
 
-  <div class="map" id="map">
-    <svg class="links" id="links"></svg>
-    <div class="hub"><b>MAGNA<br>BRAIN</b><span>v2</span></div>
+  <div class="brainwrap" id="bw">
+    <svg class="brain" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <g id="half">
+          <path class="outline" d="M400,78 C372,58 332,56 306,80 C288,56 250,55 230,84 C196,68 154,80 150,118 C112,112 84,154 104,192 C74,208 70,258 98,284 C76,314 88,362 130,374 C122,418 158,456 208,454 C216,488 264,502 302,488 C332,506 374,500 400,486 L400,78 Z"/>
+          <path class="gyri" d="M250,120 C290,138 300,108 338,128"/>
+          <path class="gyri" d="M150,162 C202,150 232,182 210,214"/>
+          <path class="gyri" d="M116,250 C172,238 210,262 196,300"/>
+          <path class="gyri" d="M150,344 C206,332 244,352 230,392"/>
+          <path class="gyri" d="M232,432 C282,422 312,440 300,468"/>
+          <path class="gyri" d="M300,150 C320,200 300,250 330,300 C300,350 320,410 300,452"/>
+        </g>
+      </defs>
+      <use href="#half"/>
+      <use href="#half" transform="translate(800,0) scale(-1,1)"/>
+      <!-- synapses from core(400,300) to each node -->
+      <line class="synapse" x1="400" y1="300" x2="400" y2="150"/>
+      <line class="synapse" x1="400" y1="300" x2="256" y2="206"/>
+      <line class="synapse" x1="400" y1="300" x2="544" y2="206"/>
+      <line class="synapse" x1="400" y1="300" x2="196" y2="330"/>
+      <line class="synapse" x1="400" y1="300" x2="604" y2="330"/>
+      <line class="synapse" x1="400" y1="300" x2="300" y2="424"/>
+      <line class="synapse" x1="400" y1="300" x2="500" y2="424"/>
+    </svg>
+    <div class="core"></div>
+    <!-- nodes positioned by % matching viewBox points -->
+    <div class="node" data-k="core"       style="left:50%;top:25%"></div>
+    <div class="node" data-k="mehr"        style="left:32%;top:34.3%"></div>
+    <div class="node" data-k="shailu"      style="left:68%;top:34.3%"></div>
+    <div class="node" data-k="frameworks"  style="left:24.5%;top:55%"></div>
+    <div class="node" data-k="engine"      style="left:75.5%;top:55%"></div>
+    <div class="node" data-k="founders"    style="left:37.5%;top:70.7%"></div>
+    <div class="node" data-k="portfolio"   style="left:62.5%;top:70.7%"></div>
   </div>
 
-  <div class="note">Prototype only — content shown is real (pulled from the brain), the live integration (renderer + inner pages) is the queued build. Numbers flagged "confirm" are not final.</div>
+  <div class="mobilegrid" id="mg"></div>
+
+  <div class="note">Tap a region to open it; tap any item to expand for more. Content is real (pulled from the brain); numbers marked "confirm" aren't final yet.</div>
 </div>
 
 <div class="scrim" id="scrim"></div>
 <aside class="panel" id="panel">
   <span class="close" id="close">×</span>
-  <div class="phead"><span class="badge" id="pbadge">Section</span><h2 id="ptitle">—</h2><p id="pdesc"></p></div>
-  <div class="psearch"><input id="ps" placeholder="Search within this section…"></div>
+  <div class="phead"><span class="badge" id="pbadge">Region</span><h2 id="ptitle">—</h2><p id="pdesc"></p></div>
+  <div class="psearch"><input id="ps" placeholder="Search within this region…"></div>
   <div class="plist" id="plist"></div>
 </aside>
 
 <script>
-const SECTIONS = {
+const S = {
   core:{icon:"🧠",label:"Core",desc:"What Magna is — and who's behind it.",items:[
-    {b:"Magna",t:"firm",p:"Global intelligence + education firm — institutional advisory, founder education, and capital."},
-    {b:"Shailu Tipparaju",t:"founder",p:"Founder of Magna. Multi-exit EdTech operator, author, Harvard. (exits/books — confirm)"},
-    {b:"Magna Compass",t:"product",p:"Institutional blueprint — 33 sectors across Core Economic, Emerging Economics, Social & Humanity."},
-    {b:"Magna Capital",t:"arm",p:"Investment arm. Thesis: merit · market · maturity."},
-    {b:"Colosseum Group",t:"parent",p:"Global investment, incubation, engineering & technology solutions."},
+    {b:"Magna",t:"firm",p:"Global intelligence + education firm.",more:"Institutional advisory, founder education, and capital — the translation layer between institutional-grade rigor and founder reality."},
+    {b:"Shailu Tipparaju",t:"founder",p:"Founder of Magna; multi-exit EdTech operator, author, Harvard.",more:"Exits / book count — confirm. Voice + worldview anchor the whole brand."},
+    {b:"Magna Compass",t:"product",p:"Institutional blueprint — 33 sectors.",more:"Organised across Core Economic, Emerging Economics, and Social & Humanity."},
+    {b:"Magna Capital",t:"arm",p:"The investment arm.",more:"Thesis: merit · market · maturity. Invests in its own thesis."},
+    {b:"Colosseum Group",t:"parent",p:"The parent enterprise.",more:"Global investment, incubation, engineering & technology solutions."},
   ]},
-  mehr:{icon:"✍️",label:"Daily Drops — Mehr",desc:"Mehr's running feed of captures and enrichment.",items:[
-    {b:"Sowmya Iyer — Founder Fridays interview",t:"Jun 10",p:"Full ~25-min transcript folded into her profile."},
-    {b:"Magna Masterclass Deck R1",t:"Jun 16",p:"Build Your Founder Brand with AI — model, 7 principles, 14-day sprint. (PDF downloadable)"},
-    {b:"Community roster",t:"May 29",p:"136 members mapped by geo + engagement + industry. (count — confirm)"},
-    {b:"Sylvie + Charan bios",t:"Jun",p:"Founder Friday prep dossiers."},
+  mehr:{icon:"✍️",label:"Mehr's Drops",desc:"Mehr's running feed of captures and enrichment.",items:[
+    {b:"Sowmya Iyer — Founder Friday interview",t:"Jun 10",p:"Full ~25-min transcript, folded into her profile.",more:"Pull-vs-push marketing, the 2017 buyback, AI bet, leadership."},
+    {b:"Magna Masterclass Deck R1",t:"Jun 16",p:"Build Your Founder Brand with AI.",more:"The MAGNA Model, 7 principles of influence, 14-day sprint. Original PDF downloadable on its page."},
+    {b:"Community roster",t:"May 29",p:"Members mapped by geo + engagement + industry.",more:"136 members — count to confirm."},
+    {b:"Founder bios — Sylvie & Charan",t:"Jun",p:"Founder Friday prep dossiers.",more:""},
   ]},
-  shailu:{icon:"🗣️",label:"Daily Drops — Shailu",desc:"Shailu's field feed — events, meetings, founder connects.",items:[
-    {b:"Space being built",t:"soon",p:"Shailu's dedicated drop feed is in the build queue. Once live, his daily drops (events, meetings, founder connects) land here and enrich the shared brain."},
+  shailu:{icon:"🗣️",label:"Shailu's Drops",desc:"Shailu's field feed — events, meetings, founder connects.",items:[
+    {b:"His space is filling in",t:"soon",p:"Shailu's dedicated drop feed is being built.",more:"Once live, his daily drops — events, meetings, founder connects — land here and enrich the shared brain. You'll see his feed alongside yours."},
   ]},
-  founders:{icon:"👥",label:"Founders & Community",desc:"Founder Fridays features + the wider Magna community.",items:[
-    {b:"Sowmya Iyer",t:"DViO Digital",p:"Dubai/Mumbai. Bought back her own agency. 300+ team. Founder Friday — June."},
-    {b:"Sylvie Milverton",t:"Lynx Educate",p:"Paris. First Founder Friday — May. EMEA → Americas + Asia."},
-    {b:"Charan Lakkaraju",t:"Student Tribe",p:"Hyderabad. Forbes 30U30. Tier-2/3 student access. Founder Friday — upcoming."},
-    {b:"Magna community",t:"136 members",p:"Searchable directory by country + engagement. (count — confirm)"},
+  founders:{icon:"👥",label:"Founders & Community",desc:"Founder Friday features + the wider Magna community.",items:[
+    {b:"Sowmya Iyer",t:"DViO Digital",p:"Dubai/Mumbai. Bought back her own agency.",more:"300+ team. AI-first growth agency. June Founder Friday — recorded."},
+    {b:"Sylvie Milverton",t:"Lynx Educate",p:"Paris. First Founder Friday — May.",more:"20 yrs in finance before building. EMEA → Americas + Asia."},
+    {b:"Charan Lakkaraju",t:"Student Tribe",p:"Hyderabad. Forbes 30 Under 30.",more:"Tier-2/3 student access; the Three Capitals philosophy. Founder Friday upcoming."},
+    {b:"Magna community",t:"136 members",p:"Searchable directory by country + engagement.",more:"Count to confirm."},
   ]},
   frameworks:{icon:"📚",label:"Frameworks & Concepts",desc:"The thinking — Magna's models and Shailu's worldview.",items:[
-    {b:"Tone Compass",t:"6 voices",p:"Naval · Dalio · Godin · Sinek · Pink · Robbins — voice chosen by content series, never by mood."},
-    {b:"The MAGNA Model",t:"5 pillars",p:"Brand = Identity × Narrative × System × Reach × Revenue. One zero collapses the whole."},
-    {b:"Science of Influence",t:"Cialdini",p:"7 principles + pre-suasion, each mapped to a pillar."},
-    {b:"The 14-Day Brand Sprint",t:"execution",p:"Two weeks, one living asset. Generate → Expand → Repurpose."},
-    {b:"Emotional Capital",t:"core idea",p:"Ranks above enterprise value."},
-    {b:"Four Dimensions of Wealth",t:"model",p:"Social · Emotional · Intellectual · Financial."},
-    {b:"Clarity is the Product",t:"angle",p:"Magna's real product is clarity on which problem is load-bearing."},
-    {b:"Mindset of Leverage",t:"capital",p:"Seek capital when you don't need it."},
+    {b:"Tone Compass",t:"6 voices",p:"Magna's voice system.",more:"Naval (Mondays) · Dalio (Lectures/Principle) · Godin (Sharp Take/Wednesdays) · Sinek (Founder Fridays) · Pink (Weekends) · Robbins (CTAs only). One voice per post — chosen by series, never mood."},
+    {b:"The MAGNA Model",t:"5 pillars",p:"Brand = Identity × Narrative × System × Reach × Revenue.",more:"Multiplicative — one zero collapses the whole. Governing law: Consistency × Value = Compounding."},
+    {b:"Science of Influence",t:"Cialdini",p:"7 principles + pre-suasion.",more:"Reciprocity, Commitment, Social Proof, Authority, Liking, Scarcity, Unity — each mapped to a pillar."},
+    {b:"The 14-Day Brand Sprint",t:"execution",p:"Two weeks, one living asset.",more:"Generate → Expand → Repurpose. AI drafts, you direct."},
+    {b:"Emotional Capital",t:"core idea",p:"Ranks above enterprise value.",more:""},
+    {b:"Four Dimensions of Wealth",t:"model",p:"Social · Emotional · Intellectual · Financial.",more:""},
+    {b:"Clarity is the Product",t:"angle",p:"Magna's real product is clarity.",more:"Which problem is load-bearing — frameworks are cheap, knowing where to apply them is the job."},
+    {b:"Mindset of Leverage",t:"capital",p:"Seek capital when you don't need it.",more:""},
   ]},
-  engine:{icon:"🎬",label:"Content Engine",desc:"Series, voices, and the idea/draft pipeline. Extensible — new buckets drop in any time.",items:[
-    {b:"Founder Fridays",t:"Sinek",p:"Founder spotlight interviews — Sylvie, Sowmya, Charan."},
-    {b:"Digital Lectures",t:"Dalio",p:"Bi-weekly carousels — Strategy, Capital, Negotiation, Sales."},
-    {b:"The Sharp Take",t:"Godin",p:"Contrarian two-sentence reframes."},
-    {b:"Magna Mondays",t:"Naval",p:"One big idea, IG static."},
-    {b:"Wisdom Wednesdays",t:"Godin",p:"Brand case-study carousels."},
-    {b:"Inspiration Weekends",t:"Pink",p:"Reflective quote, IG static."},
-    {b:"The Principle",t:"Dalio",p:"Numbered principles, LI long-form."},
-    {b:"Behind the Build",t:"Sinek",p:"Community scenes, LI."},
-    {b:"💡 Post ideas / drafts",t:"pipeline",p:"WIP ideas and drafts live here before they ship."},
+  engine:{icon:"🎬",label:"Content Engine",desc:"Series, voices, and the idea/draft pipeline. New buckets drop in any time.",items:[
+    {b:"Founder Fridays",t:"Sinek",p:"Founder spotlight interviews.",more:"Sylvie, Sowmya, Charan…"},
+    {b:"Digital Lectures",t:"Dalio",p:"Bi-weekly carousels.",more:"Strategy, Capital, Negotiation, Sales."},
+    {b:"The Sharp Take",t:"Godin",p:"Contrarian two-sentence reframes.",more:"The Magna learnings cards."},
+    {b:"Magna Mondays",t:"Naval",p:"One big idea, IG static.",more:""},
+    {b:"Wisdom Wednesdays",t:"Godin",p:"Brand case-study carousels.",more:""},
+    {b:"Inspiration Weekends",t:"Pink",p:"Reflective quote.",more:""},
+    {b:"The Principle",t:"Dalio",p:"Numbered principles, LI.",more:""},
+    {b:"Behind the Build",t:"Sinek",p:"Community scenes.",more:""},
+    {b:"Post ideas / drafts",t:"pipeline",p:"WIP ideas & drafts live here.",more:"Before they ship — your working pipeline."},
   ]},
   portfolio:{icon:"🏢",label:"Portfolio Companies",desc:"The full Magna network — built, backed, or supported. ~49 entries.",items:[
     {b:"Strateology",p:"Business strategy consulting driving growth & org performance."},
     {b:"Student Tribe",p:"India's largest Gen Z student-community platform."},
-    {b:"Whistle Drive",p:"Corporate employee transportation & urban mobility across India."},
+    {b:"Whistle Drive",p:"Corporate transportation & urban mobility across India."},
     {b:"Powerkiosk",p:"Cloud marketplace connecting energy brokers & suppliers."},
     {b:"Examity",p:"Secure exam development & online proctoring, globally."},
     {b:"Gramener",p:"Design-led data science solving problems with AI."},
@@ -189,49 +228,46 @@ const SECTIONS = {
     {b:"EdAssist (Bright Horizons)",p:"Workforce education & tuition assistance."},
   ]},
 };
-const ORDER=["core","mehr","shailu","founders","frameworks","engine","portfolio"];
-const map=document.getElementById('map');
-const W=map.clientWidth||1100, H=640, cx=W/2, cy=H/2, R=Math.min(W,H)*0.40;
-const linksSvg=document.getElementById('links');
-ORDER.forEach((key,i)=>{
-  const ang=(-90 + i*(360/ORDER.length))*Math.PI/180;
-  const x=cx+R*Math.cos(ang), y=cy+R*Math.sin(ang);
-  const s=SECTIONS[key];
-  const ln=document.createElementNS('http://www.w3.org/2000/svg','line');
-  ln.setAttribute('x1',cx);ln.setAttribute('y1',cy);ln.setAttribute('x2',x);ln.setAttribute('y2',y);
-  linksSvg.appendChild(ln);
-  const n=document.createElement('div');n.className='node';
-  n.style.left=x+'px';n.style.top=y+'px';n.style.animationDelay=(i*0.09)+'s';
+
+// build nodes
+document.querySelectorAll('.node').forEach(n=>{
+  const s=S[n.dataset.k];
   n.innerHTML=`<div class="disc">${s.icon}</div><div class="lab">${s.label}</div><div class="cnt">${s.items.length} item${s.items.length>1?'s':''}</div>`;
-  n.onclick=()=>open(key);
-  map.appendChild(n);
+  n.style.animationDelay=(Math.random()*0.5)+'s';
+  n.onclick=()=>open(n.dataset.k);
 });
+// mobile grid
+const mg=document.getElementById('mg');
+Object.keys(S).forEach(k=>{const s=S[k];const d=document.createElement('div');d.className='mcard';d.innerHTML=`<div style="font-size:1.4rem">${s.icon}</div><div style="font-size:.8rem;margin-top:6px">${s.label}</div>`;d.onclick=()=>open(k);mg.appendChild(d);});
 
 const scrim=document.getElementById('scrim'),panel=document.getElementById('panel');
 let cur=null;
-function render(key,q=''){
-  const s=SECTIONS[key];q=q.toLowerCase();
-  const items=s.items.filter(it=>(it.b+' '+(it.p||'')+' '+(it.t||'')).toLowerCase().includes(q));
-  document.getElementById('plist').innerHTML = items.length? items.map(it=>
-    `<div class="item"><b>${it.b}</b>${it.t?`<span class="tag">${it.t}</span>`:''}${it.p?`<p>${it.p}</p>`:''}</div>`).join('')
-    : `<div class="empty">Nothing matches "${q}".</div>`;
+function render(k,q=''){
+  const s=S[k];q=q.toLowerCase();
+  const items=s.items.filter(it=>(it.b+' '+(it.p||'')+' '+(it.more||'')+' '+(it.t||'')).toLowerCase().includes(q));
+  document.getElementById('plist').innerHTML = items.length? items.map((it,i)=>
+    `<div class="item" data-i="${i}">
+      <div class="row"><span class="car">▸</span><div><b>${it.b}</b>${it.t?`<span class="tag">${it.t}</span>`:''}</div></div>
+      <div class="body"><div class="inner">${it.p||''}${it.more?`<span class="more">${it.more}</span>`:''}</div></div>
+    </div>`).join('') : `<div class="empty">Nothing matches "${q}".</div>`;
+  document.querySelectorAll('#plist .item').forEach(el=>{el.querySelector('.row').onclick=()=>el.classList.toggle('open');});
 }
-function open(key){
-  cur=key;const s=SECTIONS[key];
+function open(k){
+  cur=k;const s=S[k];
   document.getElementById('pbadge').textContent=s.label;
   document.getElementById('ptitle').textContent=s.label;
   document.getElementById('pdesc').textContent=s.desc;
-  document.getElementById('ps').value='';render(key);
+  document.getElementById('ps').value='';render(k);
   scrim.classList.add('on');panel.classList.add('on');
 }
 function shut(){scrim.classList.remove('on');panel.classList.remove('on');cur=null;}
 scrim.onclick=shut;document.getElementById('close').onclick=shut;
 document.getElementById('ps').oninput=e=>{if(cur)render(cur,e.target.value)};
 document.getElementById('g').oninput=e=>{
-  const q=e.target.value.trim();if(!q){if(cur)shut();return;}
-  let best=null,bestN=-1;
-  ORDER.forEach(k=>{const n=SECTIONS[k].items.filter(it=>(it.b+' '+(it.p||'')).toLowerCase().includes(q.toLowerCase())).length;if(n>bestN){bestN=n;best=k;}});
-  if(best&&bestN>0){open(best);document.getElementById('ps').value=q;render(best,q);}
+  const q=e.target.value.trim();if(!q){return;}
+  let best=null,bestN=0;
+  Object.keys(S).forEach(k=>{const n=S[k].items.filter(it=>(it.b+' '+(it.p||'')+' '+(it.more||'')).toLowerCase().includes(q.toLowerCase())).length;if(n>bestN){bestN=n;best=k;}});
+  if(best){open(best);document.getElementById('ps').value=q;render(best,q);}
 };
 </script>
 </body>
